@@ -3858,6 +3858,30 @@ const dictionary = {
 {type:"Game",korean:"광역기 아파요",indonesia:"AOE sakit"}
 ],
 
+"stun":[
+{type:"Game",korean:"스턴 걸렸어요",indonesia:"Kena stun"}
+],
+
+"silence":[
+{type:"Game",korean:"침묵 걸렸어요",indonesia:"Kena silence"}
+],
+
+"fear":[
+{type:"Game",korean:"공포 걸렸어요",indonesia:"Kena fear"}
+],
+
+"root":[
+{type:"Game",korean:"묶였어요",indonesia:"Kena root"}
+],
+
+"cleanse":[
+{type:"Game",korean:"해제해주세요",indonesia:"Cleanse / tolong hapus debuff"}
+],
+
+"debuff":[
+{type:"Game",korean:"디버프 걸렸어요",indonesia:"Kena debuff"}
+],
+
 "kena silence":[
 {type:"Game",korean:"침묵 걸렸어요",indonesia:"Kena silence"}
 ],
@@ -3953,7 +3977,43 @@ function hangulToKeyboard(text){
 }
 
 function normalizeInput(text){
+
   return text.toLowerCase().trim().replace(/\s+/g,' ');
+}
+
+function typoScore(a,b){
+
+  if(Math.abs(a.length - b.length) > 2) return 99;
+
+  let diff = 0;
+  const len = Math.max(a.length,b.length);
+
+  for(let i=0;i<len;i++){
+    if(a[i] !== b[i]) diff++;
+  }
+
+  return diff;
+}
+
+function findTypoKey(input,keys){
+
+  if(input.length < 4) return null;
+
+  let bestKey = null;
+  let bestScore = 99;
+
+  keys.forEach(key=>{
+
+    const score = typoScore(input,key);
+
+    if(score < bestScore){
+      bestScore = score;
+      bestKey = key;
+    }
+
+  });
+
+  return bestScore <= 2 ? bestKey : null;
 }
 
 const aliases = {
@@ -3985,7 +4045,9 @@ const aliases = {
 
 function findDictionary(input){
 
-  input = aliases[input] || input;
+  if(aliases[input] && dictionary[aliases[input]]){
+    input = aliases[input];
+  }
 
   const keys = Object.keys(dictionary).sort((a,b)=>b.length-a.length);
 
@@ -4021,7 +4083,9 @@ function findDictionary(input){
       inputWords.includes(word)
     ).length;
 
-    if(matchCount >= 1 && input.length >= 3){
+    const minMatch = inputWords.length >= 3 ? 2 : 1;
+
+    if(matchCount >= minMatch && input.length >= 3){
 
       dictionary[key].forEach(item=>{
         results.push(item);
@@ -4035,7 +4099,13 @@ function findDictionary(input){
     return results.slice(0,8);
   }
 
-  return null;
+  const typoKey = findTypoKey(input, keys);
+
+if(typoKey){
+  return dictionary[typoKey];
+}
+
+return null;
 }
 
 function updateSuggestions(){
@@ -4049,11 +4119,34 @@ function updateSuggestions(){
 
   const keys = Object.keys(dictionary);
 
-  const matches = keys.filter(key =>
-    key.toLowerCase().includes(input.toLowerCase()) ||
-    input.toLowerCase().includes(key.toLowerCase()) ||
-    key.split(' ').some(word => word.startsWith(input))
-  ).slice(0,10);
+  const matches = keys
+
+  .filter(key => {
+
+    const lowerKey = key.toLowerCase();
+    const lowerInput = input.toLowerCase();
+
+    return (
+      lowerKey.startsWith(lowerInput) ||
+      lowerKey.includes(lowerInput) ||
+      lowerInput.includes(lowerKey) ||
+      lowerKey.split(' ').some(word => word.startsWith(lowerInput))
+    );
+
+  })
+
+  .sort((a,b)=>{
+
+    const lowerInput = input.toLowerCase();
+
+    const aStart = a.toLowerCase().startsWith(lowerInput) ? 1 : 0;
+    const bStart = b.toLowerCase().startsWith(lowerInput) ? 1 : 0;
+
+    return bStart - aStart;
+
+  })
+
+  .slice(0,10);
 
   matches.forEach(key=>{
 
@@ -4080,48 +4173,75 @@ function updateSuggestions(){
 }
 
 function setupQuickChat(){
+
   const quickList=[
     'hai',
     'makasih',
+    'maaf',
     'heal dong',
     'buff dong',
+    'revive dong',
     'mau party',
-    'afk bentar',
+    'join party',
+    'ada slot',
     'boss muncul',
+    'awas pk',
+    'pk datang',
     'lari',
+    'mundur semua',
+    'farm yuk',
+    'spot kosong',
     'aku mau ambil panah',
+    'afk bentar',
+    'brb',
     'lagi ngapain'
   ];
 
   const box=document.getElementById('quickBox');
-  
+
+  box.innerHTML='';
+
   quickList.forEach(text=>{
+
+    if(!dictionary[text]) return;
+
     const chip=document.createElement('div');
+
     chip.className='quick';
+
     chip.textContent=text;
+
     chip.onclick=()=>{
+
       document.getElementById('input').value=text;
-      updateSuggestions();
+
+      document.getElementById('suggestions').innerHTML='';
+
       generateText();
+
     };
+
     box.appendChild(chip);
+
   });
+
 }
 
 function setupCategories(){
 
   const categories = {
-    '👥 PARTY':['party','slot','invite','leader','tank','healer','dps'],
-    '⚔️ WAR':['war','pk','musuh','push','mundur','defend','serang'],
-    '🌾 FARM':['farm','hunt','hunting','mob','spot','exp','drop','leveling'],
-    '👹 BOSS':['boss','raid','aoe','aggro'],
-    '💚 HEAL':['hp','darah','heal','buff','res','revive'],
-    '🔵 MANA':['mp','mana'],
-    '💰 TRADE':['jual','beli','trade','harga','adena','gold','item','loot'],
-    '🏘️ TOWN':['kota','gudang','teleport','tp'],
-    '😴 AFK':['afk','brb','tidur','makan'],
-    '💬 SOCIAL':['halo','hai','makasih','maaf','wkwk','haha']
-  };
+  '👥 PARTY':['party','slot','invite','leader','tank','healer','dps','disconnect','afk'],
+  '⚔️ WAR':['war','pk','musuh','push','mundur','serang'],
+  '🌾 FARM':['farm','hunt','hunting','mob','spot','exp','drop'],
+  '💰 TRADE':['jual','beli','trade','harga','adena','gold','item'],
+  '📋 DAILY':['daily','quest','npc','login','logout','afk'],
+  '❤️ HP':['hp','darah','heal','revive'],
+  '🔵 MANA':['mp','mana','buff'],
+  '⚡ SPEED':['speed','cepat','rush'],
+  '🏙️ TOWN':['kota','gudang','teleport','tp','dungeon'],
+  '👑 BOSS':['boss','raid','aoe'],
+  '🌀 STATUS':['stun','silence','fear','root','cleanse','debuff']
+};
 
   const box=document.getElementById('categoryBox');
 
@@ -4137,31 +4257,51 @@ function setupCategories(){
 
     btn.onclick=()=>{
 
-      const keywords=categories[cat];
+      const keywords = categories[cat];
 
-      const results=[];
+      let results = [];
 
-      Object.keys(dictionary).forEach(key=>{
+      keywords.forEach(word=>{
 
-        const match=keywords.some(word=>key.includes(word));
+        Object.keys(dictionary).forEach(key=>{
 
-        if(match){
-          dictionary[key].forEach(item=>{
-            results.push(item);
-          });
+          if(key.includes(word)){
+
+            dictionary[key].forEach(item=>{
+              results.push(item);
+            });
+
+          }
+
+        });
+
+      });
+
+      const unique = [];
+
+      const seen = new Set();
+
+      results.forEach(item=>{
+
+        const id = item.korean + item.type;
+
+        if(!seen.has(id)){
+
+          seen.add(id);
+
+          unique.push(item);
+
         }
 
       });
 
       document.getElementById('result').innerHTML=`
-<div class="quick-title">
-${cat} CATEGORY
-</div>
+  <div class="quick-title">
+    ${cat} CATEGORY
+  </div>
 `;
 
-      showResults(results.slice(0,12));
-
-      document.getElementById('input').value=cat.replace(/[^\p{L}\p{N}\s]/gu,'').toLowerCase().trim();
+showResults(unique.slice(0,24));
 
     };
 
