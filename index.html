@@ -3766,6 +3766,142 @@ const dictionary = {
 {type:"Game",korean:"다시 도전합시다",indonesia:"Retry lagi"}
 ],
 
+"panah tinggal sedikit":[
+{type:"Game",korean:"화살 얼마 안 남았어요",indonesia:"Panah tinggal sedikit"}
+],
+
+"ammo habis":[
+{type:"Game",korean:"탄약 없어요",indonesia:"Ammo habis"}
+],
+
+"soulshot habis":[
+{type:"Game",korean:"소울샷 다 썼어요",indonesia:"Soulshot habis"}
+],
+
+"ss habis":[
+{type:"Game",korean:"소울샷 없어요",indonesia:"SS habis"}
+],
+
+"rebuff cepat":[
+{type:"Game",korean:"빨리 리버프해주세요",indonesia:"Rebuff cepat"}
+],
+
+"wipe":[
+{type:"Game",korean:"전멸했어요",indonesia:"Party wipe"}
+],
+
+"reset boss":[
+{type:"Game",korean:"보스 리셋됐어요",indonesia:"Boss reset"}
+],
+
+"boss reset":[
+{type:"Game",korean:"보스 초기화됐어요",indonesia:"Boss reset"}
+],
+
+"tarik mob":[
+{type:"Game",korean:"몹 끌어오세요",indonesia:"Tarik mob"}
+],
+
+"mob kabur":[
+{type:"Game",korean:"몹 도망갔어요",indonesia:"Mob kabur"}
+],
+
+"jangan overpull":[
+{type:"Game",korean:"너무 많이 몰지 마세요",indonesia:"Jangan overpull"}
+],
+
+"siap pull":[
+{type:"Game",korean:"풀링 준비됐어요",indonesia:"Siap pull"}
+],
+
+"pull sekarang":[
+{type:"Game",korean:"지금 몰아요",indonesia:"Pull sekarang"}
+],
+
+"save mana":[
+{type:"Game",korean:"마나 아끼세요",indonesia:"Save mana"}
+],
+
+"hemat skill":[
+{type:"Game",korean:"스킬 아껴주세요",indonesia:"Hemat skill"}
+],
+
+"buff crit":[
+{type:"Game",korean:"크리 버프 주세요",indonesia:"Buff crit"}
+],
+
+"buff haste":[
+{type:"Game",korean:"헤이스트 주세요",indonesia:"Buff haste"}
+],
+
+"assist tank":[
+{type:"Game",korean:"탱커 어시해주세요",indonesia:"Assist tank"}
+],
+
+"focus target":[
+{type:"Game",korean:"한 명 집중 공격",indonesia:"Focus target"}
+],
+
+"spread out":[
+{type:"Game",korean:"흩어지세요",indonesia:"Spread out"}
+],
+
+"kumpul dekat boss":[
+{type:"Game",korean:"보스 근처로 모이세요",indonesia:"Kumpul dekat boss"}
+],
+
+"jangan berdiri disitu":[
+{type:"Game",korean:"거기 서 있지 마세요",indonesia:"Jangan berdiri disitu"}
+],
+
+"aoe sakit":[
+{type:"Game",korean:"광역기 아파요",indonesia:"AOE sakit"}
+],
+
+"kena silence":[
+{type:"Game",korean:"침묵 걸렸어요",indonesia:"Kena silence"}
+],
+
+"kena fear":[
+{type:"Game",korean:"공포 걸렸어요",indonesia:"Kena fear"}
+],
+
+"kena root":[
+{type:"Game",korean:"묶였어요",indonesia:"Kena root"}
+],
+
+"cleanse dong":[
+{type:"Game",korean:"해제해주세요",indonesia:"Cleanse dong"}
+],
+
+"debuff banyak":[
+{type:"Game",korean:"디버프 많아요",indonesia:"Debuff banyak"}
+],
+
+"buff hilang":[
+{type:"Game",korean:"버프 사라졌어요",indonesia:"Buff hilang"}
+],
+
+"party afk":[
+{type:"Game",korean:"파티원 잠수예요",indonesia:"Party AFK"}
+],
+
+"leader afk":[
+{type:"Game",korean:"파장 잠수예요",indonesia:"Leader AFK"}
+],
+
+"tank disconnect":[
+{type:"Game",korean:"탱커 끊겼어요",indonesia:"Tank disconnect"}
+],
+
+"healer disconnect":[
+{type:"Game",korean:"힐러 끊겼어요",indonesia:"Healer disconnect"}
+],
+
+"restart party":[
+{type:"Game",korean:"파티 다시 만들어요",indonesia:"Restart party"}
+],
+
 "ada pk":[{type:"Game",korean:"PK 있어요",indonesia:"Ada PK"}],
 "aku pergi ke gudang":[{type:"Game",korean:"창고 갔다올게요",indonesia:"Aku pergi ke gudang"}],
 "pergi ke gudang":[{type:"Game",korean:"창고 갔다올게요",indonesia:"Pergi ke gudang"}],
@@ -3820,7 +3956,36 @@ function normalizeInput(text){
   return text.toLowerCase().trim().replace(/\s+/g,' ');
 }
 
+const aliases = {
+  "arrow":"panah",
+  "arrows":"panah",
+  "ammo":"panah",
+
+  "panah dikit":"panah tinggal sedikit",
+  "panah sedikit":"panah tinggal sedikit",
+  "panah sisa sedikit":"panah tinggal sedikit",
+  "arrow dikit":"panah tinggal sedikit",
+  "arrow sedikit":"panah tinggal sedikit",
+
+  "pt":"party",
+  "pt dong":"join party",
+
+  "heal me":"heal aku",
+  "heal pls":"heal dong",
+
+  "buff me":"buff dong",
+  "buff pls":"buff dong",
+
+  "res me":"revive dong",
+  "rev me":"revive dong",
+
+  "pk incoming":"pk datang",
+  "lagg":"lag parah"
+};
+
 function findDictionary(input){
+
+  input = aliases[input] || input;
 
   const keys = Object.keys(dictionary).sort((a,b)=>b.length-a.length);
 
@@ -3946,15 +4111,16 @@ function setupQuickChat(){
 function setupCategories(){
 
   const categories = {
-    PARTY:['party','slot','invite','leader','tank','healer','dps'],
-    WAR:['war','pk','musuh','push','mundur','defend','serang'],
-    FARM:['farm','hunt','hunting','mob','spot','exp','drop'],
-    TRADE:['jual','beli','trade','harga','adena','gold','item'],
-    DAILY:['daily','quest','npc','login','logout','afk'],
-    HP:['hp','darah','potion darah','heal'],
-    MANA:['mp','mana'],
-    SPEED:['speed','kecepatan'],
-    TOWN:['kota','gudang','teleport','tp']
+    '👥 PARTY':['party','slot','invite','leader','tank','healer','dps'],
+    '⚔️ WAR':['war','pk','musuh','push','mundur','defend','serang'],
+    '🌾 FARM':['farm','hunt','hunting','mob','spot','exp','drop','leveling'],
+    '👹 BOSS':['boss','raid','aoe','aggro'],
+    '💚 HEAL':['hp','darah','heal','buff','res','revive'],
+    '🔵 MANA':['mp','mana'],
+    '💰 TRADE':['jual','beli','trade','harga','adena','gold','item','loot'],
+    '🏘️ TOWN':['kota','gudang','teleport','tp'],
+    '😴 AFK':['afk','brb','tidur','makan'],
+    '💬 SOCIAL':['halo','hai','makasih','maaf','wkwk','haha']
   };
 
   const box=document.getElementById('categoryBox');
@@ -3993,9 +4159,9 @@ ${cat} CATEGORY
 </div>
 `;
 
-showResults(results.slice(0,12));
+      showResults(results.slice(0,12));
 
-      document.getElementById('input').value=cat.toLowerCase();
+      document.getElementById('input').value=cat.replace(/[^\p{L}\p{N}\s]/gu,'').toLowerCase().trim();
 
     };
 
@@ -4147,80 +4313,6 @@ function showToast(){
 
 setupQuickChat();
 setupCategories();
-
-function setupCategories(){
-
-  const categories = {
-
-  '👥 PARTY':['party','invite','slot','tank','healer','dps'],
-
-  '⚔️ WAR':['war','pk','enemy','push','retreat','defend'],
-
-  '🌾 FARM':['farm','hunt','mob','spot','exp','leveling'],
-
-  '👹 BOSS':['boss','raid','aoe','burst','aggro'],
-
-  '💚 HEAL':['heal','buff','mana','hp','res','revive'],
-
-  '💰 TRADE':['trade','sell','buy','adena','gold','loot'],
-
-  '😴 AFK':['afk','brb','toilet','sleep','eat'],
-
-  '💬 SOCIAL':['hello','thanks','sorry','haha','zzz']
-
-};
-
-  const box=document.getElementById('categoryBox');
-
-  if(!box) return;
-
-  box.innerHTML='';
-
-  Object.keys(categories).forEach(cat=>{
-
-    const btn=document.createElement('div');
-
-    btn.className='quick';
-
-    btn.textContent=cat;
-
-    btn.onclick=()=>{
-
-      const keywords=categories[cat];
-
-      const results=[];
-
-      Object.keys(dictionary).forEach(key=>{
-
-        const match=keywords.some(word=>
-          key.includes(word)
-        );
-
-        if(match){
-
-          dictionary[key].forEach(item=>{
-            results.push(item);
-          });
-
-        }
-
-      });
-
-      document.getElementById('result').innerHTML=`
-      <div class="quick-title">
-      ${cat} CATEGORY
-      </div>
-      `;
-
-      showResults(results.slice(0,12));
-
-    };
-
-    box.appendChild(btn);
-
-  });
-
-}
 
 function clearAll(){
 
