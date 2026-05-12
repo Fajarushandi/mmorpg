@@ -1,0 +1,4240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Korean MMO Chat Assistant</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:
+    radial-gradient(circle at top,#172033 0%,#0f1115 45%,#080a0f 100%);
+  color:white;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.container{
+  width:100%;
+  max-width:760px;
+  background:#181c23;
+  border:1px solid #2c3440;
+  border-radius:24px;
+  padding:25px;
+  box-shadow:
+    0 0 50px rgba(0,0,0,.35),
+    0 0 90px rgba(76,141,255,.12);
+}
+
+.hero{
+  text-align:center;
+  margin-bottom:26px;
+}
+
+.beta{
+  display:inline-block;
+  background:linear-gradient(90deg,#4c8dff,#7a5cff);
+  color:white;
+  padding:6px 14px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:bold;
+  letter-spacing:1px;
+  margin-bottom:16px;
+  box-shadow:0 0 20px rgba(76,141,255,.35);
+}
+
+.logo{
+  font-size:58px;
+  margin-bottom:12px;
+}
+
+.hero h1{
+  font-size:40px;
+  line-height:1.08;
+  margin-bottom:10px;
+  font-weight:800;
+  background:linear-gradient(90deg,#ffffff,#8eb4ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.subtitle{
+  color:#8ea5c3;
+  font-size:15px;
+  margin-bottom:16px;
+}
+
+.hero-info{
+  display:inline-block;
+  padding:10px 16px;
+  border-radius:14px;
+  background:#11151b;
+  border:1px solid #2c3440;
+  color:#9fb3ce;
+  font-size:13px;
+}
+
+.input-box{
+  display:flex;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+input{
+  flex:1;
+  padding:16px;
+  border:none;
+  border-radius:14px;
+  background:#232933;
+  color:white;
+  font-size:17px;
+  outline:none;
+  min-width:0;
+}
+
+input:focus{
+  box-shadow:0 0 0 2px rgba(76,141,255,.45);
+}
+
+button{
+  padding:16px 20px;
+  border:none;
+  border-radius:14px;
+  background:#4c8dff;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
+  white-space:nowrap;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  opacity:.95;
+}
+
+.suggestion-box{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:18px;
+}
+
+.suggestion{
+  padding:9px 12px;
+  border-radius:999px;
+  background:#11151b;
+  border:1px solid #2c3440;
+  color:#b7c5d9;
+  font-size:13px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.suggestion:hover{
+  background:#232933;
+  color:white;
+}
+
+.quick-title{
+  color:#8ea5c3;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.quick-box{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.quick{
+  padding:9px 12px;
+  border-radius:999px;
+  background:#202735;
+  border:1px solid #334055;
+  color:#d6e2f5;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.result{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.card{
+  background:#232933;
+  border-radius:16px;
+  padding:16px;
+  border:1px solid #313b49;
+  animation:fadeUp .25s ease;
+}
+
+.type{
+  color:#8eb4ff;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.korean{
+  font-size:30px;
+  font-weight:bold;
+  margin-bottom:12px;
+  line-height:1.25;
+  text-shadow:0 0 18px rgba(142,180,255,.35);
+}
+
+.keyboard{
+  background:#11151b;
+  padding:12px;
+  border-radius:12px;
+  color:#74ff9c;
+  word-break:break-all;
+  font-size:20px;
+}
+
+.indo{
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#11151b;
+  border:1px solid #2d3745;
+  color:#b7c5d9;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.copy{
+  margin-top:12px;
+  width:100%;
+}
+
+.info{
+  margin-top:20px;
+  color:#9aa4b2;
+  font-size:13px;
+  text-align:center;
+}
+
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#11151b;
+  border:1px solid #2c3440;
+  color:white;
+  padding:12px 18px;
+  border-radius:12px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+}
+
+@keyframes fadeUp{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+@media(max-width:560px){
+  body{
+    align-items:flex-start;
+    padding:16px;
+  }
+
+  .container{
+    padding:22px;
+  }
+
+  .hero h1{
+    font-size:34px;
+  }
+
+  .input-box{
+    flex-direction:column;
+  }
+
+  button{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="beta">BETA VERSION</div>
+    <div class="logo">🇰🇷</div>
+    <h1>Korean MMO Chat Assistant</h1>
+    <p class="subtitle">Korean MMO Phrase Generator</p>
+    <div class="hero-info">Indo → Korean → Korean Keyboard Input</div>
+  </div>
+
+  <div class="input-box" style="flex-direction:column;">
+    <input
+    onclick="this.select()"
+      id="input"
+      placeholder="Contoh: heal dong, party yuk, ada pk"
+      oninput="updateSuggestions()"
+      onkeydown="if(event.key==='Enter') generateText()"
+    >
+    <div style="display:flex;gap:10px;width:100%;">
+  <button style="flex:1;" onclick="generateText()">Search</button>
+
+  <button
+  style="
+  background:#2a313d;
+  flex:0.5;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 0 20px rgba(255,255,255,0.03);
+  transition:.25s ease;
+  "
+  onmouseover="
+    this.style.transform='translateY(-2px)';
+    this.style.background='rgba(255,255,255,0.12)';
+  "
+  onmouseout="
+    this.style.transform='translateY(0)';
+    this.style.background='#2a313d';
+  "
+  onclick="clearAll()"
+>
+  🗑️ Clear
+</button>
+</div>
+  </div>
+
+  <div class="suggestion-box" id="suggestions"></div>
+
+  <div class="quick-title">Quick Chat</div>
+  <div class="quick-box" id="quickBox"></div>
+
+  <div class="quick-title">Categories</div>
+  <div class="quick-box" id="categoryBox"></div>
+
+  <div class="result" id="result"></div>
+
+  <div class="info">
+    Powered by FR
+  </div>
+
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const dictionary = {
+
+"halo":[
+{type:"Formal",korean:"안녕하세요",indonesia:"Halo formal"},
+{type:"Santai",korean:"안녕",indonesia:"Halo santai"},
+{type:"Game",korean:"ㅎㅇ",indonesia:"Hi slang game"},
+{type:"English Style",korean:"하이",indonesia:"Hai gaya English"}
+],
+
+"hai":[
+{type:"Santai",korean:"안녕",indonesia:"Hai santai"},
+{type:"Game",korean:"ㅎㅇ",indonesia:"Hai slang game"},
+{type:"English Style",korean:"하이",indonesia:"Hai gaya English"}
+],
+
+"makasih":[
+{type:"Formal",korean:"감사합니다",indonesia:"Terima kasih formal"},
+{type:"Santai",korean:"고마워",indonesia:"Makasih santai"},
+{type:"Game",korean:"ㄳ",indonesia:"Thanks slang game"}
+],
+
+"terima kasih":[
+{type:"Formal",korean:"감사합니다",indonesia:"Terima kasih formal"},
+{type:"Santai",korean:"고마워",indonesia:"Makasih santai"},
+{type:"Game",korean:"ㄳ",indonesia:"Thanks slang game"}
+],
+
+"maaf":[
+{type:"Formal",korean:"죄송합니다",indonesia:"Maaf formal"},
+{type:"Santai",korean:"미안",indonesia:"Maaf santai"},
+{type:"Game",korean:"ㅈㅅ",indonesia:"Maaf slang game"}
+],
+
+"oke":[
+{type:"Santai",korean:"알겠어",indonesia:"Oke / ngerti"},
+{type:"Game",korean:"ㅇㅋ",indonesia:"OK slang game"},
+{type:"English Style",korean:"오케이",indonesia:"Oke gaya English"}
+],
+
+"ya":[
+{type:"Formal",korean:"네",indonesia:"Ya formal"},
+{type:"Santai",korean:"응",indonesia:"Iya santai"},
+{type:"Game",korean:"ㅇㅇ",indonesia:"Iya slang game"}
+],
+
+"tidak":[
+{type:"Formal",korean:"아니요",indonesia:"Tidak formal"},
+{type:"Santai",korean:"아니",indonesia:"Enggak"},
+{type:"Game",korean:"ㄴㄴ",indonesia:"No slang game"}
+],
+
+"ayo":[
+{type:"Game",korean:"ㄱㄱ",indonesia:"Gas / go go"},
+{type:"Santai",korean:"가자",indonesia:"Ayo"}
+],
+
+"gas":[
+{type:"Game",korean:"ㄱㄱ",indonesia:"Gas / go go"},
+{type:"Santai",korean:"가자",indonesia:"Ayo"}
+],
+
+"tunggu":[
+{type:"Game",korean:"잠시만",indonesia:"Tunggu sebentar"},
+{type:"Santai",korean:"잠깐",indonesia:"Bentar"}
+],
+
+"hati hati":[
+{type:"Game",korean:"조심",indonesia:"Hati-hati"},
+{type:"Formal",korean:"조심하세요",indonesia:"Tolong hati-hati"}
+],
+
+"mau party":[
+{type:"Natural",korean:"파티 할래요?",indonesia:"Mau party?"},
+{type:"Game",korean:"파티 ㄱ?",indonesia:"Party gas?"}
+],
+
+"party yuk":[
+{type:"Natural",korean:"파티 할래요?",indonesia:"Yuk party"},
+{type:"Game",korean:"파티 ㄱ?",indonesia:"Party gas?"}
+],
+
+"party":[
+{type:"Game",korean:"파티",indonesia:"Party"}
+],
+
+"cari party":[
+{type:"Game",korean:"파티 구해요",indonesia:"Cari party"},
+{type:"Singkat",korean:"파티 구함",indonesia:"Cari party singkat"}
+],
+
+"join party":[
+{type:"Game",korean:"파티 초대해주세요",indonesia:"Invite party dong"},
+{type:"Singkat",korean:"파티좀",indonesia:"Party dong"}
+],
+
+"invite party":[
+{type:"Game",korean:"파티 초대해주세요",indonesia:"Tolong invite party"}
+],
+
+"party penuh":[
+{type:"Game",korean:"파티 꽉 찼어요",indonesia:"Party penuh"}
+],
+
+"party full":[
+{type:"Game",korean:"파티 풀입니다",indonesia:"Party full"}
+],
+
+"ada slot":[
+{type:"Game",korean:"자리 있어요?",indonesia:"Ada slot?"}
+],
+
+"slot kosong":[
+{type:"Game",korean:"자리 있어요",indonesia:"Slot kosong tersedia"}
+],
+
+"slot satu":[
+{type:"Game",korean:"1자리 있어요",indonesia:"Ada 1 slot"}
+],
+
+"slot dua":[
+{type:"Game",korean:"2자리 있어요",indonesia:"Ada 2 slot"}
+],
+
+"tank":[
+{type:"Game",korean:"탱커",indonesia:"Tank"}
+],
+
+"healer":[
+{type:"Game",korean:"힐러",indonesia:"Healer"}
+],
+
+"dps":[
+{type:"Game",korean:"딜러",indonesia:"Damage dealer"}
+],
+
+"butuh tanker":[
+{type:"Game",korean:"탱커 구해요",indonesia:"Butuh tanker"}
+],
+
+"butuh healer":[
+{type:"Game",korean:"힐러 구해요",indonesia:"Butuh healer"}
+],
+
+"butuh dps":[
+{type:"Game",korean:"딜러 구해요",indonesia:"Butuh DPS"}
+],
+
+"invite aku":[
+{type:"Game",korean:"초대해주세요",indonesia:"Invite aku"}
+],
+
+"kick aku":[
+{type:"Game",korean:"추방해주세요",indonesia:"Kick aku"}
+],
+
+"keluar party":[
+{type:"Game",korean:"파티 나갈게요",indonesia:"Keluar party"}
+],
+
+"leader mana":[
+{type:"Game",korean:"파장 누구예요?",indonesia:"Leader siapa?"}
+],
+
+"heal":[
+{type:"Game",korean:"힐",indonesia:"Heal"}
+],
+
+"heal dong":[
+{type:"Game",korean:"힐좀",indonesia:"Tolong heal"}
+],
+
+"tolong heal":[
+{type:"Game",korean:"힐 주세요",indonesia:"Tolong heal"},
+{type:"Singkat",korean:"힐좀",indonesia:"Heal dong"}
+],
+
+"aku butuh heal":[
+{type:"Game",korean:"힐 주세요",indonesia:"Aku butuh heal"},
+{type:"Singkat",korean:"힐좀",indonesia:"Heal dong"},
+{type:"Formal",korean:"치료가 필요해요",indonesia:"Aku butuh penyembuhan"}
+],
+
+"heal aku":[
+{type:"Game",korean:"저 힐 주세요",indonesia:"Heal aku"}
+],
+
+"heal cepat":[
+{type:"Game",korean:"빨리 힐 주세요",indonesia:"Heal cepat"}
+],
+
+"heal tank":[
+{type:"Game",korean:"탱커 힐 주세요",indonesia:"Heal tank"}
+],
+
+"heal party":[
+{type:"Game",korean:"파티 힐 주세요",indonesia:"Heal party"}
+],
+
+"buff":[
+{type:"Game",korean:"버프",indonesia:"Buff"}
+],
+
+"buff dong":[
+{type:"Game",korean:"버프좀",indonesia:"Tolong buff"}
+],
+
+"tolong buff":[
+{type:"Game",korean:"버프 주세요",indonesia:"Tolong buff"},
+{type:"Singkat",korean:"버프좀",indonesia:"Buff dong"}
+],
+
+"aku butuh buff":[
+{type:"Game",korean:"버프 주세요",indonesia:"Aku butuh buff"},
+{type:"Singkat",korean:"버프좀",indonesia:"Buff dong"}
+],
+
+"buff dulu":[
+{type:"Game",korean:"버프 먼저 주세요",indonesia:"Buff dulu"}
+],
+
+"buff semua":[
+{type:"Game",korean:"전체 버프 주세요",indonesia:"Buff semua"}
+],
+
+"res":[
+{type:"Game",korean:"부활",indonesia:"Resurrect"}
+],
+
+"revive":[
+{type:"Game",korean:"부활",indonesia:"Revive"}
+],
+
+"res dong":[
+{type:"Game",korean:"부활 좀",indonesia:"Tolong revive"}
+],
+
+"hidupin":[
+{type:"Game",korean:"부활해주세요",indonesia:"Tolong hidupkan / revive"}
+],
+
+"hp dikit":[
+{type:"Game",korean:"피 조금 있어요",indonesia:"HP sedikit"}
+],
+
+"darah habis":[
+{type:"Game",korean:"피 없어요",indonesia:"Darah habis"}
+],
+
+"mana dikit":[
+{type:"Game",korean:"마나 조금 있어요",indonesia:"Mana sedikit"}
+],
+
+"mana kosong":[
+{type:"Game",korean:"마나 없어요",indonesia:"Mana kosong"}
+],
+
+"mana habis":[
+{type:"Game",korean:"마나 없어요",indonesia:"Mana habis"}
+],
+
+"pot habis":[
+{type:"Game",korean:"물약 없어요",indonesia:"Potion habis"}
+],
+
+"pot dulu":[
+{type:"Game",korean:"물약 좀 쓸게요",indonesia:"Pakai potion dulu"}
+],
+
+"mati":[
+{type:"Game",korean:"죽었어요",indonesia:"Mati"}
+],
+
+"aku mati":[
+{type:"Game",korean:"죽었어요",indonesia:"Aku mati"}
+],
+
+"jangan mati":[
+{type:"Game",korean:"죽지 마세요",indonesia:"Jangan mati"}
+],
+
+"serang":[
+{type:"Game",korean:"공격",indonesia:"Serang"}
+],
+
+"jangan serang":[
+{type:"Game",korean:"공격하지 마세요",indonesia:"Jangan serang"}
+],
+
+"jangan hit":[
+{type:"Game",korean:"치지 마세요",indonesia:"Jangan hit"}
+],
+
+"target ini":[
+{type:"Game",korean:"이거 쳐요",indonesia:"Target ini"}
+],
+
+"pk":[
+{type:"Game",korean:"PK",indonesia:"PK"}
+],
+
+"pk datang":[
+{type:"Game",korean:"PK 왔어요",indonesia:"PK datang"}
+],
+
+"pk kiri":[
+{type:"Game",korean:"왼쪽 PK",indonesia:"PK kiri"}
+],
+
+"pk kanan":[
+{type:"Game",korean:"오른쪽 PK",indonesia:"PK kanan"}
+],
+
+"pk banyak":[
+{type:"Game",korean:"PK 많아요",indonesia:"PK banyak"}
+],
+
+"musuh datang":[
+{type:"Game",korean:"적 왔어요",indonesia:"Musuh datang"}
+],
+
+"musuh kiri":[
+{type:"Game",korean:"왼쪽 적",indonesia:"Musuh kiri"}
+],
+
+"musuh kanan":[
+{type:"Game",korean:"오른쪽 적",indonesia:"Musuh kanan"}
+],
+
+"musuh banyak":[
+{type:"Game",korean:"적 많아요",indonesia:"Musuh banyak"}
+],
+
+"lari":[
+{type:"Game",korean:"도망가요",indonesia:"Kabur / lari"},
+{type:"Game",korean:"ㅌㅌ",indonesia:"Kabur slang game"}
+],
+
+"cepat lari":[
+{type:"Game",korean:"빨리 도망가요",indonesia:"Cepat lari"}
+],
+
+"jangan lawan":[
+{type:"Game",korean:"싸우지 마세요",indonesia:"Jangan lawan"}
+],
+
+"mundur semua":[
+{type:"Game",korean:"다 뒤로 빠져요",indonesia:"Mundur semua"}
+],
+
+"war mulai":[
+{type:"Game",korean:"전쟁 시작",indonesia:"War mulai"}
+],
+
+"war selesai":[
+{type:"Game",korean:"전쟁 끝",indonesia:"War selesai"}
+],
+
+"boss muncul":[
+{type:"Game",korean:"보스 떴어요",indonesia:"Boss muncul"}
+],
+
+"boss belum muncul":[
+{type:"Game",korean:"보스 아직 안 떴어요",indonesia:"Boss belum muncul"}
+],
+
+"boss mati":[
+{type:"Game",korean:"보스 죽었어요",indonesia:"Boss mati"}
+],
+
+"boss kiri":[
+{type:"Game",korean:"보스 왼쪽",indonesia:"Boss kiri"}
+],
+
+"boss kanan":[
+{type:"Game",korean:"보스 오른쪽",indonesia:"Boss kanan"}
+],
+
+"boss atas":[
+{type:"Game",korean:"보스 위쪽",indonesia:"Boss atas"}
+],
+
+"boss bawah":[
+{type:"Game",korean:"보스 아래쪽",indonesia:"Boss bawah"}
+],
+
+"tunggu boss":[
+{type:"Game",korean:"보스 기다려요",indonesia:"Tunggu boss"}
+],
+
+"raid mulai":[
+{type:"Game",korean:"레이드 시작해요",indonesia:"Raid mulai"}
+],
+
+"raid selesai":[
+{type:"Game",korean:"레이드 끝났어요",indonesia:"Raid selesai"}
+],
+
+"drop apa":[
+{type:"Game",korean:"뭐 드랍됐어요?",indonesia:"Drop apa?"}
+],
+
+"farm":[
+{type:"Game",korean:"사냥",indonesia:"Farm / hunting"}
+],
+
+"hunt":[
+{type:"Game",korean:"사냥",indonesia:"Hunting"}
+],
+
+"hunting":[
+{type:"Game",korean:"사냥",indonesia:"Hunting"}
+],
+
+"farm yuk":[
+{type:"Game",korean:"사냥 ㄱ?",indonesia:"Gas farming?"}
+],
+
+"hunt yuk":[
+{type:"Game",korean:"사냥 ㄱ?",indonesia:"Gas hunting?"}
+],
+
+"farm disini":[
+{type:"Game",korean:"여기서 사냥해요",indonesia:"Farm di sini"}
+],
+
+"pull mob":[
+{type:"Game",korean:"몹 몰아주세요",indonesia:"Pull mob"}
+],
+
+"jangan pull":[
+{type:"Game",korean:"몹 몰지 마세요",indonesia:"Jangan pull mob"}
+],
+
+"mob banyak":[
+{type:"Game",korean:"몹 많아요",indonesia:"Mob banyak"}
+],
+
+"mob sakit":[
+{type:"Game",korean:"몹 아파요",indonesia:"Mob damage sakit"}
+],
+
+"spawn cepat":[
+{type:"Game",korean:"스폰 빨라요",indonesia:"Spawn cepat"}
+],
+
+"spawn lama":[
+{type:"Game",korean:"스폰 느려요",indonesia:"Spawn lama"}
+],
+
+"spot penuh":[
+{type:"Game",korean:"자리 없어요",indonesia:"Spot penuh"}
+],
+
+"spot kosong":[
+{type:"Game",korean:"자리 있어요",indonesia:"Spot kosong"}
+],
+
+"pindah spot":[
+{type:"Game",korean:"자리 옮겨요",indonesia:"Pindah spot"}
+],
+
+"jangan ks":[
+{type:"Game",korean:"스틸하지 마세요",indonesia:"Jangan KS"}
+],
+
+"ini spot kami":[
+{type:"Game",korean:"여기 우리 자리예요",indonesia:"Ini spot kami"}
+],
+
+"boleh gabung":[
+{type:"Game",korean:"같이 해도 돼요?",indonesia:"Boleh gabung?"}
+],
+
+"gabung sini":[
+{type:"Game",korean:"여기 같이 해요",indonesia:"Gabung sini"}
+],
+
+"ikut sini":[
+{type:"Game",korean:"여기로 오세요",indonesia:"Ikut ke sini"}
+],
+
+"kumpul sini":[
+{type:"Game",korean:"여기 모여요",indonesia:"Kumpul sini"}
+],
+
+"leveling":[
+{type:"Game",korean:"레벨업",indonesia:"Leveling"}
+],
+
+"exp":[
+{type:"Game",korean:"경험치",indonesia:"Experience"}
+],
+
+"dungeon":[
+{type:"Game",korean:"던전",indonesia:"Dungeon"}
+],
+
+"dungeon semut":[
+{type:"Game",korean:"개미굴",indonesia:"Ant Cave"}
+],
+
+"ant cave":[
+{type:"Game",korean:"개미굴",indonesia:"Ant Cave"}
+],
+
+"oasis":[
+{type:"Game",korean:"오아시스",indonesia:"Oasis"}
+],
+
+"gudang":[
+{type:"Game",korean:"창고",indonesia:"Gudang"}
+],
+
+"teleporter":[
+{type:"Game",korean:"텔레포터",indonesia:"Teleporter"}
+],
+
+"penginapan":[
+{type:"Game",korean:"여관",indonesia:"Penginapan"}
+],
+
+"pedagang":[
+{type:"Game",korean:"상인",indonesia:"Pedagang"}
+],
+
+"penjaga gudang":[
+{type:"Game",korean:"창고지기",indonesia:"Penjaga gudang"}
+],
+
+"pandai besi":[
+{type:"Game",korean:"대장장이",indonesia:"Pandai besi"}
+],
+
+"panah":[
+{type:"Game",korean:"화살",indonesia:"Arrow / panah"}
+],
+
+"aku butuh panah":[
+{type:"Game",korean:"화살 필요해요",indonesia:"Aku butuh panah"}
+],
+
+"aku mau ambil panah":[
+{type:"Game",korean:"화살 가지러 갈게요",indonesia:"Aku mau ambil panah"},
+{type:"Singkat",korean:"화살 가지러 감",indonesia:"Pergi ambil panah"}
+],
+
+"beli panah":[
+{type:"Game",korean:"화살 살게요",indonesia:"Beli panah"}
+],
+
+"weapon":[
+{type:"Game",korean:"무기",indonesia:"Weapon"}
+],
+
+"armor":[
+{type:"Game",korean:"방어구",indonesia:"Armor"}
+],
+
+"shield":[
+{type:"Game",korean:"방패",indonesia:"Shield"}
+],
+
+"adena":[
+{type:"Game",korean:"아데나",indonesia:"Adena"}
+],
+
+"item":[
+{type:"Game",korean:"아이템",indonesia:"Item"}
+],
+
+"loot":[
+{type:"Game",korean:"루팅",indonesia:"Loot"}
+],
+
+"drop":[
+{type:"Game",korean:"드랍",indonesia:"Drop"}
+],
+
+"jual":[
+{type:"Game",korean:"팔아요",indonesia:"Jual"}
+],
+
+"beli":[
+{type:"Game",korean:"사요",indonesia:"Beli"}
+],
+
+"trade":[
+{type:"Game",korean:"거래",indonesia:"Trade"}
+],
+
+"harga berapa":[
+{type:"Game",korean:"가격 얼마예요?",indonesia:"Harga berapa?"}
+],
+
+"jual murah":[
+{type:"Game",korean:"싸게 팔아요",indonesia:"Jual murah"}
+],
+
+"beli murah":[
+{type:"Game",korean:"싸게 사요",indonesia:"Beli murah"}
+],
+
+"harga fix":[
+{type:"Game",korean:"가격 고정",indonesia:"Harga fix"}
+],
+
+"nego bisa":[
+{type:"Game",korean:"흥정 가능",indonesia:"Bisa nego"}
+],
+
+"trade cepat":[
+{type:"Game",korean:"빨리 거래해요",indonesia:"Trade cepat"}
+],
+
+"cek harga":[
+{type:"Game",korean:"시세 확인",indonesia:"Cek harga"}
+],
+
+"harga pasar":[
+{type:"Game",korean:"시세",indonesia:"Harga pasar"}
+],
+
+"mahal banget":[
+{type:"Natural",korean:"너무 비싸요",indonesia:"Mahal banget"}
+],
+
+"murah banget":[
+{type:"Natural",korean:"엄청 싸요",indonesia:"Murah banget"}
+],
+
+"diskon dong":[
+{type:"Game",korean:"좀 깎아주세요",indonesia:"Diskon dong"}
+],
+
+"aku akan afk":[
+{type:"Game",korean:"잠수할게요",indonesia:"Aku akan AFK"},
+{type:"Singkat",korean:"잠수함",indonesia:"AFK dulu"}
+],
+
+"aku afk":[
+{type:"Game",korean:"잠수할게요",indonesia:"Aku AFK"}
+],
+
+"afk":[
+{type:"Game",korean:"잠수",indonesia:"AFK"}
+],
+
+"afk bentar":[
+{type:"Game",korean:"잠수 좀",indonesia:"AFK sebentar"}
+],
+
+"afk dulu":[
+{type:"Game",korean:"잠수 좀",indonesia:"AFK dulu"}
+],
+
+"brb":[
+{type:"Game",korean:"금방 올게요",indonesia:"Be right back"}
+],
+
+"aku otw":[
+{type:"Game",korean:"가는 중이에요",indonesia:"Aku OTW"}
+],
+
+"otw bentar":[
+{type:"Game",korean:"금방 갈게요",indonesia:"OTW bentar"}
+],
+
+"tunggu aku":[
+{type:"Game",korean:"기다려주세요",indonesia:"Tunggu aku"}
+],
+
+"jangan pergi":[
+{type:"Game",korean:"가지 마세요",indonesia:"Jangan pergi"}
+],
+
+"aku datang":[
+{type:"Game",korean:"갈게요",indonesia:"Aku datang"}
+],
+
+"aku kesana":[
+{type:"Game",korean:"거기로 갈게요",indonesia:"Aku ke sana"}
+],
+
+"kamu dimana":[
+{type:"Natural",korean:"어디예요?",indonesia:"Kamu dimana?"}
+],
+
+"posisi dimana":[
+{type:"Game",korean:"위치 어디예요?",indonesia:"Posisi dimana?"}
+],
+
+"aku disini":[
+{type:"Natural",korean:"여기 있어요",indonesia:"Aku di sini"}
+],
+
+"map mana":[
+{type:"Game",korean:"어느 맵이에요?",indonesia:"Map mana?"}
+],
+
+"lagi ngapain":[
+{type:"Natural",korean:"뭐해요?",indonesia:"Lagi ngapain?"},
+{type:"Santai",korean:"뭐해?",indonesia:"Lagi apa? santai"}
+],
+
+"aku lapar":[
+{type:"Natural",korean:"배고파요",indonesia:"Aku lapar"}
+],
+
+"makan dulu":[
+{type:"Natural",korean:"밥 먹고 올게요",indonesia:"Makan dulu"}
+],
+
+"minum dulu":[
+{type:"Natural",korean:"물 좀 마실게요",indonesia:"Minum dulu"}
+],
+
+"tidur dulu":[
+{type:"Natural",korean:"자러 갈게요",indonesia:"Tidur dulu"}
+],
+
+"aku ngantuk":[
+{type:"Natural",korean:"졸려요",indonesia:"Aku ngantuk"}
+],
+
+"aku capek":[
+{type:"Natural",korean:"피곤해요",indonesia:"Aku capek"}
+],
+
+"capek banget":[
+{type:"Natural",korean:"너무 피곤해요",indonesia:"Capek banget"}
+],
+
+"seru banget":[
+{type:"Natural",korean:"정말 재밌어요",indonesia:"Seru banget"}
+],
+
+"main lagi":[
+{type:"Natural",korean:"또 같이 해요",indonesia:"Main lagi"}
+],
+
+"temenan yuk":[
+{type:"Natural",korean:"친구해요",indonesia:"Temenan yuk"}
+],
+
+"add friend":[
+{type:"Game",korean:"친구 추가해주세요",indonesia:"Add friend"}
+],
+
+"wkwk":[
+{type:"Game",korean:"ㅋㅋㅋ",indonesia:"Wkwkwk"}
+],
+
+"haha":[
+{type:"Game",korean:"ㅋㅋㅋ",indonesia:"Hahaha"}
+],
+
+"mantap":[
+{type:"Game",korean:"굿",indonesia:"Mantap"},
+{type:"English Style",korean:"나이스",indonesia:"Nice"}
+],
+
+"gila":[
+{type:"Santai",korean:"대박",indonesia:"Gila / keren banget"}
+],
+
+"dadah":[
+{type:"Santai",korean:"바이",indonesia:"Bye"},
+{type:"Natural",korean:"안녕",indonesia:"Dadah"}
+],
+
+"mp low":[
+{type:"Game",korean:"마나 부족",indonesia:"MP sedikit"},
+{type:"Game",korean:"마나 없어요",indonesia:"MP habis"}
+],
+
+"mana kurang":[
+{type:"Game",korean:"마나 부족",indonesia:"Mana kurang"}
+],
+
+"suruh pergi":[
+{type:"Game",korean:"저리 가세요",indonesia:"Suruh pergi"}
+],
+
+"pergi sana":[
+{type:"Game",korean:"저리 가세요",indonesia:"Pergi sana"}
+],
+
+"usir dia":[
+{type:"Game",korean:"저리 가세요",indonesia:"Usir dia"}
+],
+
+"tunggu disini 10 menit":[
+{type:"Natural",korean:"여기서 10분만 기다려주세요",indonesia:"Tunggu disini 10 menit"},
+{type:"Game",korean:"여기서 10분 대기해주세요",indonesia:"Standby disini 10 menit"}
+],
+
+"jangan afk":[
+{type:"Game",korean:"잠수하지 마세요",indonesia:"Jangan AFK"}
+],
+
+"cepat kesini":[
+{type:"Game",korean:"빨리 여기 오세요",indonesia:"Cepat kesini"}
+],
+
+"monster sakit":[
+{type:"Game",korean:"몹 데미지 아파요",indonesia:"Monster sakit"}
+],
+
+"damage kurang":[
+{type:"Game",korean:"딜 부족해요",indonesia:"Damage kurang"}
+],
+
+"damage besar":[
+{type:"Game",korean:"딜 세요",indonesia:"Damage besar"}
+],
+
+"aman disini":[
+{type:"Game",korean:"여기 안전해요",indonesia:"Aman disini"}
+],
+
+"tidak aman":[
+{type:"Game",korean:"안전하지 않아요",indonesia:"Tidak aman"}
+],
+
+"ramai banget":[
+{type:"Game",korean:"사람 많아요",indonesia:"Ramai banget"}
+],
+
+"sepi":[
+{type:"Game",korean:"사람 없어요",indonesia:"Sepi"}
+],
+
+"farm semalaman":[
+{type:"Game",korean:"밤새 사냥해요",indonesia:"Farm semalaman"}
+],
+
+"exp bagus":[
+{type:"Game",korean:"경험치 좋아요",indonesia:"EXP bagus"}
+],
+
+"exp kecil":[
+{type:"Game",korean:"경험치 별로예요",indonesia:"EXP kecil"}
+],
+
+"drop bagus":[
+{type:"Game",korean:"드랍 좋아요",indonesia:"Drop bagus"}
+],
+
+"drop jelek":[
+{type:"Game",korean:"드랍 안 좋아요",indonesia:"Drop jelek"}
+],
+
+"aku disconnect":[
+{type:"Game",korean:"접속 끊겼어요",indonesia:"Aku disconnect"}
+],
+
+"lag parah":[
+{type:"Game",korean:"렉 심해요",indonesia:"Lag parah"}
+],
+
+"fps drop":[
+{type:"Game",korean:"프레임 떨어져요",indonesia:"FPS drop"}
+],
+
+"server penuh":[
+{type:"Game",korean:"서버 꽉 찼어요",indonesia:"Server penuh"}
+],
+
+"maintenance":[
+{type:"Game",korean:"점검 중",indonesia:"Maintenance"}
+],
+
+"restart game":[
+{type:"Game",korean:"게임 다시 켤게요",indonesia:"Restart game"}
+],
+
+"aku login":[
+{type:"Game",korean:"접속했어요",indonesia:"Aku login"}
+],
+
+"aku logout":[
+{type:"Game",korean:"로그아웃할게요",indonesia:"Aku logout"}
+],
+
+"tolong cover":[
+{type:"Game",korean:"커버해주세요",indonesia:"Tolong cover"}
+],
+
+"cover aku":[
+{type:"Game",korean:"저 좀 커버해주세요",indonesia:"Cover aku"}
+],
+
+"jangan rush":[
+{type:"Game",korean:"무리하지 마세요",indonesia:"Jangan rush"}
+],
+
+"rush boss":[
+{type:"Game",korean:"보스 바로 가요",indonesia:"Rush boss"}
+],
+
+"aku siap":[
+{type:"Game",korean:"준비됐어요",indonesia:"Aku siap"}
+],
+
+"belum siap":[
+{type:"Game",korean:"아직 준비 안 됐어요",indonesia:"Belum siap"}
+],
+
+"siap war":[
+{type:"Game",korean:"전쟁 준비 완료",indonesia:"Siap war"}
+],
+
+"siap raid":[
+{type:"Game",korean:"레이드 준비 완료",indonesia:"Siap raid"}
+],
+
+"good game":[
+{type:"Game",korean:"수고하셨습니다",indonesia:"Good game"}
+],
+
+"nice try":[
+{type:"Game",korean:"잘했어요",indonesia:"Nice try"}
+],
+
+"mantap party":[
+{type:"Game",korean:"파티 좋네요",indonesia:"Party mantap"}
+],
+
+"healer bagus":[
+{type:"Game",korean:"힐 잘하시네요",indonesia:"Healer bagus"}
+],
+
+"tank kuat":[
+{type:"Game",korean:"탱커 단단해요",indonesia:"Tank kuat"}
+],
+
+"dps sakit":[
+{type:"Game",korean:"딜 엄청 세요",indonesia:"DPS sakit"}
+],
+
+"ayo war":[
+{type:"Game",korean:"전쟁 갑시다",indonesia:"Ayo war"}
+],
+
+"war sekarang":[
+{type:"Game",korean:"지금 전쟁해요",indonesia:"War sekarang"}
+],
+
+"mati semua":[
+{type:"Game",korean:"다 죽었어요",indonesia:"Mati semua"}
+],
+
+"push terus":[
+{type:"Game",korean:"계속 밀어요",indonesia:"Push terus"}
+],
+
+"back dulu":[
+{type:"Game",korean:"뒤로 빠질게요",indonesia:"Back dulu"}
+],
+
+"cover belakang":[
+{type:"Game",korean:"뒤 좀 봐주세요",indonesia:"Cover belakang"}
+],
+
+"musuh banyak banget":[
+{type:"Game",korean:"적 엄청 많아요",indonesia:"Musuh banyak banget"}
+],
+
+"jangan maju":[
+{type:"Game",korean:"앞으로 가지 마세요",indonesia:"Jangan maju"}
+],
+
+"maju terus":[
+{type:"Game",korean:"계속 전진해요",indonesia:"Maju terus"}
+],
+
+"farm aman":[
+{type:"Game",korean:"안전하게 사냥해요",indonesia:"Farm aman"}
+],
+
+"exp kenceng":[
+{type:"Game",korean:"경험치 빨라요",indonesia:"EXP cepat"}
+],
+
+"spot enak":[
+{type:"Game",korean:"자리 좋아요",indonesia:"Spot bagus"}
+],
+
+"spot jelek":[
+{type:"Game",korean:"자리 별로예요",indonesia:"Spot jelek"}
+],
+
+"mob keras":[
+{type:"Game",korean:"몹 너무 세요",indonesia:"Mob keras"}
+],
+
+"mob gampang":[
+{type:"Game",korean:"몹 쉬워요",indonesia:"Mob gampang"}
+],
+
+"drop banyak":[
+{type:"Game",korean:"드랍 많이 나와요",indonesia:"Drop banyak"}
+],
+
+"drop dikit":[
+{type:"Game",korean:"드랍 적어요",indonesia:"Drop sedikit"}
+],
+
+"buff habis":[
+{type:"Game",korean:"버프 끝났어요",indonesia:"Buff habis"}
+],
+
+"rebuff dong":[
+{type:"Game",korean:"버프 다시 주세요",indonesia:"Rebuff dong"}
+],
+
+"heal full":[
+{type:"Game",korean:"풀힐 주세요",indonesia:"Heal full"}
+],
+
+"mana full":[
+{type:"Game",korean:"마나 풀",indonesia:"Mana full"}
+],
+
+"hp full":[
+{type:"Game",korean:"피 풀",indonesia:"HP full"}
+],
+
+"tunggu buff":[
+{type:"Game",korean:"버프 기다려요",indonesia:"Tunggu buff"}
+],
+
+"ayo dungeon":[
+{type:"Game",korean:"던전 갑시다",indonesia:"Ayo dungeon"}
+],
+
+"masuk dungeon":[
+{type:"Game",korean:"던전 들어가요",indonesia:"Masuk dungeon"}
+],
+
+"keluar dungeon":[
+{type:"Game",korean:"던전 나가요",indonesia:"Keluar dungeon"}
+],
+
+"teleport sini":[
+{type:"Game",korean:"여기로 텔레포트해주세요",indonesia:"Teleport sini"}
+],
+
+"tp dong":[
+{type:"Game",korean:"텔 좀 주세요",indonesia:"TP dong"}
+],
+
+"mana save":[
+{type:"Game",korean:"마나 아껴요",indonesia:"Hemat mana"}
+],
+
+"hemat potion":[
+{type:"Game",korean:"물약 아껴요",indonesia:"Hemat potion"}
+],
+
+"pakai buff":[
+{type:"Game",korean:"버프 사용하세요",indonesia:"Pakai buff"}
+],
+
+"jual cepat":[
+{type:"Game",korean:"빨리 팔아요",indonesia:"Jual cepat"}
+],
+
+"beli cepat":[
+{type:"Game",korean:"빨리 사요",indonesia:"Beli cepat"}
+],
+
+"trade aman":[
+{type:"Game",korean:"안전 거래",indonesia:"Trade aman"}
+],
+
+"aku sibuk":[
+{type:"Natural",korean:"지금 바빠요",indonesia:"Aku sibuk"}
+],
+
+"nanti dulu":[
+{type:"Natural",korean:"나중에 해요",indonesia:"Nanti dulu"}
+],
+
+"sebentar lagi":[
+{type:"Natural",korean:"곧 갈게요",indonesia:"Sebentar lagi"}
+],
+
+"lama banget":[
+{type:"Natural",korean:"너무 오래 걸려요",indonesia:"Lama banget"}
+],
+
+"cepat banget":[
+{type:"Natural",korean:"엄청 빨라요",indonesia:"Cepat banget"}
+],
+
+"aku takut":[
+{type:"Natural",korean:"무서워요",indonesia:"Aku takut"}
+],
+
+"tenang aja":[
+{type:"Natural",korean:"걱정 마세요",indonesia:"Tenang aja"}
+],
+
+"semangat":[
+{type:"Natural",korean:"화이팅",indonesia:"Semangat"}
+],
+
+"ayo lanjut":[
+{type:"Game",korean:"계속 갑시다",indonesia:"Ayo lanjut"}
+],
+
+"ada orang":[
+{type:"Game",korean:"사람 있어요",indonesia:"Ada orang"}
+],
+
+"orang datang":[
+{type:"Game",korean:"사람 왔어요",indonesia:"Orang datang"}
+],
+
+"ramai disini":[
+{type:"Game",korean:"여기 사람 많아요",indonesia:"Ramai disini"}
+],
+
+"spot rebutan":[
+{type:"Game",korean:"자리 경쟁 심해요",indonesia:"Spot rebutan"}
+],
+
+"jangan rebut":[
+{type:"Game",korean:"자리 뺏지 마세요",indonesia:"Jangan rebut"}
+],
+
+"aku solo":[
+{type:"Game",korean:"혼자 사냥해요",indonesia:"Aku solo"}
+],
+
+"party lebih cepat":[
+{type:"Game",korean:"파티가 더 빨라요",indonesia:"Party lebih cepat"}
+],
+
+"exp dibagi":[
+{type:"Game",korean:"경험치 나눠져요",indonesia:"EXP dibagi"}
+],
+
+"aku farming":[
+{type:"Game",korean:"사냥 중이에요",indonesia:"Aku farming"}
+],
+
+"lagi leveling":[
+{type:"Game",korean:"레벨업 중이에요",indonesia:"Lagi leveling"}
+],
+
+"level berapa":[
+{type:"Game",korean:"레벨 몇이에요?",indonesia:"Level berapa?"}
+],
+
+"level tinggi":[
+{type:"Game",korean:"레벨 높아요",indonesia:"Level tinggi"}
+],
+
+"level kecil":[
+{type:"Game",korean:"레벨 낮아요",indonesia:"Level kecil"}
+],
+
+"gear bagus":[
+{type:"Game",korean:"장비 좋아요",indonesia:"Gear bagus"}
+],
+
+"gear jelek":[
+{type:"Game",korean:"장비 안 좋아요",indonesia:"Gear jelek"}
+],
+
+"damage sakit banget":[
+{type:"Game",korean:"딜 엄청 아파요",indonesia:"Damage sakit banget"}
+],
+
+"tank tipis":[
+{type:"Game",korean:"탱커 약해요",indonesia:"Tank tipis"}
+],
+
+"healer mana habis":[
+{type:"Game",korean:"힐러 마나 없어요",indonesia:"Healer mana habis"}
+],
+
+"dps kurang":[
+{type:"Game",korean:"딜 부족해요",indonesia:"DPS kurang"}
+],
+
+"ayo buff ulang":[
+{type:"Game",korean:"버프 다시 합시다",indonesia:"Buff ulang"}
+],
+
+"ayo heal":[
+{type:"Game",korean:"힐 부탁해요",indonesia:"Ayo heal"}
+],
+
+"ayo push":[
+{type:"Game",korean:"밀어요",indonesia:"Ayo push"}
+],
+
+"ayo retreat":[
+{type:"Game",korean:"후퇴합시다",indonesia:"Ayo retreat"}
+],
+
+"musuh kuat":[
+{type:"Game",korean:"적 강해요",indonesia:"Musuh kuat"}
+],
+
+"musuh lemah":[
+{type:"Game",korean:"적 약해요",indonesia:"Musuh lemah"}
+],
+
+"war seru":[
+{type:"Game",korean:"전쟁 재밌어요",indonesia:"War seru"}
+],
+
+"war capek":[
+{type:"Game",korean:"전쟁 힘들어요",indonesia:"War capek"}
+],
+
+"pk lagi":[
+{type:"Game",korean:"PK 또 왔어요",indonesia:"PK lagi"}
+],
+
+"awas belakang":[
+{type:"Game",korean:"뒤 조심하세요",indonesia:"Awas belakang"}
+],
+
+"jangan sendiri":[
+{type:"Game",korean:"혼자 가지 마세요",indonesia:"Jangan sendiri"}
+],
+
+"ikut party kami":[
+{type:"Game",korean:"우리 파티 들어오세요",indonesia:"Ikut party kami"}
+],
+
+"party santai":[
+{type:"Game",korean:"편하게 파티해요",indonesia:"Party santai"}
+],
+
+"party serius":[
+{type:"Game",korean:"진지하게 파티해요",indonesia:"Party serius"}
+],
+
+"main santai":[
+{type:"Natural",korean:"편하게 게임해요",indonesia:"Main santai"}
+],
+
+"main serius":[
+{type:"Natural",korean:"열심히 게임해요",indonesia:"Main serius"}
+],
+
+"aku offline dulu":[
+{type:"Natural",korean:"먼저 로그아웃할게요",indonesia:"Offline dulu"}
+],
+
+"aku balik lagi":[
+{type:"Natural",korean:"다시 올게요",indonesia:"Aku balik lagi"}
+],
+
+"selamat farming":[
+{type:"Game",korean:"좋은 사냥 되세요",indonesia:"Selamat farming"}
+],
+
+"semoga drop bagus":[
+{type:"Game",korean:"좋은 드랍 나오길",indonesia:"Semoga drop bagus"}
+],
+
+"semoga hoki":[
+{type:"Natural",korean:"행운을 빌어요",indonesia:"Semoga hoki"}
+],
+
+"good luck":[
+{type:"Natural",korean:"행운을 빕니다",indonesia:"Good luck"}
+],
+
+"ayo buru buru":[
+{type:"Game",korean:"빨리 갑시다",indonesia:"Ayo buru-buru"}
+],
+
+"jangan telat":[
+{type:"Game",korean:"늦지 마세요",indonesia:"Jangan telat"}
+],
+
+"aku nyangkut":[
+{type:"Game",korean:"끼였어요",indonesia:"Aku nyangkut"}
+],
+
+"jalan blocked":[
+{type:"Game",korean:"길 막혔어요",indonesia:"Jalan blocked"}
+],
+
+"mob respawn":[
+{type:"Game",korean:"몹 다시 나왔어요",indonesia:"Mob respawn"}
+],
+
+"boss respawn":[
+{type:"Game",korean:"보스 다시 떴어요",indonesia:"Boss respawn"}
+],
+
+"siap teleport":[
+{type:"Game",korean:"텔 준비됐어요",indonesia:"Siap teleport"}
+],
+
+"teleport sekarang":[
+{type:"Game",korean:"지금 텔해주세요",indonesia:"Teleport sekarang"}
+],
+
+"jangan spam":[
+{type:"Game",korean:"스팸하지 마세요",indonesia:"Jangan spam"}
+],
+
+"chat pelan":[
+{type:"Game",korean:"천천히 말해주세요",indonesia:"Chat pelan"}
+],
+
+"aku tidak ngerti":[
+{type:"Natural",korean:"이해 못했어요",indonesia:"Aku tidak ngerti"}
+],
+
+"bisa ulang":[
+{type:"Natural",korean:"다시 말해주세요",indonesia:"Bisa ulang?"}
+],
+
+"bahasa korea sulit":[
+{type:"Natural",korean:"한국어 어려워요",indonesia:"Bahasa Korea sulit"}
+],
+
+"aku belajar korea":[
+{type:"Natural",korean:"한국어 배우는 중이에요",indonesia:"Aku belajar Korea"}
+],
+
+"tolong tunggu":[
+{type:"Natural",korean:"잠시 기다려주세요",indonesia:"Tolong tunggu"}
+],
+
+"aku sibuk farming":[
+{type:"Game",korean:"지금 사냥 중이에요",indonesia:"Aku sibuk farming"}
+],
+
+"jangan ganggu":[
+{type:"Game",korean:"방해하지 마세요",indonesia:"Jangan ganggu"}
+],
+
+"aku fokus":[
+{type:"Natural",korean:"집중 중이에요",indonesia:"Aku fokus"}
+],
+
+"farm nonstop":[
+{type:"Game",korean:"계속 사냥해요",indonesia:"Farm nonstop"}
+],
+
+"ayo lanjut farming":[
+{type:"Game",korean:"계속 사냥합시다",indonesia:"Lanjut farming"}
+],
+
+"aku mau tidur":[
+{type:"Natural",korean:"자러 갈게요",indonesia:"Aku mau tidur"}
+],
+
+"selamat tidur":[
+{type:"Natural",korean:"잘 자요",indonesia:"Selamat tidur"}
+],
+
+"selamat pagi":[
+{type:"Natural",korean:"좋은 아침이에요",indonesia:"Selamat pagi"}
+],
+
+"selamat malam":[
+{type:"Natural",korean:"좋은 밤 되세요",indonesia:"Selamat malam"}
+],
+
+"aku kembali":[
+{type:"Natural",korean:"다시 왔어요",indonesia:"Aku kembali"}
+],
+
+"maaf telat":[
+{type:"Natural",korean:"늦어서 죄송해요",indonesia:"Maaf telat"}
+],
+
+"aku lag":[
+{type:"Game",korean:"렉 걸렸어요",indonesia:"Aku lag"}
+],
+
+"ping tinggi":[
+{type:"Game",korean:"핑 높아요",indonesia:"Ping tinggi"}
+],
+
+"internet jelek":[
+{type:"Game",korean:"인터넷 안 좋아요",indonesia:"Internet jelek"}
+],
+
+"disconnect lagi":[
+{type:"Game",korean:"또 끊겼어요",indonesia:"Disconnect lagi"}
+],
+
+"server lag":[
+{type:"Game",korean:"서버 렉이에요",indonesia:"Server lag"}
+],
+
+"maintenance kapan":[
+{type:"Game",korean:"점검 언제예요?",indonesia:"Maintenance kapan?"}
+],
+
+"server penuh banget":[
+{type:"Game",korean:"서버 사람 너무 많아요",indonesia:"Server penuh banget"}
+],
+
+"aku afk makan":[
+{type:"Game",korean:"밥 먹고 올게요",indonesia:"AFK makan"}
+],
+
+"aku afk sebentar":[
+{type:"Game",korean:"잠깐 잠수할게요",indonesia:"AFK sebentar"}
+],
+
+"jangan kick":[
+{type:"Game",korean:"강퇴하지 마세요",indonesia:"Jangan kick"}
+],
+
+"tolong invite lagi":[
+{type:"Game",korean:"다시 초대해주세요",indonesia:"Invite lagi"}
+],
+
+"ayo cari boss":[
+{type:"Game",korean:"보스 찾으러 갑시다",indonesia:"Cari boss"}
+],
+
+"boss sudah mati":[
+{type:"Game",korean:"보스 이미 죽었어요",indonesia:"Boss sudah mati"}
+],
+
+"drop rare":[
+{type:"Game",korean:"희귀 드랍 나왔어요",indonesia:"Drop rare"}
+],
+
+"item bagus":[
+{type:"Game",korean:"좋은 아이템 나왔어요",indonesia:"Item bagus"}
+],
+
+"item jelek":[
+{type:"Game",korean:"별로인 아이템이에요",indonesia:"Item jelek"}
+],
+
+"ayo cepet":[
+{type:"Game",korean:"빨리 와요",indonesia:"Ayo cepat"}
+],
+
+"aku otw boss":[
+{type:"Game",korean:"보스 가는 중이에요",indonesia:"OTW boss"}
+],
+
+"jangan rusuh":[
+{type:"Game",korean:"시끄럽게 하지 마세요",indonesia:"Jangan rusuh"}
+],
+
+"ayo defend":[
+{type:"Game",korean:"방어합시다",indonesia:"Ayo defend"}
+],
+
+"base diserang":[
+{type:"Game",korean:"기지 공격받고 있어요",indonesia:"Base diserang"}
+],
+
+"tolong backup":[
+{type:"Game",korean:"지원 부탁해요",indonesia:"Tolong backup"}
+],
+
+"backup datang":[
+{type:"Game",korean:"지원 왔어요",indonesia:"Backup datang"}
+],
+
+"jangan ceroboh":[
+{type:"Game",korean:"조심하세요",indonesia:"Jangan ceroboh"}
+],
+
+"musuh kabur":[
+{type:"Game",korean:"적 도망갔어요",indonesia:"Musuh kabur"}
+],
+
+"kejar musuh":[
+{type:"Game",korean:"적 추격해요",indonesia:"Kejar musuh"}
+],
+
+"jangan kejar":[
+{type:"Game",korean:"쫓아가지 마세요",indonesia:"Jangan kejar"}
+],
+
+"aman sekarang":[
+{type:"Game",korean:"이제 안전해요",indonesia:"Aman sekarang"}
+],
+
+"aku kena stun":[
+{type:"Game",korean:"스턴 걸렸어요",indonesia:"Kena stun"}
+],
+
+"revive dong":[
+{type:"Game",korean:"부활해주세요",indonesia:"Revive dong"}
+],
+
+"revive sini":[
+{type:"Game",korean:"여기서 부활해주세요",indonesia:"Revive sini"}
+],
+
+"ayo reset":[
+{type:"Game",korean:"리셋합시다",indonesia:"Ayo reset"}
+],
+
+"ulang lagi":[
+{type:"Game",korean:"다시 해요",indonesia:"Ulang lagi"}
+],
+
+"boss susah":[
+{type:"Game",korean:"보스 어려워요",indonesia:"Boss susah"}
+],
+
+"boss gampang":[
+{type:"Game",korean:"보스 쉬워요",indonesia:"Boss gampang"}
+],
+
+"damage kurang banget":[
+{type:"Game",korean:"딜 너무 부족해요",indonesia:"Damage kurang banget"}
+],
+
+"heal kurang":[
+{type:"Game",korean:"힐 부족해요",indonesia:"Heal kurang"}
+],
+
+"mana hampir habis":[
+{type:"Game",korean:"마나 거의 없어요",indonesia:"Mana hampir habis"}
+],
+
+"hp hampir habis":[
+{type:"Game",korean:"피 거의 없어요",indonesia:"HP hampir habis"}
+],
+
+"ayo balik kota":[
+{type:"Game",korean:"마을로 돌아가요",indonesia:"Balik kota"}
+],
+
+"jual item":[
+{type:"Game",korean:"아이템 팔아요",indonesia:"Jual item"}
+],
+
+"repair dulu":[
+{type:"Game",korean:"수리하고 올게요",indonesia:"Repair dulu"}
+],
+
+"gear rusak":[
+{type:"Game",korean:"장비 망가졌어요",indonesia:"Gear rusak"}
+],
+
+"stok potion habis":[
+{type:"Game",korean:"물약 다 썼어요",indonesia:"Potion habis"}
+],
+
+"aku beli potion":[
+{type:"Game",korean:"물약 사러 갈게요",indonesia:"Beli potion"}
+],
+
+"tunggu party lengkap":[
+{type:"Game",korean:"파티 다 모일 때까지 기다려요",indonesia:"Tunggu party lengkap"}
+],
+
+"party kuat":[
+{type:"Game",korean:"파티 강해요",indonesia:"Party kuat"}
+],
+
+"party lemah":[
+{type:"Game",korean:"파티 약해요",indonesia:"Party lemah"}
+],
+
+"ayo dungeon lagi":[
+{type:"Game",korean:"던전 다시 갑시다",indonesia:"Dungeon lagi"}
+],
+
+"jangan lupa buff":[
+{type:"Game",korean:"버프 잊지 마세요",indonesia:"Jangan lupa buff"}
+],
+
+"aku takut pk":[
+{type:"Game",korean:"PK 무서워요",indonesia:"Takut PK"}
+],
+
+"pk datang lagi":[
+{type:"Game",korean:"PK 또 왔어요",indonesia:"PK datang lagi"}
+],
+
+"ayo hunting":[
+{type:"Game",korean:"사냥 갑시다",indonesia:"Ayo hunting"}
+],
+
+"hunting santai":[
+{type:"Game",korean:"편하게 사냥해요",indonesia:"Hunting santai"}
+],
+
+"hunting serius":[
+{type:"Game",korean:"빡세게 사냥해요",indonesia:"Hunting serius"}
+],
+
+"aku capek farming":[
+{type:"Natural",korean:"사냥해서 피곤해요",indonesia:"Capek farming"}
+],
+
+"farm bagus hari ini":[
+{type:"Game",korean:"오늘 사냥 좋네요",indonesia:"Farm bagus hari ini"}
+],
+
+"hoki bagus":[
+{type:"Natural",korean:"운 좋네요",indonesia:"Hoki bagus"}
+],
+
+"hoki jelek":[
+{type:"Natural",korean:"운이 안 좋아요",indonesia:"Hoki jelek"}
+],
+
+"thanks party":[
+{type:"Game",korean:"파티 감사합니다",indonesia:"Thanks party"}
+],
+
+"thanks heal":[
+{type:"Game",korean:"힐 감사합니다",indonesia:"Thanks heal"}
+],
+
+"thanks buff":[
+{type:"Game",korean:"버프 감사합니다",indonesia:"Thanks buff"}
+],
+
+"nice party":[
+{type:"Game",korean:"좋은 파티였어요",indonesia:"Nice party"}
+],
+
+"party bagus banget":[
+{type:"Game",korean:"파티 정말 좋았어요",indonesia:"Party bagus banget"}
+],
+
+"main bareng lagi":[
+{type:"Natural",korean:"다음에 또 같이 해요",indonesia:"Main bareng lagi"}
+],
+
+"senang ketemu kamu":[
+{type:"Natural",korean:"만나서 반가워요",indonesia:"Senang ketemu kamu"}
+],
+
+"terima kasih banyak":[
+{type:"Formal",korean:"정말 감사합니다",indonesia:"Terima kasih banyak"}
+],
+
+"maaf ya":[
+{type:"Natural",korean:"미안해요",indonesia:"Maaf ya"}
+],
+
+"maaf mati":[
+{type:"Game",korean:"죽어서 죄송해요",indonesia:"Maaf mati"}
+],
+
+"maaf noob":[
+{type:"Game",korean:"제가 초보예요",indonesia:"Maaf masih noob"}
+],
+
+"aku masih belajar":[
+{type:"Natural",korean:"아직 배우는 중이에요",indonesia:"Aku masih belajar"}
+],
+
+"tolong ajarin":[
+{type:"Natural",korean:"가르쳐주세요",indonesia:"Tolong ajarin"}
+],
+
+"aku bingung":[
+{type:"Natural",korean:"헷갈려요",indonesia:"Aku bingung"}
+],
+
+"harus kemana":[
+{type:"Game",korean:"어디로 가야 돼요?",indonesia:"Harus kemana?"}
+],
+
+"quest dimana":[
+{type:"Game",korean:"퀘스트 어디예요?",indonesia:"Quest dimana?"}
+],
+
+"npc dimana":[
+{type:"Game",korean:"NPC 어디예요?",indonesia:"NPC dimana?"}
+],
+
+"tolong bantu":[
+{type:"Natural",korean:"도와주세요",indonesia:"Tolong bantu"}
+],
+
+"bantu quest":[
+{type:"Game",korean:"퀘스트 도와주세요",indonesia:"Bantu quest"}
+],
+
+"bantu kill":[
+{type:"Game",korean:"잡는 거 도와주세요",indonesia:"Bantu kill"}
+],
+
+"aku sendirian":[
+{type:"Natural",korean:"혼자예요",indonesia:"Aku sendirian"}
+],
+
+"boleh ikut":[
+{type:"Game",korean:"같이 가도 돼요?",indonesia:"Boleh ikut?"}
+],
+
+"ayo bareng":[
+{type:"Natural",korean:"같이 해요",indonesia:"Ayo bareng"}
+],
+
+"aku teman indonesia":[
+{type:"Natural",korean:"저 인도네시아 사람이에요",indonesia:"Aku orang Indonesia"}
+],
+
+"aku tidak bisa korea":[
+{type:"Natural",korean:"한국어 잘 못해요",indonesia:"Aku tidak bisa Korea"}
+],
+
+"pakai translate":[
+{type:"Natural",korean:"번역기 사용 중이에요",indonesia:"Pakai translate"}
+],
+
+"tolong bahasa simple":[
+{type:"Natural",korean:"쉬운 말로 해주세요",indonesia:"Tolong bahasa simple"}
+],
+
+"aku ngerti sedikit":[
+{type:"Natural",korean:"조금 이해해요",indonesia:"Aku ngerti sedikit"}
+],
+
+"aku suka game ini":[
+{type:"Natural",korean:"이 게임 좋아해요",indonesia:"Aku suka game ini"}
+],
+
+"game ini seru":[
+{type:"Natural",korean:"이 게임 재밌어요",indonesia:"Game ini seru"}
+],
+
+"server ini ramai":[
+{type:"Game",korean:"이 서버 사람 많아요",indonesia:"Server ini ramai"}
+],
+
+"server ini bagus":[
+{type:"Game",korean:"이 서버 좋아요",indonesia:"Server ini bagus"}
+],
+
+"aku online tiap hari":[
+{type:"Natural",korean:"매일 접속해요",indonesia:"Aku online tiap hari"}
+],
+
+"aku main malam":[
+{type:"Natural",korean:"밤에 게임해요",indonesia:"Aku main malam"}
+],
+
+"aku main santai aja":[
+{type:"Natural",korean:"편하게 게임해요",indonesia:"Main santai aja"}
+],
+
+"jangan marah":[
+{type:"Natural",korean:"화내지 마세요",indonesia:"Jangan marah"}
+],
+
+"tenang tenang":[
+{type:"Natural",korean:"진정하세요",indonesia:"Tenang tenang"}
+],
+
+"aku bercanda":[
+{type:"Natural",korean:"농담이에요",indonesia:"Aku bercanda"}
+],
+
+"wkwkwk":[
+{type:"Game",korean:"ㅋㅋㅋㅋ",indonesia:"Wkwkwk"}
+],
+
+"haha lucu":[
+{type:"Natural",korean:"재밌네요",indonesia:"Haha lucu"}
+],
+
+"bye":[
+{type:"Natural",korean:"잘 가요",indonesia:"Bye"}
+],
+
+"sampai jumpa":[
+{type:"Natural",korean:"다음에 봐요",indonesia:"Sampai jumpa"}
+],
+
+"ayo cepat farming":[
+{type:"Game",korean:"빨리 사냥합시다",indonesia:"Ayo cepat farming"}
+],
+
+"monster banyak disini":[
+{type:"Game",korean:"여기 몹 많아요",indonesia:"Monster banyak disini"}
+],
+
+"monster sedikit":[
+{type:"Game",korean:"몹 적어요",indonesia:"Monster sedikit"}
+],
+
+"spot bagus banget":[
+{type:"Game",korean:"자리 정말 좋아요",indonesia:"Spot bagus banget"}
+],
+
+"spot jelek banget":[
+{type:"Game",korean:"자리 너무 안 좋아요",indonesia:"Spot jelek banget"}
+],
+
+"ayo pindah map":[
+{type:"Game",korean:"맵 옮겨요",indonesia:"Ayo pindah map"}
+],
+
+"map ini bagus":[
+{type:"Game",korean:"이 맵 좋아요",indonesia:"Map ini bagus"}
+],
+
+"map ini susah":[
+{type:"Game",korean:"이 맵 어려워요",indonesia:"Map ini susah"}
+],
+
+"monster kuat banget":[
+{type:"Game",korean:"몹 너무 강해요",indonesia:"Monster kuat banget"}
+],
+
+"monster gampang banget":[
+{type:"Game",korean:"몹 엄청 쉬워요",indonesia:"Monster gampang banget"}
+],
+
+"ayo cari spot":[
+{type:"Game",korean:"자리 찾으러 가요",indonesia:"Cari spot"}
+],
+
+"jangan rebut spot":[
+{type:"Game",korean:"자리 뺏지 마세요",indonesia:"Jangan rebut spot"}
+],
+
+"kami duluan":[
+{type:"Game",korean:"저희가 먼저 왔어요",indonesia:"Kami duluan"}
+],
+
+"ayo hunt boss":[
+{type:"Game",korean:"보스 잡으러 갑시다",indonesia:"Hunt boss"}
+],
+
+"boss spawn lagi":[
+{type:"Game",korean:"보스 또 떴어요",indonesia:"Boss spawn lagi"}
+],
+
+"boss belum ada":[
+{type:"Game",korean:"보스 아직 없어요",indonesia:"Boss belum ada"}
+],
+
+"ayo defend base":[
+{type:"Game",korean:"기지 방어합시다",indonesia:"Defend base"}
+],
+
+"ayo serang":[
+{type:"Game",korean:"공격합시다",indonesia:"Ayo serang"}
+],
+
+"musuh datang lagi":[
+{type:"Game",korean:"적 또 왔어요",indonesia:"Musuh datang lagi"}
+],
+
+"awas pk":[
+{type:"Game",korean:"PK 조심하세요",indonesia:"Awas PK"}
+],
+
+"pk kuat":[
+{type:"Game",korean:"PK 강해요",indonesia:"PK kuat"}
+],
+
+"pk lemah":[
+{type:"Game",korean:"PK 약해요",indonesia:"PK lemah"}
+],
+
+"ayo bantu war":[
+{type:"Game",korean:"전쟁 도와주세요",indonesia:"Bantu war"}
+],
+
+"war susah":[
+{type:"Game",korean:"전쟁 힘들어요",indonesia:"War susah"}
+],
+
+"war gampang":[
+{type:"Game",korean:"전쟁 쉬워요",indonesia:"War gampang"}
+],
+
+"ayo push kiri":[
+{type:"Game",korean:"왼쪽 밀어요",indonesia:"Push kiri"}
+],
+
+"ayo push kanan":[
+{type:"Game",korean:"오른쪽 밀어요",indonesia:"Push kanan"}
+],
+
+"tank maju":[
+{type:"Game",korean:"탱커 앞으로",indonesia:"Tank maju"}
+],
+
+"healer belakang":[
+{type:"Game",korean:"힐러 뒤에 있어요",indonesia:"Healer belakang"}
+],
+
+"dps fokus boss":[
+{type:"Game",korean:"딜러 보스 집중",indonesia:"DPS fokus boss"}
+],
+
+"ayo revive":[
+{type:"Game",korean:"부활해주세요",indonesia:"Ayo revive"}
+],
+
+"jangan revive dulu":[
+{type:"Game",korean:"아직 부활하지 마세요",indonesia:"Jangan revive dulu"}
+],
+
+"ayo loot":[
+{type:"Game",korean:"드랍 먹어요",indonesia:"Ayo loot"}
+],
+
+"siapa dapat item":[
+{type:"Game",korean:"누가 아이템 먹었어요?",indonesia:"Siapa dapat item?"}
+],
+
+"item mahal":[
+{type:"Game",korean:"비싼 아이템이에요",indonesia:"Item mahal"}
+],
+
+"item murah":[
+{type:"Game",korean:"싼 아이템이에요",indonesia:"Item murah"}
+],
+
+"ayo trade":[
+{type:"Game",korean:"거래합시다",indonesia:"Ayo trade"}
+],
+
+"trade nanti":[
+{type:"Game",korean:"나중에 거래해요",indonesia:"Trade nanti"}
+],
+
+"aku tidak punya uang":[
+{type:"Game",korean:"돈 없어요",indonesia:"Aku tidak punya uang"}
+],
+
+"gold kurang":[
+{type:"Game",korean:"골드 부족해요",indonesia:"Gold kurang"}
+],
+
+"gold banyak":[
+{type:"Game",korean:"골드 많아요",indonesia:"Gold banyak"}
+],
+
+"ayo login lagi":[
+{type:"Game",korean:"다시 접속해요",indonesia:"Login lagi"}
+],
+
+"server stabil":[
+{type:"Game",korean:"서버 안정적이에요",indonesia:"Server stabil"}
+],
+
+"server error":[
+{type:"Game",korean:"서버 오류예요",indonesia:"Server error"}
+],
+
+"ayo kumpul":[
+{type:"Game",korean:"다 같이 모여요",indonesia:"Ayo kumpul"}
+],
+
+"kumpul tengah":[
+{type:"Game",korean:"중앙으로 모여요",indonesia:"Kumpul tengah"}
+],
+
+"musuh di tengah":[
+{type:"Game",korean:"중앙에 적 있어요",indonesia:"Musuh di tengah"}
+],
+
+"jalan kiri aman":[
+{type:"Game",korean:"왼쪽 길 안전해요",indonesia:"Jalan kiri aman"}
+],
+
+"jalan kanan aman":[
+{type:"Game",korean:"오른쪽 길 안전해요",indonesia:"Jalan kanan aman"}
+],
+
+"jangan masuk dulu":[
+{type:"Game",korean:"아직 들어가지 마세요",indonesia:"Jangan masuk dulu"}
+],
+
+"masuk sekarang":[
+{type:"Game",korean:"지금 들어가요",indonesia:"Masuk sekarang"}
+],
+
+"aku hampir mati":[
+{type:"Game",korean:"거의 죽을 뻔했어요",indonesia:"Aku hampir mati"}
+],
+
+"untung selamat":[
+{type:"Natural",korean:"살아서 다행이에요",indonesia:"Untung selamat"}
+],
+
+"damage mereka sakit":[
+{type:"Game",korean:"적 딜 아파요",indonesia:"Damage mereka sakit"}
+],
+
+"party terlalu jauh":[
+{type:"Game",korean:"파티 너무 멀어요",indonesia:"Party terlalu jauh"}
+],
+
+"ikuti tank":[
+{type:"Game",korean:"탱커 따라가세요",indonesia:"Ikuti tank"}
+],
+
+"jangan pisah":[
+{type:"Game",korean:"따로 가지 마세요",indonesia:"Jangan pisah"}
+],
+
+"ayo finish boss":[
+{type:"Game",korean:"보스 마무리해요",indonesia:"Finish boss"}
+],
+
+"boss hampir mati":[
+{type:"Game",korean:"보스 거의 죽었어요",indonesia:"Boss hampir mati"}
+],
+
+"drop dibagi rata":[
+{type:"Game",korean:"드랍 공평하게 나눠요",indonesia:"Drop dibagi rata"}
+],
+
+"aku butuh gold":[
+{type:"Game",korean:"골드 필요해요",indonesia:"Aku butuh gold"}
+],
+
+"ayo cari healer":[
+{type:"Game",korean:"힐러 구하러 가요",indonesia:"Cari healer"}
+],
+
+"ayo cari tank":[
+{type:"Game",korean:"탱커 구하러 가요",indonesia:"Cari tank"}
+],
+
+"ayo cari dps":[
+{type:"Game",korean:"딜러 구하러 가요",indonesia:"Cari DPS"}
+],
+
+"full buff dulu":[
+{type:"Game",korean:"풀버프 먼저 해요",indonesia:"Full buff dulu"}
+],
+
+"ayo ready":[
+{type:"Game",korean:"준비하세요",indonesia:"Ayo ready"}
+],
+
+"siap semua":[
+{type:"Game",korean:"다 준비됐어요?",indonesia:"Siap semua?"}
+],
+
+"aku belum ready":[
+{type:"Game",korean:"아직 준비 안 됐어요",indonesia:"Aku belum ready"}
+],
+
+"ayo gas":[
+{type:"Game",korean:"갑시다",indonesia:"Ayo gas"}
+],
+
+"gas terus":[
+{type:"Game",korean:"계속 갑시다",indonesia:"Gas terus"}
+],
+
+"farm lagi besok":[
+{type:"Natural",korean:"내일 또 사냥해요",indonesia:"Farm lagi besok"}
+],
+
+"aku online besok":[
+{type:"Natural",korean:"내일 접속할게요",indonesia:"Aku online besok"}
+],
+
+"main nanti malam":[
+{type:"Natural",korean:"오늘 밤에 게임해요",indonesia:"Main nanti malam"}
+],
+
+"aku kerja dulu":[
+{type:"Natural",korean:"먼저 일할게요",indonesia:"Aku kerja dulu"}
+],
+
+"aku makan dulu":[
+{type:"Natural",korean:"먼저 밥 먹을게요",indonesia:"Aku makan dulu"}
+],
+
+"jangan lupa invite":[
+{type:"Game",korean:"초대 잊지 마세요",indonesia:"Jangan lupa invite"}
+],
+
+"invite kalau full":[
+{type:"Game",korean:"자리 나면 초대해주세요",indonesia:"Invite kalau ada slot"}
+],
+
+"party nyaman":[
+{type:"Game",korean:"파티 편해요",indonesia:"Party nyaman"}
+],
+
+"party ribet":[
+{type:"Game",korean:"파티 복잡해요",indonesia:"Party ribet"}
+],
+
+"aku senang":[
+{type:"Natural",korean:"기분 좋아요",indonesia:"Aku senang"}
+],
+
+"hari ini hoki":[
+{type:"Natural",korean:"오늘 운 좋네요",indonesia:"Hari ini hoki"}
+],
+
+"hari ini sial":[
+{type:"Natural",korean:"오늘 운 안 좋아요",indonesia:"Hari ini sial"}
+],
+
+"rez dong":[
+{type:"Game",korean:"부활좀",indonesia:"Rez dong"}
+],
+
+"mana potion":[
+{type:"Game",korean:"마나 물약",indonesia:"Mana potion"}
+],
+
+"heal potion":[
+{type:"Game",korean:"체력 물약",indonesia:"Heal potion"}
+],
+
+"tele kota":[
+{type:"Game",korean:"귀환 주문서",indonesia:"Teleport kota"}
+],
+
+"scroll tp":[
+{type:"Game",korean:"텔 주문서",indonesia:"TP scroll"}
+],
+
+"safe zone":[
+{type:"Game",korean:"세이프존",indonesia:"Safe zone"}
+],
+
+"zona aman":[
+{type:"Game",korean:"안전 지역",indonesia:"Zona aman"}
+],
+
+"red player":[
+{type:"Game",korean:"빨간 닉",indonesia:"Red player"}
+],
+
+"karma merah":[
+{type:"Game",korean:"카오 상태",indonesia:"Karma merah"}
+],
+
+"drop item":[
+{type:"Game",korean:"아이템 떨궜어요",indonesia:"Drop item"}
+],
+
+"jangan bunuh":[
+{type:"Game",korean:"죽이지 마세요",indonesia:"Jangan bunuh"}
+],
+
+"tolong protect":[
+{type:"Game",korean:"보호해주세요",indonesia:"Tolong protect"}
+],
+
+"aku dikejar":[
+{type:"Game",korean:"쫓기고 있어요",indonesia:"Aku dikejar"}
+],
+
+"pk gila":[
+{type:"Game",korean:"PK 미쳤어요",indonesia:"PK gila"}
+],
+
+"ramai pk":[
+{type:"Game",korean:"PK 많아요",indonesia:"Ramai PK"}
+],
+
+"login cepat":[
+{type:"Game",korean:"빨리 접속하세요",indonesia:"Login cepat"}
+],
+
+"char stuck":[
+{type:"Game",korean:"캐릭터 끼였어요",indonesia:"Character stuck"}
+],
+
+"inventory full":[
+{type:"Game",korean:"인벤 꽉 찼어요",indonesia:"Inventory full"}
+],
+
+"berat penuh":[
+{type:"Game",korean:"무게 꽉 찼어요",indonesia:"Berat penuh"}
+],
+
+"drop dulu":[
+{type:"Game",korean:"템 좀 버릴게요",indonesia:"Drop dulu"}
+],
+
+"jual npc":[
+{type:"Game",korean:"NPC에 팔게요",indonesia:"Jual NPC"}
+],
+
+"auto farming":[
+{type:"Game",korean:"자동 사냥 중",indonesia:"Auto farming"}
+],
+
+"bot kah":[
+{type:"Game",korean:"매크로예요?",indonesia:"Bot kah?"}
+],
+
+"jangan afk lama":[
+{type:"Game",korean:"오래 잠수하지 마세요",indonesia:"Jangan AFK lama"}
+],
+
+"aku balik":[
+{type:"Natural",korean:"금방 돌아올게요",indonesia:"Aku balik"}
+],
+
+"wait":[
+{type:"Game",korean:"잠깐만요",indonesia:"Wait"}
+],
+
+"sebentar":[
+{type:"Natural",korean:"잠시만요",indonesia:"Sebentar"}
+],
+
+"full party":[
+{type:"Game",korean:"파티 꽉 찼어요",indonesia:"Full party"}
+],
+
+"party kosong":[
+{type:"Game",korean:"파티 자리 있어요",indonesia:"Party kosong"}
+],
+
+"siapa leader":[
+{type:"Game",korean:"누가 파장이에요?",indonesia:"Siapa leader"}
+],
+
+"follow aku":[
+{type:"Game",korean:"저 따라오세요",indonesia:"Follow aku"}
+],
+
+"aku follow":[
+{type:"Game",korean:"따라갈게요",indonesia:"Aku follow"}
+],
+
+"jangan jauh dari party":[
+{type:"Game",korean:"파티에서 멀리 가지 마세요",indonesia:"Jangan jauh dari party"}
+],
+
+"ayo rush":[
+{type:"Game",korean:"돌진합시다",indonesia:"Ayo rush"}
+],
+
+"tarik monster":[
+{type:"Game",korean:"몹 끌어오세요",indonesia:"Tarik monster"}
+],
+
+"jangan tarik banyak":[
+{type:"Game",korean:"몹 많이 끌지 마세요",indonesia:"Jangan tarik banyak"}
+],
+
+"mob reset":[
+{type:"Game",korean:"몹 리셋됐어요",indonesia:"Mob reset"}
+],
+
+"boss reset":[
+{type:"Game",korean:"보스 리셋됐어요",indonesia:"Boss reset"}
+],
+
+"critical sakit":[
+{type:"Game",korean:"크리 엄청 세요",indonesia:"Critical sakit"}
+],
+
+"miss terus":[
+{type:"Game",korean:"계속 빗나가요",indonesia:"Miss terus"}
+],
+
+"akurasi kurang":[
+{type:"Game",korean:"명중 부족해요",indonesia:"Akurasi kurang"}
+],
+
+"evasion tinggi":[
+{type:"Game",korean:"회피 높아요",indonesia:"Evasion tinggi"}
+],
+
+"armor bagus":[
+{type:"Game",korean:"방어구 좋아요",indonesia:"Armor bagus"}
+],
+
+"weapon bagus":[
+{type:"Game",korean:"무기 좋아요",indonesia:"Weapon bagus"}
+],
+
+"enchant berhasil":[
+{type:"Game",korean:"강화 성공",indonesia:"Enchant berhasil"}
+],
+
+"enchant gagal":[
+{type:"Game",korean:"강화 실패",indonesia:"Enchant gagal"}
+],
+
+"item pecah":[
+{type:"Game",korean:"아이템 터졌어요",indonesia:"Item pecah"}
+],
+
+"drop rare lagi":[
+{type:"Game",korean:"희귀템 또 나왔어요",indonesia:"Drop rare lagi"}
+],
+
+"share loot":[
+{type:"Game",korean:"드랍 나눠요",indonesia:"Share loot"}
+],
+
+"aku miskin":[
+{type:"Game",korean:"가난해요",indonesia:"Aku miskin"}
+],
+
+"butuh adena":[
+{type:"Game",korean:"아데나 필요해요",indonesia:"Butuh adena"}
+],
+
+"aduh lag":[
+{type:"Game",korean:"아 렉 걸렸어요",indonesia:"Aduh lag"}
+],
+
+"restart dulu":[
+{type:"Game",korean:"재접할게요",indonesia:"Restart dulu"}
+],
+
+"char error":[
+{type:"Game",korean:"캐릭터 오류예요",indonesia:"Character error"}
+],
+
+"server down":[
+{type:"Game",korean:"서버 다운됐어요",indonesia:"Server down"}
+],
+
+"maintenance selesai":[
+{type:"Game",korean:"점검 끝났어요",indonesia:"Maintenance selesai"}
+],
+
+"ayo login":[
+{type:"Game",korean:"접속합시다",indonesia:"Ayo login"}
+],
+
+"cape farming":[
+{type:"Natural",korean:"사냥 힘드네요",indonesia:"Cape farming"}
+],
+
+"drop jelek hari ini":[
+{type:"Natural",korean:"오늘 드랍 별로네요",indonesia:"Drop jelek hari ini"}
+],
+
+"hari ini gacor":[
+{type:"Natural",korean:"오늘 잘 나오네요",indonesia:"Hari ini gacor"}
+],
+
+"hoki drop":[
+{type:"Natural",korean:"드랍 운 좋네요",indonesia:"Hoki drop"}
+],
+
+"mp habis":[
+{type:"Game",korean:"마나 없어요",indonesia:"MP habis"}
+],
+
+"mp tidak ada":[
+{type:"Game",korean:"마나 없어요",indonesia:"MP tidak ada"}
+],
+
+"mp kosong":[
+{type:"Game",korean:"마나 없어요",indonesia:"MP kosong"}
+],
+
+"mp kurang":[
+{type:"Game",korean:"마나 부족해요",indonesia:"MP kurang"}
+],
+
+"mana tidak ada":[
+{type:"Game",korean:"마나 없어요",indonesia:"Mana tidak ada"}
+],
+
+"mana kosong":[
+{type:"Game",korean:"마나 없어요",indonesia:"Mana kosong"}
+],
+
+"mana tinggal sedikit":[
+{type:"Game",korean:"마나 거의 없어요",indonesia:"Mana tinggal sedikit"}
+],
+
+"mana hampir habis":[
+{type:"Game",korean:"마나 거의 없어요",indonesia:"Mana hampir habis"}
+],
+
+"hp habis":[
+{type:"Game",korean:"피 없어요",indonesia:"HP habis"}
+],
+
+"hp tidak ada":[
+{type:"Game",korean:"피 없어요",indonesia:"HP tidak ada"}
+],
+
+"hp kosong":[
+{type:"Game",korean:"피 없어요",indonesia:"HP kosong"}
+],
+
+"hp tinggal sedikit":[
+{type:"Game",korean:"피 거의 없어요",indonesia:"HP tinggal sedikit"}
+],
+
+"darah hampir habis":[
+{type:"Game",korean:"피 거의 없어요",indonesia:"Darah hampir habis"}
+],
+
+"darah tinggal sedikit":[
+{type:"Game",korean:"피 거의 없어요",indonesia:"Darah tinggal sedikit"}
+],
+
+"butuh potion darah":[
+{type:"Game",korean:"체력 물약 필요해요",indonesia:"Butuh potion darah"}
+],
+
+"potion darah habis":[
+{type:"Game",korean:"체력 물약 없어요",indonesia:"Potion darah habis"}
+],
+
+"beli potion darah":[
+{type:"Game",korean:"체력 물약 사러 갈게요",indonesia:"Beli potion darah"}
+],
+
+"pakai potion darah":[
+{type:"Game",korean:"체력 물약 쓸게요",indonesia:"Pakai potion darah"}
+],
+
+"butuh speed":[
+{type:"Game",korean:"속도 버프 필요해요",indonesia:"Butuh speed"}
+],
+
+"butuh kecepatan":[
+{type:"Game",korean:"속도 버프 필요해요",indonesia:"Butuh kecepatan"}
+],
+
+"speed habis":[
+{type:"Game",korean:"속도 버프 끝났어요",indonesia:"Speed habis"}
+],
+
+"speed dong":[
+{type:"Game",korean:"속도 버프 주세요",indonesia:"Speed dong"}
+],
+
+"buff speed":[
+{type:"Game",korean:"속도 버프 주세요",indonesia:"Buff speed"}
+],
+
+"pergi gudang":[
+{type:"Game",korean:"창고 갔다올게요",indonesia:"Pergi gudang"}
+],
+
+"ke gudang dulu":[
+{type:"Game",korean:"창고 갔다올게요",indonesia:"Ke gudang dulu"}
+],
+
+"mau gudang":[
+{type:"Game",korean:"창고좀",indonesia:"Mau gudang / gudang dulu"}
+],
+
+"pergi kota":[
+{type:"Game",korean:"마을 갔다올게요",indonesia:"Pergi kota"}
+],
+
+"ke kota dulu":[
+{type:"Game",korean:"마을 갔다올게요",indonesia:"Ke kota dulu"}
+],
+
+"balik kota dulu":[
+{type:"Game",korean:"마을 갔다올게요",indonesia:"Balik kota dulu"}
+],
+
+"aku mau ke kota":[
+{type:"Game",korean:"마을 갔다올게요",indonesia:"Aku mau ke kota"}
+],
+
+"tank depan":[
+{type:"Game",korean:"탱커 앞에 가세요",indonesia:"Tank depan"}
+],
+
+"dps belakang":[
+{type:"Game",korean:"딜러 뒤에 있어요",indonesia:"DPS belakang"}
+],
+
+"protect healer":[
+{type:"Game",korean:"힐러 보호해주세요",indonesia:"Protect healer"}
+],
+
+"jaga belakang":[
+{type:"Game",korean:"뒤 좀 지켜주세요",indonesia:"Jaga belakang"}
+],
+
+"daily selesai":[
+{type:"Game",korean:"일퀘 끝났어요",indonesia:"Daily selesai"}
+],
+
+"quest selesai":[
+{type:"Game",korean:"퀘스트 끝났어요",indonesia:"Quest selesai"}
+],
+
+"quest susah":[
+{type:"Game",korean:"퀘스트 어려워요",indonesia:"Quest susah"}
+],
+
+"quest gampang":[
+{type:"Game",korean:"퀘스트 쉬워요",indonesia:"Quest gampang"}
+],
+
+"tolong cepat":[
+{type:"Game",korean:"빨리 도와주세요",indonesia:"Tolong cepat"}
+],
+
+"aku sekarat":[
+{type:"Game",korean:"죽기 직전이에요",indonesia:"Aku sekarat"}
+],
+
+"protect aku":[
+{type:"Game",korean:"저 좀 보호해주세요",indonesia:"Protect aku"}
+],
+
+"jangan tinggalin":[
+{type:"Game",korean:"혼자 두지 마세요",indonesia:"Jangan tinggalin"}
+],
+
+"cod bisa":[
+{type:"Game",korean:"COD 가능",indonesia:"COD bisa"}
+],
+
+"stock habis":[
+{type:"Game",korean:"재고 없어요",indonesia:"Stock habis"}
+],
+
+"masih ada":[
+{type:"Game",korean:"아직 있어요",indonesia:"Masih ada"}
+],
+
+"aku simpan dulu":[
+{type:"Game",korean:"일단 보관할게요",indonesia:"Aku simpan dulu"}
+],
+
+"toilet dulu":[
+{type:"Game",korean:"장실요",indonesia:"Toilet dulu"}
+],
+
+"wc dulu":[
+{type:"Game",korean:"장실요",indonesia:"WC dulu"}
+],
+
+"panah dong":[
+{type:"Game",korean:"화살좀요",indonesia:"Panah dong"}
+],
+
+"gudang dong":[
+{type:"Game",korean:"창고좀",indonesia:"Gudang dong"}
+],
+
+"ambil barang":[
+{type:"Game",korean:"템 가지러 갈게요",indonesia:"Ambil barang"}
+],
+
+"berat penuh":[
+{type:"Game",korean:"무게 꽉 찼어요",indonesia:"Berat penuh"}
+],
+
+"inventory penuh":[
+{type:"Game",korean:"인벤 꽉 찼어요",indonesia:"Inventory penuh"}
+],
+
+"matiin auto":[
+{type:"Game",korean:"자동 꺼주세요",indonesia:"Matikan auto"}
+],
+
+"nyalain auto":[
+{type:"Game",korean:"자동 켜주세요",indonesia:"Nyalakan auto"}
+],
+
+"jangan auto":[
+{type:"Game",korean:"자동하지 마세요",indonesia:"Jangan auto"}
+],
+
+"ambil drop":[
+{type:"Game",korean:"드랍 먹어요",indonesia:"Ambil drop"}
+],
+
+"jangan ambil drop":[
+{type:"Game",korean:"드랍 먹지 마세요",indonesia:"Jangan ambil drop"}
+],
+
+"drop bagi rata":[
+{type:"Game",korean:"드랍 나눠요",indonesia:"Drop bagi rata"}
+],
+
+"aku balik sebentar":[
+{type:"Natural",korean:"잠깐 다녀올게요",indonesia:"Aku balik sebentar"}
+],
+
+"jangan tinggal":[
+{type:"Game",korean:"두고 가지 마세요",indonesia:"Jangan tinggalin"}
+],
+
+"buff plz":[
+{type:"Game",korean:"버프좀",indonesia:"Buff please"}
+],
+
+"heal plz":[
+{type:"Game",korean:"힐좀",indonesia:"Heal please"}
+],
+
+"res plz":[
+{type:"Game",korean:"부활좀",indonesia:"Res please"}
+],
+
+"go boss":[
+{type:"Game",korean:"보스 ㄱㄱ",indonesia:"Go boss"}
+],
+
+"go hunt":[
+{type:"Game",korean:"사냥 ㄱㄱ",indonesia:"Go hunt"}
+],
+
+"go war":[
+{type:"Game",korean:"전쟁 ㄱㄱ",indonesia:"Go war"}
+],
+
+"back":[
+{type:"Game",korean:"뒤로",indonesia:"Mundur"}
+],
+
+"retreat":[
+{type:"Game",korean:"후퇴",indonesia:"Retreat"}
+],
+
+"rush":[
+{type:"Game",korean:"돌진",indonesia:"Rush"}
+],
+
+"push":[
+{type:"Game",korean:"밀어요",indonesia:"Push"}
+],
+
+"left":[
+{type:"Game",korean:"왼쪽",indonesia:"Kiri"}
+],
+
+"right":[
+{type:"Game",korean:"오른쪽",indonesia:"Kanan"}
+],
+
+"mid":[
+{type:"Game",korean:"중앙",indonesia:"Tengah"}
+],
+
+"top":[
+{type:"Game",korean:"위쪽",indonesia:"Atas"}
+],
+
+"bottom":[
+{type:"Game",korean:"아래쪽",indonesia:"Bawah"}
+],
+
+"follow":[
+{type:"Game",korean:"따라오세요",indonesia:"Follow"}
+],
+
+"cover":[
+{type:"Game",korean:"커버",indonesia:"Cover"}
+],
+
+"protect":[
+{type:"Game",korean:"보호",indonesia:"Protect"}
+],
+
+"safe":[
+{type:"Game",korean:"안전",indonesia:"Aman"}
+],
+
+"danger":[
+{type:"Game",korean:"위험",indonesia:"Bahaya"}
+],
+
+"wait":[
+{type:"Game",korean:"잠깐",indonesia:"Wait"}
+],
+
+"hold":[
+{type:"Game",korean:"대기",indonesia:"Standby"}
+],
+
+"assist":[
+{type:"Game",korean:"지원",indonesia:"Assist"}
+],
+
+"focus boss":[
+{type:"Game",korean:"보스 집중",indonesia:"Focus boss"}
+],
+
+"focus tank":[
+{type:"Game",korean:"탱커 집중",indonesia:"Focus tank"}
+],
+
+"focus heal":[
+{type:"Game",korean:"힐 집중",indonesia:"Focus heal"}
+],
+
+"mana pls":[
+{type:"Game",korean:"마나좀",indonesia:"Mana please"}
+],
+
+"hp low":[
+{type:"Game",korean:"피 없어요",indonesia:"HP low"}
+],
+
+"oom":[
+{type:"Game",korean:"마나 없어요",indonesia:"Out of mana"}
+],
+
+"brb toilet":[
+{type:"Game",korean:"장실요",indonesia:"BRB toilet"}
+],
+
+"brb town":[
+{type:"Game",korean:"마을 갔다올게요",indonesia:"BRB town"}
+],
+
+"brb warehouse":[
+{type:"Game",korean:"창고 갔다올게요",indonesia:"BRB warehouse"}
+],
+
+"afk toilet":[
+{type:"Game",korean:"장실 다녀올게요",indonesia:"AFK toilet"}
+],
+
+"reload pot":[
+{type:"Game",korean:"물약 채우러 갈게요",indonesia:"Reload potion"}
+],
+
+"repair gear":[
+{type:"Game",korean:"장비 수리할게요",indonesia:"Repair gear"}
+],
+
+"weight full":[
+{type:"Game",korean:"무게 꽉 찼어요",indonesia:"Weight full"}
+],
+
+"inventory full":[
+{type:"Game",korean:"인벤 꽉 찼어요",indonesia:"Inventory full"}
+],
+
+"tarik monster":[
+{type:"Game",korean:"몹 끌어오세요",indonesia:"Tarik monster"}
+],
+
+"narik monster":[
+{type:"Game",korean:"몹 몰아오세요",indonesia:"Narik monster"}
+],
+
+"pull monster":[
+{type:"Game",korean:"몹 풀링해주세요",indonesia:"Pull monster"}
+],
+
+"kumpulin monster":[
+{type:"Game",korean:"몹 모아주세요",indonesia:"Kumpulin monster"}
+],
+
+"bawa monster kesini":[
+{type:"Game",korean:"몹 여기로 끌어오세요",indonesia:"Bawa monster kesini"}
+],
+
+"tarik banyak":[
+{type:"Game",korean:"많이 몰아오세요",indonesia:"Tarik banyak"}
+],
+
+"jangan tarik banyak":[
+{type:"Game",korean:"너무 많이 몰지 마세요",indonesia:"Jangan tarik banyak"}
+],
+
+"muter muter":[
+{type:"Game",korean:"빙빙 도세요",indonesia:"Muter-muter"}
+],
+
+"lari muter":[
+{type:"Game",korean:"돌면서 뛰세요",indonesia:"Lari muter"}
+],
+
+"kite monster":[
+{type:"Game",korean:"몹 카이팅하세요",indonesia:"Kite monster"}
+],
+
+"jangan dekat monster":[
+{type:"Game",korean:"몹 가까이 가지 마세요",indonesia:"Jangan dekat monster"}
+],
+
+"biar monster ngumpul":[
+{type:"Game",korean:"몹 모일 때까지 기다리세요",indonesia:"Biar monster ngumpul"}
+],
+
+"tahan monster":[
+{type:"Game",korean:"몹 잡아두세요",indonesia:"Tahan monster"}
+],
+
+"monster nyebar":[
+{type:"Game",korean:"몹 흩어졌어요",indonesia:"Monster nyebar"}
+],
+
+"monster sudah ngumpul":[
+{type:"Game",korean:"몹 다 모였어요",indonesia:"Monster sudah ngumpul"}
+],
+
+"aoe sekarang":[
+{type:"Game",korean:"지금 광역 쓰세요",indonesia:"AOE sekarang"}
+],
+
+"spam aoe":[
+{type:"Game",korean:"광역 계속 쓰세요",indonesia:"Spam AOE"}
+],
+
+"udah makan":[
+{type:"Natural",korean:"밥 먹었어요?",indonesia:"Udah makan?"}
+],
+
+"belum makan":[
+{type:"Natural",korean:"아직 안 먹었어요",indonesia:"Belum makan"}
+],
+
+"makan apa":[
+{type:"Natural",korean:"뭐 먹었어요?",indonesia:"Makan apa?"}
+],
+
+"ngopi dulu":[
+{type:"Natural",korean:"커피 마시고 올게요",indonesia:"Ngopi dulu"}
+],
+
+"rokok dulu":[
+{type:"Natural",korean:"담배 좀 피고 올게요",indonesia:"Rokok dulu"}
+],
+
+"cape banget hari ini":[
+{type:"Natural",korean:"오늘 너무 피곤해요",indonesia:"Cape banget hari ini"}
+],
+
+"hari ini hoki":[
+{type:"Natural",korean:"오늘 운 좋네요",indonesia:"Hari ini hoki"}
+],
+
+"hari ini apes":[
+{type:"Natural",korean:"오늘 운이 안 좋아요",indonesia:"Hari ini apes"}
+],
+
+"drop gacor":[
+{type:"Game",korean:"드랍 잘 나오네요",indonesia:"Drop gacor"}
+],
+
+"drop zonk":[
+{type:"Game",korean:"드랍 진짜 안 나오네요",indonesia:"Drop zonk"}
+],
+
+"gacha jelek":[
+{type:"Game",korean:"가챠 망했어요",indonesia:"Gacha jelek"}
+],
+
+"gacha bagus":[
+{type:"Game",korean:"가챠 잘 나왔어요",indonesia:"Gacha bagus"}
+],
+
+"jam berapa disana":[
+{type:"Natural",korean:"거기 몇 시예요?",indonesia:"Jam berapa disana?"}
+],
+
+"aku dari indonesia":[
+{type:"Natural",korean:"저 인도네시아 사람이에요",indonesia:"Aku dari Indonesia"}
+],
+
+"aku main tiap hari":[
+{type:"Natural",korean:"매일 게임해요",indonesia:"Aku main tiap hari"}
+],
+
+"main berapa jam":[
+{type:"Natural",korean:"몇 시간 게임해요?",indonesia:"Main berapa jam?"}
+],
+
+"aku kerja":[
+{type:"Natural",korean:"저 일해요",indonesia:"Aku kerja"}
+],
+
+"aku sekolah":[
+{type:"Natural",korean:"저 학생이에요",indonesia:"Aku sekolah"}
+],
+
+"lagi santai":[
+{type:"Natural",korean:"지금 쉬는 중이에요",indonesia:"Lagi santai"}
+],
+
+"aku miskin adena":[
+{type:"Game",korean:"아데나 없어요",indonesia:"Miskin adena"}
+],
+
+"bantu adena":[
+{type:"Game",korean:"아데나 좀 주세요",indonesia:"Bantu adena"}
+],
+
+"pinjam adena":[
+{type:"Game",korean:"아데나 빌려주세요",indonesia:"Pinjam adena"}
+],
+
+"balikin nanti":[
+{type:"Natural",korean:"나중에 돌려드릴게요",indonesia:"Balikin nanti"}
+],
+
+"aku noob":[
+{type:"Natural",korean:"저 초보예요",indonesia:"Aku noob"}
+],
+
+"tolong jangan bully":[
+{type:"Natural",korean:"괴롭히지 마세요",indonesia:"Tolong jangan bully"}
+],
+
+"aku cuma farming":[
+{type:"Game",korean:"저 그냥 사냥 중이에요",indonesia:"Aku cuma farming"}
+],
+
+"damai dong":[
+{type:"Game",korean:"싸우지 맙시다",indonesia:"Damai dong"}
+],
+
+"jangan pk aku":[
+{type:"Game",korean:"저 PK하지 마세요",indonesia:"Jangan PK aku"}
+],
+
+"aku bukan musuh":[
+{type:"Game",korean:"저 적 아니에요",indonesia:"Aku bukan musuh"}
+],
+
+"aku stuck":[
+{type:"Game",korean:"캐릭터 끼였어요",indonesia:"Aku stuck"}
+],
+
+"tolong tarik":[
+{type:"Game",korean:"몹 좀 끌어주세요",indonesia:"Tolong tarik monster"}
+],
+
+"monster hilang":[
+{type:"Game",korean:"몹 사라졌어요",indonesia:"Monster hilang"}
+],
+
+"jangan reset monster":[
+{type:"Game",korean:"몹 리셋시키지 마세요",indonesia:"Jangan reset monster"}
+],
+
+"reset lagi":[
+{type:"Game",korean:"다시 리셋할게요",indonesia:"Reset lagi"}
+],
+
+"monster terlalu sakit":[
+{type:"Game",korean:"몹 데미지 너무 아파요",indonesia:"Monster terlalu sakit"}
+],
+
+"damage boss sakit":[
+{type:"Game",korean:"보스 딜 너무 아파요",indonesia:"Damage boss sakit"}
+],
+
+"tank hampir mati":[
+{type:"Game",korean:"탱커 거의 죽어요",indonesia:"Tank hampir mati"}
+],
+
+"heal tank cepat":[
+{type:"Game",korean:"탱커 빨리 힐해주세요",indonesia:"Heal tank cepat"}
+],
+
+"mana healer habis":[
+{type:"Game",korean:"힐러 마나 다 떨어졌어요",indonesia:"Mana healer habis"}
+],
+
+"buff attack habis":[
+{type:"Game",korean:"공격 버프 끝났어요",indonesia:"Buff attack habis"}
+],
+
+"buff defense habis":[
+{type:"Game",korean:"방어 버프 끝났어요",indonesia:"Buff defense habis"}
+],
+
+"ayo buff ulang":[
+{type:"Game",korean:"버프 다시 주세요",indonesia:"Buff ulang"}
+],
+
+"aku reload potion":[
+{type:"Game",korean:"물약 다시 채우러 갈게요",indonesia:"Reload potion"}
+],
+
+"potion mana habis":[
+{type:"Game",korean:"마나 물약 없어요",indonesia:"Potion mana habis"}
+],
+
+"potion hp habis":[
+{type:"Game",korean:"체력 물약 없어요",indonesia:"Potion HP habis"}
+],
+
+"jual loot":[
+{type:"Game",korean:"루팅템 팔게요",indonesia:"Jual loot"}
+],
+
+"drop siapa":[
+{type:"Game",korean:"누가 드랍 먹었어요?",indonesia:"Siapa ambil drop"}
+],
+
+"aku afk toilet":[
+{type:"Game",korean:"장실 다녀올게요",indonesia:"AFK toilet"}
+],
+
+"afk bentar jangan kick":[
+{type:"Game",korean:"잠깐 잠수할게요 강퇴하지 마세요",indonesia:"AFK bentar jangan kick"}
+],
+
+"aku reconnect":[
+{type:"Game",korean:"재접속할게요",indonesia:"Reconnect"}
+],
+
+"char error":[
+{type:"Game",korean:"캐릭터 오류예요",indonesia:"Character error"}
+],
+
+"restart client":[
+{type:"Game",korean:"클라이언트 다시 켤게요",indonesia:"Restart client"}
+],
+
+"server unstable":[
+{type:"Game",korean:"서버 불안정해요",indonesia:"Server tidak stabil"}
+],
+
+"delay parah":[
+{type:"Game",korean:"딜레이 심해요",indonesia:"Delay parah"}
+],
+
+"ayo defend kiri":[
+{type:"Game",korean:"왼쪽 방어하세요",indonesia:"Defend kiri"}
+],
+
+"ayo defend kanan":[
+{type:"Game",korean:"오른쪽 방어하세요",indonesia:"Defend kanan"}
+],
+
+"push tengah":[
+{type:"Game",korean:"중앙 밀어요",indonesia:"Push tengah"}
+],
+
+"jangan maju sendiri":[
+{type:"Game",korean:"혼자 앞으로 가지 마세요",indonesia:"Jangan maju sendiri"}
+],
+
+"follow leader":[
+{type:"Game",korean:"파장 따라가세요",indonesia:"Follow leader"}
+],
+
+"jangan pencet respawn":[
+{type:"Game",korean:"리스폰 누르지 마세요",indonesia:"Jangan pencet respawn"}
+],
+
+"wait revive":[
+{type:"Game",korean:"부활 기다리세요",indonesia:"Wait revive"}
+],
+
+"spam heal":[
+{type:"Game",korean:"힐 계속 주세요",indonesia:"Spam heal"}
+],
+
+"spam buff":[
+{type:"Game",korean:"버프 계속 주세요",indonesia:"Spam buff"}
+],
+
+"save mana healer":[
+{type:"Game",korean:"힐러 마나 아끼세요",indonesia:"Save mana healer"}
+],
+
+"boss enrage":[
+{type:"Game",korean:"보스 폭주 상태예요",indonesia:"Boss enrage"}
+],
+
+"boss phase dua":[
+{type:"Game",korean:"보스 2페이즈예요",indonesia:"Boss phase 2"}
+],
+
+"boss phase tiga":[
+{type:"Game",korean:"보스 3페이즈예요",indonesia:"Boss phase 3"}
+],
+
+"siap burst":[
+{type:"Game",korean:"폭딜 준비하세요",indonesia:"Siap burst"}
+],
+
+"burst sekarang":[
+{type:"Game",korean:"지금 폭딜하세요",indonesia:"Burst sekarang"}
+],
+
+"pakai skill stun":[
+{type:"Game",korean:"스턴 스킬 쓰세요",indonesia:"Pakai skill stun"}
+],
+
+"stun boss":[
+{type:"Game",korean:"보스 스턴하세요",indonesia:"Stun boss"}
+],
+
+"boss immune":[
+{type:"Game",korean:"보스 면역이에요",indonesia:"Boss immune"}
+],
+
+"clean mob dulu":[
+{type:"Game",korean:"몹 먼저 정리하세요",indonesia:"Bersihin mob dulu"}
+],
+
+"skip monster":[
+{type:"Game",korean:"몹 패스하세요",indonesia:"Skip monster"}
+],
+
+"jangan hit sembarang":[
+{type:"Game",korean:"아무거나 치지 마세요",indonesia:"Jangan hit sembarang"}
+],
+
+"focus healer musuh":[
+{type:"Game",korean:"적 힐러 집중하세요",indonesia:"Focus healer musuh"}
+],
+
+"focus dps musuh":[
+{type:"Game",korean:"적 딜러 집중하세요",indonesia:"Focus DPS musuh"}
+],
+
+"jangan auto attack":[
+{type:"Game",korean:"자동 공격 끄세요",indonesia:"Jangan auto attack"}
+],
+
+"pakai auto attack":[
+{type:"Game",korean:"자동 공격 켜세요",indonesia:"Pakai auto attack"}
+],
+
+"monster lari":[
+{type:"Game",korean:"몹 도망갔어요",indonesia:"Monster lari"}
+],
+
+"tarik ke pojok":[
+{type:"Game",korean:"구석으로 끌어오세요",indonesia:"Tarik ke pojok"}
+],
+
+"jangan keluar range":[
+{type:"Game",korean:"사거리 밖으로 나가지 마세요",indonesia:"Jangan keluar range"}
+],
+
+"range terlalu jauh":[
+{type:"Game",korean:"사거리가 너무 멀어요",indonesia:"Range terlalu jauh"}
+],
+
+"masuk range":[
+{type:"Game",korean:"사거리 안으로 들어오세요",indonesia:"Masuk range"}
+],
+
+"pakai skill api":[
+{type:"Game",korean:"불 스킬 쓰세요",indonesia:"Pakai skill api"}
+],
+
+"pakai skill es":[
+{type:"Game",korean:"얼음 스킬 쓰세요",indonesia:"Pakai skill es"}
+],
+
+"pakai skill petir":[
+{type:"Game",korean:"번개 스킬 쓰세요",indonesia:"Pakai skill petir"}
+],
+
+"boss lemah api":[
+{type:"Game",korean:"보스 불 약점이에요",indonesia:"Boss lemah api"}
+],
+
+"boss lemah es":[
+{type:"Game",korean:"보스 얼음 약점이에요",indonesia:"Boss lemah es"}
+],
+
+"buff crit":[
+{type:"Game",korean:"크리 버프 주세요",indonesia:"Buff crit"}
+],
+
+"crit sakit":[
+{type:"Game",korean:"크리 엄청 아파요",indonesia:"Critical sakit"}
+],
+
+"miss terus":[
+{type:"Game",korean:"계속 빗나가요",indonesia:"Miss terus"}
+],
+
+"akurasi kurang":[
+{type:"Game",korean:"명중 부족해요",indonesia:"Akurasi kurang"}
+],
+
+"evasion tinggi":[
+{type:"Game",korean:"회피 높아요",indonesia:"Evasion tinggi"}
+],
+
+"ayo upgrade":[
+{type:"Game",korean:"강화합시다",indonesia:"Ayo upgrade"}
+],
+
+"upgrade gagal":[
+{type:"Game",korean:"강화 실패",indonesia:"Upgrade gagal"}
+],
+
+"upgrade berhasil":[
+{type:"Game",korean:"강화 성공",indonesia:"Upgrade berhasil"}
+],
+
+"item pecah":[
+{type:"Game",korean:"아이템 터졌어요",indonesia:"Item pecah"}
+],
+
+"drop jackpot":[
+{type:"Game",korean:"대박 드랍 나왔어요",indonesia:"Drop jackpot"}
+],
+
+"gacha zonk":[
+{type:"Game",korean:"가챠 망했어요",indonesia:"Gacha zonk"}
+],
+
+"gacha gacor":[
+{type:"Game",korean:"가챠 대박났어요",indonesia:"Gacha gacor"}
+],
+
+"ayo all in":[
+{type:"Game",korean:"올인합시다",indonesia:"Ayo all in"}
+],
+
+"hemat adena":[
+{type:"Game",korean:"아데나 아끼세요",indonesia:"Hemat adena"}
+],
+
+"aku bangkrut":[
+{type:"Game",korean:"완전 거지됐어요",indonesia:"Aku bangkrut"}
+],
+
+"drop dibagi party":[
+{type:"Game",korean:"파티끼리 드랍 나눠요",indonesia:"Drop dibagi party"}
+],
+
+"jangan ninja loot":[
+{type:"Game",korean:"닌자루팅하지 마세요",indonesia:"Jangan ninja loot"}
+],
+
+"loot cepat":[
+{type:"Game",korean:"빨리 루팅하세요",indonesia:"Loot cepat"}
+],
+
+"aku balik farming":[
+{type:"Game",korean:"다시 사냥하러 갈게요",indonesia:"Balik farming"}
+],
+
+"ayo nonstop":[
+{type:"Game",korean:"쉬지 말고 갑시다",indonesia:"Ayo nonstop"}
+],
+
+"cape raid":[
+{type:"Game",korean:"레이드 힘드네요",indonesia:"Cape raid"}
+],
+
+"raid sukses":[
+{type:"Game",korean:"레이드 성공했어요",indonesia:"Raid sukses"}
+],
+
+"raid gagal":[
+{type:"Game",korean:"레이드 실패했어요",indonesia:"Raid gagal"}
+],
+
+"jangan disconnect":[
+{type:"Game",korean:"접속 끊기지 마세요",indonesia:"Jangan disconnect"}
+],
+
+"aku timeout":[
+{type:"Game",korean:"시간 초과됐어요",indonesia:"Aku timeout"}
+],
+
+"loading lama":[
+{type:"Game",korean:"로딩 오래 걸려요",indonesia:"Loading lama"}
+],
+
+"map penuh":[
+{type:"Game",korean:"맵 사람 많아요",indonesia:"Map penuh"}
+],
+
+"channel penuh":[
+{type:"Game",korean:"채널 꽉 찼어요",indonesia:"Channel penuh"}
+],
+
+"ganti channel":[
+{type:"Game",korean:"채널 바꿔요",indonesia:"Ganti channel"}
+],
+
+"channel aman":[
+{type:"Game",korean:"이 채널 안전해요",indonesia:"Channel aman"}
+],
+
+"channel ramai":[
+{type:"Game",korean:"이 채널 사람 많아요",indonesia:"Channel ramai"}
+],
+
+"spawn boss":[
+{type:"Game",korean:"보스 스폰됐어요",indonesia:"Boss spawn"}
+],
+
+"boss hilang":[
+{type:"Game",korean:"보스 사라졌어요",indonesia:"Boss hilang"}
+],
+
+"respawn berapa menit":[
+{type:"Game",korean:"몇 분 리스폰이에요?",indonesia:"Respawn berapa menit"}
+],
+
+"respawn lama":[
+{type:"Game",korean:"리스폰 오래 걸려요",indonesia:"Respawn lama"}
+],
+
+"ayo camp boss":[
+{type:"Game",korean:"보스 캠핑합시다",indonesia:"Camp boss"}
+],
+
+"camp disini":[
+{type:"Game",korean:"여기서 캠핑해요",indonesia:"Camp disini"}
+],
+
+"jangan rebut boss":[
+{type:"Game",korean:"보스 뺏지 마세요",indonesia:"Jangan rebut boss"}
+],
+
+"siapa tank utama":[
+{type:"Game",korean:"메인 탱커 누구예요?",indonesia:"Siapa tank utama"}
+],
+
+"siapa healer utama":[
+{type:"Game",korean:"메인 힐러 누구예요?",indonesia:"Siapa healer utama"}
+],
+
+"aku jadi tank":[
+{type:"Game",korean:"제가 탱커할게요",indonesia:"Aku jadi tank"}
+],
+
+"aku jadi healer":[
+{type:"Game",korean:"제가 힐러할게요",indonesia:"Aku jadi healer"}
+],
+
+"aku jadi dps":[
+{type:"Game",korean:"제가 딜러할게요",indonesia:"Aku jadi DPS"}
+],
+
+"cover healer":[
+{type:"Game",korean:"힐러 보호해주세요",indonesia:"Cover healer"}
+],
+
+"protect tank":[
+{type:"Game",korean:"탱커 보호해주세요",indonesia:"Protect tank"}
+],
+
+"healer kena target":[
+{type:"Game",korean:"힐러 타겟됐어요",indonesia:"Healer kena target"}
+],
+
+"dps kena stun":[
+{type:"Game",korean:"딜러 스턴 걸렸어요",indonesia:"DPS kena stun"}
+],
+
+"tank kena debuff":[
+{type:"Game",korean:"탱커 디버프 걸렸어요",indonesia:"Tank kena debuff"}
+],
+
+"cleanse dong":[
+{type:"Game",korean:"해제해주세요",indonesia:"Cleanse dong"}
+],
+
+"debuff sakit":[
+{type:"Game",korean:"디버프 너무 아파요",indonesia:"Debuff sakit"}
+],
+
+"pakai potion sekarang":[
+{type:"Game",korean:"지금 물약 쓰세요",indonesia:"Pakai potion sekarang"}
+],
+
+"jangan pelit potion":[
+{type:"Game",korean:"물약 아끼지 마세요",indonesia:"Jangan pelit potion"}
+],
+
+"mana regen":[
+{type:"Game",korean:"마나 회복 중",indonesia:"Mana regen"}
+],
+
+"hp regen":[
+{type:"Game",korean:"체력 회복 중",indonesia:"HP regen"}
+],
+
+"duduk dulu":[
+{type:"Game",korean:"잠깐 앉아있어요",indonesia:"Duduk dulu"}
+],
+
+"regen dulu":[
+{type:"Game",korean:"회복 좀 할게요",indonesia:"Regen dulu"}
+],
+
+"ayo lanjut raid":[
+{type:"Game",korean:"레이드 계속합시다",indonesia:"Lanjut raid"}
+],
+
+"raid clear":[
+{type:"Game",korean:"레이드 클리어",indonesia:"Raid clear"}
+],
+
+"perfect run":[
+{type:"Game",korean:"완벽한 플레이",indonesia:"Perfect run"}
+],
+
+"wipe party":[
+{type:"Game",korean:"파티 전멸했어요",indonesia:"Party wipe"}
+],
+
+"retry lagi":[
+{type:"Game",korean:"다시 도전합시다",indonesia:"Retry lagi"}
+],
+
+"ada pk":[{type:"Game",korean:"PK 있어요",indonesia:"Ada PK"}],
+"aku pergi ke gudang":[{type:"Game",korean:"창고 갔다올게요",indonesia:"Aku pergi ke gudang"}],
+"pergi ke gudang":[{type:"Game",korean:"창고 갔다올게요",indonesia:"Pergi ke gudang"}],
+"mau ke gudang":[{type:"Game",korean:"창고 갔다올게요",indonesia:"Mau ke gudang"}]
+
+};
+
+const CHO=['r','R','s','e','E','f','a','q','Q','t','T','d','w','W','c','z','x','v','g'];
+const JUNG=['k','o','i','O','j','p','u','P','h','hk','ho','hl','y','n','nj','np','nl','b','m','ml','l'];
+const JONG=['','r','R','rt','s','sw','sg','e','f','fr','fa','fq','ft','fx','fv','fg','a','q','qt','t','T','d','w','c','z','x','v','g'];
+
+const JAMO={
+'ㄱ':'r','ㄲ':'R','ㄳ':'rt','ㄴ':'s','ㄵ':'sw','ㄶ':'sg',
+'ㄷ':'e','ㄸ':'E','ㄹ':'f','ㄺ':'fr','ㄻ':'fa','ㄼ':'fq',
+'ㄽ':'ft','ㄾ':'fx','ㄿ':'fv','ㅀ':'fg','ㅁ':'a','ㅂ':'q',
+'ㅃ':'Q','ㅄ':'qt','ㅅ':'t','ㅆ':'T','ㅇ':'d','ㅈ':'w',
+'ㅉ':'W','ㅊ':'c','ㅋ':'z','ㅌ':'x','ㅍ':'v','ㅎ':'g',
+'ㅏ':'k','ㅐ':'o','ㅑ':'i','ㅒ':'O','ㅓ':'j','ㅔ':'p',
+'ㅕ':'u','ㅖ':'P','ㅗ':'h','ㅘ':'hk','ㅙ':'ho','ㅚ':'hl',
+'ㅛ':'y','ㅜ':'n','ㅝ':'nj','ㅞ':'np','ㅟ':'nl','ㅠ':'b',
+'ㅡ':'m','ㅢ':'ml','ㅣ':'l'
+};
+
+function hangulToKeyboard(text){
+  let output='';
+
+  for(const char of text){
+    const code=char.charCodeAt(0);
+
+    if(JAMO[char]){
+      output+=JAMO[char];
+      continue;
+    }
+    
+    if(code>=0xAC00 && code<=0xD7A3){
+      const offset=code-0xAC00;
+      const jong=offset%28;
+      const jung=Math.floor((offset/28)%21);
+      const cho=Math.floor(offset/588);
+
+      output+=CHO[cho]+JUNG[jung]+JONG[jong];
+      continue;
+    }
+
+    output+=char;
+  }
+
+  return output;
+}
+
+function normalizeInput(text){
+  return text.toLowerCase().trim().replace(/\s+/g,' ');
+}
+
+function findDictionary(input){
+
+  const keys = Object.keys(dictionary).sort((a,b)=>b.length-a.length);
+
+  if(dictionary[input]){
+    return dictionary[input];
+  }
+
+  let results = [];
+
+  keys.forEach(key=>{
+
+    if(key.includes(input) || input.includes(key)){
+
+      dictionary[key].forEach(item=>{
+        results.push(item);
+      });
+
+    }
+
+  });
+
+  if(results.length > 0){
+    return results.slice(0,8);
+  }
+
+  const inputWords = input.split(" ");
+
+  keys.forEach(key=>{
+
+    const keyWords = key.split(" ");
+
+    const matchCount = keyWords.filter(word=>
+      inputWords.includes(word)
+    ).length;
+
+    if(matchCount >= 1 && input.length >= 3){
+
+      dictionary[key].forEach(item=>{
+        results.push(item);
+      });
+
+    }
+
+  });
+
+  if(results.length > 0){
+    return results.slice(0,8);
+  }
+
+  return null;
+}
+
+function updateSuggestions(){
+
+  const input = normalizeInput(document.getElementById('input').value);
+  const box = document.getElementById('suggestions');
+
+  box.innerHTML = '';
+
+  if(!input) return;
+
+  const keys = Object.keys(dictionary);
+
+  const matches = keys.filter(key =>
+    key.toLowerCase().includes(input.toLowerCase()) ||
+    input.toLowerCase().includes(key.toLowerCase()) ||
+    key.split(' ').some(word => word.startsWith(input))
+  ).slice(0,10);
+
+  matches.forEach(key=>{
+
+    const chip=document.createElement('div');
+
+    chip.className='suggestion';
+
+    chip.textContent=key;
+
+    chip.onclick=()=>{
+
+      document.getElementById('input').value=key;
+
+      box.innerHTML='';
+
+      generateText();
+
+    };
+
+    box.appendChild(chip);
+
+  });
+
+}
+
+function setupQuickChat(){
+  const quickList=[
+    'hai',
+    'makasih',
+    'heal dong',
+    'buff dong',
+    'mau party',
+    'afk bentar',
+    'boss muncul',
+    'lari',
+    'aku mau ambil panah',
+    'lagi ngapain'
+  ];
+
+  const box=document.getElementById('quickBox');
+  
+  quickList.forEach(text=>{
+    const chip=document.createElement('div');
+    chip.className='quick';
+    chip.textContent=text;
+    chip.onclick=()=>{
+      document.getElementById('input').value=text;
+      updateSuggestions();
+      generateText();
+    };
+    box.appendChild(chip);
+  });
+}
+
+function setupCategories(){
+
+  const categories = {
+    PARTY:['party','slot','invite','leader','tank','healer','dps'],
+    WAR:['war','pk','musuh','push','mundur','defend','serang'],
+    FARM:['farm','hunt','hunting','mob','spot','exp','drop'],
+    TRADE:['jual','beli','trade','harga','adena','gold','item'],
+    DAILY:['daily','quest','npc','login','logout','afk'],
+    HP:['hp','darah','potion darah','heal'],
+    MANA:['mp','mana'],
+    SPEED:['speed','kecepatan'],
+    TOWN:['kota','gudang','teleport','tp']
+  };
+
+  const box=document.getElementById('categoryBox');
+
+  box.innerHTML='';
+
+  Object.keys(categories).forEach(cat=>{
+
+    const btn=document.createElement('div');
+
+    btn.className='quick';
+
+    btn.textContent=cat;
+
+    btn.onclick=()=>{
+
+      const keywords=categories[cat];
+
+      const results=[];
+
+      Object.keys(dictionary).forEach(key=>{
+
+        const match=keywords.some(word=>key.includes(word));
+
+        if(match){
+          dictionary[key].forEach(item=>{
+            results.push(item);
+          });
+        }
+
+      });
+
+      document.getElementById('result').innerHTML=`
+<div class="quick-title">
+${cat} CATEGORY
+</div>
+`;
+
+showResults(results.slice(0,12));
+
+      document.getElementById('input').value=cat.toLowerCase();
+
+    };
+
+    box.appendChild(btn);
+
+  });
+
+}
+
+async function generateText(){
+  const rawInput=document.getElementById('input').value;
+  const input=normalizeInput(rawInput);
+  const result=document.getElementById('result');
+
+  result.innerHTML='';
+
+  if(!input) return;
+
+  const found=findDictionary(input);
+
+  if(found){
+    showResults(found);
+    return;
+  }
+
+  result.innerHTML=`
+<div class="card">
+
+  <div class="type">
+    Phrase Not Found
+  </div>
+
+  <div class="indo">
+    Phrase belum ada di database.<br><br>
+
+    Coba keyword seperti:
+    <br><br>
+
+    • heal
+    <br>
+    • party
+    <br>
+    • boss
+    <br>
+    • afk
+    <br>
+    • gudang
+    <br>
+    • teleport
+  </div>
+
+</div>
+`;
+
+return;
+}
+
+function showResults(items){
+
+  const result=document.getElementById('result');
+
+  if(!result.innerHTML.includes('CATEGORY')){
+  result.innerHTML='';
+}
+
+  items.forEach(item=>{
+
+    const keyboard=hangulToKeyboard(item.korean);
+
+    const div=document.createElement('div');
+
+    div.className='card';
+
+    div.innerHTML=`
+      <div class="type">${item.type}</div>
+      <div class="korean">${item.korean}</div>
+      <div class="keyboard">${keyboard}</div>
+      <div class="indo">
+        <b>Arti:</b><br>
+        ${item.indonesia || '-'}
+      </div>
+      <button class="copy">Copy Keyboard</button>
+    `;
+
+    div.querySelector('.copy').onclick=(e)=>
+      copyText(keyboard,e.target);
+
+    result.appendChild(div);
+
+  });
+
+  result.scrollIntoView({
+    behavior:'smooth',
+    block:'start'
+  });
+
+  document.getElementById('input').focus();
+
+}
+
+function copyText(text){
+
+  if(navigator.clipboard && window.isSecureContext){
+
+    navigator.clipboard.writeText(text).then(()=>{
+      showToast();
+    }).catch(()=>{
+      fallbackCopy(text);
+    });
+
+  }else{
+    fallbackCopy(text);
+  }
+
+}
+
+function fallbackCopy(text){
+
+  const textarea=document.createElement('textarea');
+
+  textarea.value=text;
+  textarea.style.position='fixed';
+  textarea.style.opacity='0';
+
+  document.body.appendChild(textarea);
+
+  textarea.focus();
+  textarea.select();
+
+  document.execCommand('copy');
+
+  document.body.removeChild(textarea);
+
+  showToast();
+
+}
+
+function showToast(){
+
+  const toast=document.getElementById('toast');
+
+  toast.classList.add('show');
+
+  setTimeout(()=>{
+    toast.classList.remove('show');
+  },1500);
+
+}
+
+setupQuickChat();
+setupCategories();
+
+function setupCategories(){
+
+  const categories = {
+
+  '👥 PARTY':['party','invite','slot','tank','healer','dps'],
+
+  '⚔️ WAR':['war','pk','enemy','push','retreat','defend'],
+
+  '🌾 FARM':['farm','hunt','mob','spot','exp','leveling'],
+
+  '👹 BOSS':['boss','raid','aoe','burst','aggro'],
+
+  '💚 HEAL':['heal','buff','mana','hp','res','revive'],
+
+  '💰 TRADE':['trade','sell','buy','adena','gold','loot'],
+
+  '😴 AFK':['afk','brb','toilet','sleep','eat'],
+
+  '💬 SOCIAL':['hello','thanks','sorry','haha','zzz']
+
+};
+
+  const box=document.getElementById('categoryBox');
+
+  if(!box) return;
+
+  box.innerHTML='';
+
+  Object.keys(categories).forEach(cat=>{
+
+    const btn=document.createElement('div');
+
+    btn.className='quick';
+
+    btn.textContent=cat;
+
+    btn.onclick=()=>{
+
+      const keywords=categories[cat];
+
+      const results=[];
+
+      Object.keys(dictionary).forEach(key=>{
+
+        const match=keywords.some(word=>
+          key.includes(word)
+        );
+
+        if(match){
+
+          dictionary[key].forEach(item=>{
+            results.push(item);
+          });
+
+        }
+
+      });
+
+      document.getElementById('result').innerHTML=`
+      <div class="quick-title">
+      ${cat} CATEGORY
+      </div>
+      `;
+
+      showResults(results.slice(0,12));
+
+    };
+
+    box.appendChild(btn);
+
+  });
+
+}
+
+function clearAll(){
+
+  document.getElementById('input').value='';
+
+  document.getElementById('result').innerHTML='';
+
+  document.getElementById('suggestions').innerHTML='';
+
+  document.getElementById('input').focus();
+
+}
+
+</script>
+
+</body>
+</html>
