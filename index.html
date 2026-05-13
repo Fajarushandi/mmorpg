@@ -332,17 +332,19 @@ button:hover{
   </div>
 
   <div class="suggestion-box" id="suggestions"></div>
-
   <div class="quick-title">Quick Chat</div>
-  <div class="quick-box" id="quickBox"></div>
+<div class="quick-box" id="quickBox"></div>
 
-  <div class="quick-title">Categories</div>
-  <div class="quick-box" id="categoryBox"></div>
+<div class="quick-title">Categories</div>
+<div class="quick-box" id="categoryBox"></div>
 
-  <div class="result" id="result"></div>
+<div class="quick-title">Favorites</div>
+<div class="quick-box" id="favoriteBox"></div>
+
+<div class="result" id="result"></div>
 
   <div class="info">
-    Powered by FR
+    Powered by Fajar R
   </div>
 
 </div>
@@ -4249,7 +4251,7 @@ function updateSuggestions(){
 
   box.innerHTML = '';
 
-  if(!input) return;
+  if(!input || input.length < 2) return;
 
   const keys = Object.keys(dictionary);
 
@@ -4451,6 +4453,63 @@ showResults(unique.slice(0,24));
 
 }
 
+let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+function toggleFavorite(data){
+
+  const key = data.korean;
+
+  const index = favorites.findIndex(v => v.korean === key);
+
+  if(index > -1){
+    favorites.splice(index,1);
+  }else{
+    favorites.push(data);
+  }
+
+  localStorage.setItem('favorites',JSON.stringify(favorites));
+
+  renderFavorites();
+}
+
+function renderFavorites(){
+
+  const box = document.getElementById('favoriteBox');
+
+  if(!box) return;
+
+  box.innerHTML = '';
+
+  if(favorites.length === 0){
+    box.innerHTML = `
+      <div style="
+        color:#7f8b99;
+        font-size:13px;
+      ">
+        Belum ada favorite
+      </div>
+    `;
+    return;
+  }
+
+  favorites.forEach(item=>{
+
+    const btn = document.createElement('div');
+
+    btn.className = 'quick';
+
+    btn.innerText = item.korean;
+
+    btn.onclick = ()=>{
+      showResults([item]);
+    };
+
+    box.appendChild(btn);
+
+  });
+
+}
+
 async function generateText(){
   const rawInput=document.getElementById('input').value;
   const input=normalizeInput(rawInput);
@@ -4504,8 +4563,8 @@ function showResults(items){
   const result=document.getElementById('result');
 
   if(!result.innerHTML.includes('CATEGORY')){
-  result.innerHTML='';
-}
+    result.innerHTML='';
+  }
 
   items.forEach(item=>{
 
@@ -4520,18 +4579,39 @@ function showResults(items){
       <div class="korean">${item.korean}</div>
       <div class="keyboard">${keyboard}</div>
       <div class="indo">
-  ${(item.indonesia || '-')
-    .replace(" formal","")
-    .replace(" santai","")
-    .replace(" slang game","")
-    .replace(" gaya English","")
-  }
-</div>
-      <button class="copy">Copy Keyboard</button>
+        ${(item.indonesia || '-')
+          .replace(" formal","")
+          .replace(" santai","")
+          .replace(" slang game","")
+          .replace(" gaya English","")
+        }
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:12px;">
+        <button class="copy" style="flex:1;">
+          Copy Keyboard
+        </button>
+
+        <button
+          class="fav"
+          style="
+          width:58px;
+          background:#2a313d;
+          border:1px solid #3a4455;
+          "
+        >
+          ⭐
+        </button>
+      </div>
     `;
 
-    div.querySelector('.copy').onclick=(e)=>
-      copyText(keyboard,e.target);
+    div.querySelector('.copy').onclick=()=>{
+      copyText(keyboard);
+    };
+
+    div.querySelector('.fav').onclick=()=>{
+      toggleFavorite(item);
+    };
 
     result.appendChild(div);
 
@@ -4595,6 +4675,7 @@ function showToast(){
 
 setupQuickChat();
 setupCategories();
+renderFavorites();
 
 function clearAll(){
 
