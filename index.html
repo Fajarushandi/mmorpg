@@ -378,6 +378,8 @@ button:hover{
   <div class="quick-box" id="favoriteBox"></div>
 </div>
 
+<div id="resultHeader"></div>
+
 <div class="result" id="result"></div>
 
   <div class="info">
@@ -4448,6 +4450,7 @@ function setupCategories(){
 
   const box = document.getElementById('categoryBox');
   const result = document.getElementById('result');
+  const resultHeader = document.getElementById('resultHeader');
 
   box.innerHTML = '';
 
@@ -4466,6 +4469,7 @@ function setupCategories(){
         result.dataset.category = '';
 
         result.innerHTML = '';
+resultHeader.innerHTML = '';
 
         return;
 
@@ -4505,7 +4509,7 @@ function setupCategories(){
 
       });
 
-      result.innerHTML = `
+      resultHeader.innerHTML = `
         <div class="card" data-category-title="true">
 
           <div class="type">CATEGORY</div>
