@@ -4520,9 +4520,13 @@ function showResults(items){
       <div class="korean">${item.korean}</div>
       <div class="keyboard">${keyboard}</div>
       <div class="indo">
-        <b>Arti:</b><br>
-        ${item.indonesia || '-'}
-      </div>
+  ${(item.indonesia || '-')
+    .replace(" formal","")
+    .replace(" santai","")
+    .replace(" slang game","")
+    .replace(" gaya English","")
+  }
+</div>
       <button class="copy">Copy Keyboard</button>
     `;
 
