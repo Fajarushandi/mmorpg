@@ -182,12 +182,7 @@ button:hover{
   color:#d6e2f5;
   font-size:13px;
   cursor:pointer;
-}
-
-.result{
-  display:flex;
-  flex-direction:column;
-  gap:15px;
+  transition:.2s;
 }
 
 .card{
@@ -235,6 +230,28 @@ button:hover{
 .copy{
   margin-top:12px;
   width:100%;
+}
+
+.fav{
+  transition:.2s;
+}
+
+.fav:hover{
+  transform:scale(1.08);
+}
+
+.result{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+
+  max-height:70vh;
+  overflow:auto;
+}
+
+.quick:hover{
+  transform:translateY(-2px);
+  opacity:.95;
 }
 
 .info{
