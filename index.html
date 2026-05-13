@@ -299,7 +299,7 @@ button:hover{
 
   <div class="input-box" style="flex-direction:column;">
     <input
-    onclick="this.select()"
+    onfocus="this.select()"
       id="input"
       placeholder="Contoh: heal dong, party yuk, ada pk"
       oninput="updateSuggestions()"
@@ -324,7 +324,7 @@ button:hover{
     this.style.transform='translateY(0)';
     this.style.background='#2a313d';
   "
-  onclick="clearAll()"
+  onclick="closeKeyboard(); clearAll()"
 >
   🗑️ Clear
 </button>
@@ -4115,6 +4115,20 @@ function typoScore(a,b){
   return diff;
 }
 
+function closeKeyboard(){
+
+  const input = document.getElementById('input');
+
+  input.blur();
+
+  input.setAttribute('readonly', true);
+
+  setTimeout(()=>{
+    input.removeAttribute('readonly');
+  },100);
+
+}
+
 function findTypoKey(input,keys){
 
   if(input.length < 4) return null;
@@ -4277,6 +4291,8 @@ function updateSuggestions(){
     chip.textContent=key;
 
     chip.onclick=()=>{
+    
+    closeKeyboard();
 
       document.getElementById('input').value=key;
 
@@ -4333,6 +4349,8 @@ function setupQuickChat(){
 
     chip.onclick=()=>{
 
+  closeKeyboard();
+
       document.getElementById('input').value=text;
 
       document.getElementById('suggestions').innerHTML='';
@@ -4377,7 +4395,7 @@ function setupCategories(){
 
     btn.onclick=()=>{
     
-    document.getElementById('input').blur();
+    closeKeyboard();
 
       const keywords = categories[cat];
 
@@ -4520,8 +4538,6 @@ function showResults(items){
     block:'start'
   });
 
-  document.getElementById('input').focus();
-
 }
 
 function copyText(text){
@@ -4583,8 +4599,6 @@ function clearAll(){
   document.getElementById('result').innerHTML='';
 
   document.getElementById('suggestions').innerHTML='';
-
-  document.getElementById('input').focus();
 
 }
 
