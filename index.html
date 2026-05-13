@@ -4583,7 +4583,9 @@ function renderFavorites(){
     btn.innerText = item.korean;
 
     btn.onclick = ()=>{
-      showResults([item]);
+      document.getElementById('resultHeader').innerHTML='';
+document.getElementById('result').dataset.category='';
+showResults([item]);
     };
 
     box.appendChild(btn);
@@ -4598,6 +4600,8 @@ async function generateText(){
   const result=document.getElementById('result');
 
   result.innerHTML='';
+  resultHeader.innerHTML='';
+result.dataset.category='';
 
   if(!input) return;
 
@@ -4643,6 +4647,7 @@ return;
 function showResults(items){
 
   const result=document.getElementById('result');
+  const resultHeader=document.getElementById('resultHeader');
 
   if(!result.innerHTML.includes('CATEGORY')){
     result.innerHTML='';
