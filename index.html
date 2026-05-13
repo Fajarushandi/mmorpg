@@ -160,6 +160,20 @@ button:hover{
   margin-bottom:20px;
 }
 
+.section{
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;
+  padding:14px;
+  margin-bottom:16px;
+}
+
+.section .quick-title{
+  margin-bottom:10px;
+  font-weight:bold;
+  letter-spacing:.3px;
+}
+
 .quick{
   padding:9px 12px;
   border-radius:999px;
@@ -332,14 +346,20 @@ button:hover{
   </div>
 
   <div class="suggestion-box" id="suggestions"></div>
-  <div class="quick-title">Quick Chat</div>
-<div class="quick-box" id="quickBox"></div>
+  <div class="section">
+  <div class="quick-title">⚡ Quick Chat</div>
+  <div class="quick-box" id="quickBox"></div>
+</div>
 
-<div class="quick-title">Categories</div>
-<div class="quick-box" id="categoryBox"></div>
+<div class="section">
+  <div class="quick-title">📂 Categories</div>
+  <div class="quick-box" id="categoryBox"></div>
+</div>
 
-<div class="quick-title">Favorites</div>
-<div class="quick-box" id="favoriteBox"></div>
+<div class="section">
+  <div class="quick-title">⭐ Favorites</div>
+  <div class="quick-box" id="favoriteBox"></div>
+</div>
 
 <div class="result" id="result"></div>
 
@@ -4185,49 +4205,77 @@ function findDictionary(input){
     input = aliases[input];
   }
 
-  const keys = Object.keys(dictionary).sort((a,b)=>b.length-a.length);
+  const keys = Object.keys(dictionary);
 
   if(dictionary[input]){
     return dictionary[input];
   }
 
-  let results = [];
+  const scored = [];
 
   keys.forEach(key=>{
 
-    if(key.includes(input) || input.includes(key)){
+    let score = 0;
 
-      dictionary[key].forEach(item=>{
-        results.push(item);
+    if(key === input){
+      score += 100;
+    }
+
+    else if(key.startsWith(input)){
+      score += 80;
+    }
+
+    else if(key.includes(input)){
+      score += 60;
+    }
+
+    else if(input.includes(key)){
+      score += 45;
+    }
+
+    const inputWords = input.split(" ");
+    const keyWords = key.split(" ");
+
+    const matchCount = keyWords.filter(word =>
+      inputWords.includes(word)
+    ).length;
+
+    if(matchCount > 0 && input.length >= 3){
+      score += matchCount * 20;
+    }
+
+    if(score > 0){
+      scored.push({
+        key,
+        score
       });
-
     }
 
   });
 
-  if(results.length > 0){
-    return results.slice(0,8);
-  }
-
-  const inputWords = input.split(" ");
-
-  keys.forEach(key=>{
-
-    const keyWords = key.split(" ");
-
-    const matchCount = keyWords.filter(word=>
-      inputWords.includes(word)
-    ).length;
-
-    const minMatch = inputWords.length >= 3 ? 2 : 1;
-
-    if(matchCount >= minMatch && input.length >= 3){
-
-      dictionary[key].forEach(item=>{
-        results.push(item);
-      });
-
+  scored.sort((a,b)=>{
+    if(b.score !== a.score){
+      return b.score - a.score;
     }
+
+    return a.key.length - b.key.length;
+  });
+
+  const results = [];
+  const seen = new Set();
+
+  scored.forEach(data=>{
+
+    dictionary[data.key].forEach(item=>{
+
+      const id = item.korean + item.type;
+
+      if(!seen.has(id)){
+        seen.add(id);
+        results.push(item);
+      }
+
+    });
 
   });
 
@@ -4237,11 +4285,11 @@ function findDictionary(input){
 
   const typoKey = findTypoKey(input, keys);
 
-if(typoKey){
-  return dictionary[typoKey];
-}
+  if(typoKey){
+    return dictionary[typoKey];
+  }
 
-return null;
+  return null;
 }
 
 function updateSuggestions(){
@@ -4370,49 +4418,52 @@ function setupQuickChat(){
 function setupCategories(){
 
   const categories = {
-  '👥 PARTY':['party','slot','invite','leader','tank','healer','dps','disconnect','afk'],
-  '⚔️ WAR':['war','pk','musuh','push','mundur','serang'],
-  '🌾 FARM':['farm','hunt','hunting','mob','spot','exp','drop'],
-  '💰 TRADE':['jual','beli','trade','harga','adena','gold','item'],
-  '📋 DAILY':['daily','quest','npc','login','logout','afk'],
-  '❤️ HP':['hp','darah','heal','revive'],
-  '🔵 MANA':['mp','mana','buff'],
-  '⚡ SPEED':['speed','cepat','rush'],
-  '🏙️ TOWN':['kota','gudang','teleport','tp','dungeon'],
-  '👑 BOSS':['boss','raid','aoe'],
-  '🌀 STATUS':['stun','silence','fear','root','cleanse','debuff']
-};
+    '🎉 PARTY':['party','slot','invite','leader','tank','healer','dps'],
+    '⚔️ WAR':['war','pk','musuh','push','mundur','defend','serang'],
+    '🌾 FARM':['farm','hunt','hunting','mob','spot','exp','drop'],
+    '💰 TRADE':['jual','beli','trade','harga','adena','gold','item'],
+    '📅 DAILY':['daily','quest','npc','login','logout','afk'],
+    '❤️ HP':['hp','darah','potion darah','heal'],
+    '🔵 MANA':['mp','mana'],
+    '⚡ SPEED':['speed','kecepatan'],
+    '🏙️ TOWN':['kota','gudang','teleport','tp']
+  };
 
-  const box=document.getElementById('categoryBox');
+  const box = document.getElementById('categoryBox');
+  const result = document.getElementById('result');
 
-  box.innerHTML='';
+  box.innerHTML = '';
 
   Object.keys(categories).forEach(cat=>{
 
-    const btn=document.createElement('div');
+    const btn = document.createElement('div');
 
-    btn.className='quick';
+    btn.className = 'quick';
 
-    btn.textContent=cat;
+    btn.innerText = cat;
 
-    btn.onclick=()=>{
-    
-    closeKeyboard();
+    btn.onclick = ()=>{
 
-      const keywords = categories[cat];
+      if(result.dataset.category === cat){
 
-      let results = [];
+        result.dataset.category = '';
 
-      keywords.forEach(word=>{
+        result.innerHTML = '';
+
+        return;
+
+      }
+
+      result.dataset.category = cat;
+
+      let found = [];
+
+      categories[cat].forEach(word=>{
 
         Object.keys(dictionary).forEach(key=>{
 
           if(key.includes(word)){
-
-            dictionary[key].forEach(item=>{
-              results.push(item);
-            });
-
+            found.push(...dictionary[key]);
           }
 
         });
@@ -4423,7 +4474,7 @@ function setupCategories(){
 
       const seen = new Set();
 
-      results.forEach(item=>{
+      found.forEach(item=>{
 
         const id = item.korean + item.type;
 
@@ -4437,13 +4488,23 @@ function setupCategories(){
 
       });
 
-      document.getElementById('result').innerHTML=`
-  <div class="quick-title">
-    ${cat} CATEGORY
-  </div>
-`;
+      result.innerHTML = `
+        <div class="card" data-category-title="true">
 
-showResults(unique.slice(0,24));
+          <div class="type">CATEGORY</div>
+
+          <div class="korean">
+            ${cat.replace(/^[^\w]+ /,'')}
+          </div>
+
+          <div class="indo">
+            Klik kategori yang sama lagi untuk menutup.
+          </div>
+
+        </div>
+      `;
+
+      showResults(unique.slice(0,24));
 
     };
 
@@ -4570,6 +4631,8 @@ function showResults(items){
 
     const keyboard=hangulToKeyboard(item.korean);
 
+    const isFav = favorites.some(fav => fav.korean === item.korean);
+
     const div=document.createElement('div');
 
     div.className='card';
@@ -4598,9 +4661,10 @@ function showResults(items){
           width:58px;
           background:#2a313d;
           border:1px solid #3a4455;
+          font-size:18px;
           "
         >
-          ⭐
+          ${isFav ? '⭐' : '☆'}
         </button>
       </div>
     `;
@@ -4609,8 +4673,12 @@ function showResults(items){
       copyText(keyboard);
     };
 
-    div.querySelector('.fav').onclick=()=>{
+    div.querySelector('.fav').onclick=(e)=>{
       toggleFavorite(item);
+
+      const active = favorites.some(fav => fav.korean === item.korean);
+
+      e.target.innerText = active ? '⭐' : '☆';
     };
 
     result.appendChild(div);
