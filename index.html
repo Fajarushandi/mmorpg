@@ -4539,9 +4539,11 @@ let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
 
 function toggleFavorite(data){
 
-  const key = data.korean;
+  const key = data.korean + data.type;
 
-  const index = favorites.findIndex(v => v.korean === key);
+const index = favorites.findIndex(v =>
+  v.korean + v.type === key
+);
 
   if(index > -1){
     favorites.splice(index,1);
@@ -4774,10 +4776,10 @@ renderFavorites();
 function clearAll(){
 
   document.getElementById('input').value='';
-
   document.getElementById('result').innerHTML='';
-
+  document.getElementById('resultHeader').innerHTML='';
   document.getElementById('suggestions').innerHTML='';
+  document.getElementById('result').dataset.category='';
 
 }
 
