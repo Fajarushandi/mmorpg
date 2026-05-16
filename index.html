@@ -12,6 +12,10 @@
   box-sizing:border-box;
 }
 
+html, body{
+  width:100%;
+  overflow-x:hidden;
+}
 body{
   font-family:Arial,sans-serif;
   background:
@@ -330,12 +334,12 @@ button:hover{
 
   <div class="input-box" style="flex-direction:column;">
     <input
-    onfocus="this.select()"
-      id="input"
-      placeholder="Contoh: heal dong, party yuk, ada pk"
-      oninput="updateSuggestions()"
-      onkeydown="if(event.key==='Enter') generateText()"
-    >
+onfocus="this.select()"
+  id="input"
+  placeholder="Contoh: heal dong, party yuk, ada pk"
+  oninput="updateSuggestions(); scrollToSuggestions()"
+  onkeydown="if(event.key==='Enter') generateText()"
+>
     <div style="display:flex;gap:10px;width:100%;">
   <button style="flex:1;" onclick="generateText()">Search</button>
 
@@ -363,7 +367,7 @@ button:hover{
   </div>
 
   <div class="suggestion-box" id="suggestions"></div>
-  <div class="section">
+  <div class="section" id="quickSection">
   <div class="quick-title">⚡ Quick Chat</div>
   <div class="quick-box" id="quickBox"></div>
 </div>
@@ -383,8 +387,8 @@ button:hover{
 <div class="result" id="result"></div>
 
   <div class="info">
-    Powered by Fajar R
-  </div>
+  Built by Fajar
+</div>
 
 </div>
 
@@ -4483,7 +4487,10 @@ resultHeader.innerHTML = '';
 
         Object.keys(dictionary).forEach(key=>{
 
+          const keyWords = key.split(' ');
+          
           if(key.includes(word)){
+            
             found.push(...dictionary[key]);
           }
 
@@ -4704,7 +4711,7 @@ function showResults(items){
     div.querySelector('.fav').onclick=(e)=>{
       toggleFavorite(item);
 
-      const active = favorites.some(fav => fav.korean === item.korean);
+      const active = favorites.some(fav =>   fav.korean === item.korean && fav.type === item.type );
 
       e.target.innerText = active ? '⭐' : '☆';
     };
@@ -4780,6 +4787,29 @@ function clearAll(){
   document.getElementById('resultHeader').innerHTML='';
   document.getElementById('suggestions').innerHTML='';
   document.getElementById('result').dataset.category='';
+
+}
+
+let quickScrollTimer = null;
+
+function scrollToSuggestions(){
+
+  clearTimeout(quickScrollTimer);
+
+  quickScrollTimer = setTimeout(()=>{
+
+    const suggestions =
+      document.getElementById('suggestions');
+
+    if(!suggestions) return;
+
+    suggestions.scrollIntoView({
+      behavior:'smooth',
+      block:'center',
+      inline:'nearest'
+    });
+
+  },120);
 
 }
 
