@@ -164,6 +164,14 @@ button:hover{
   margin-bottom:20px;
 }
 
+.quick{
+  flex:0 0 auto;
+}
+
+.section{
+  position:relative;
+}
+
 .section{
   background:rgba(255,255,255,.025);
   border:1px solid rgba(255,255,255,.06);
@@ -248,9 +256,23 @@ button:hover{
   display:flex;
   flex-direction:column;
   gap:15px;
-
   max-height:70vh;
-  overflow:auto;
+  overflow-y:auto;
+  padding-right:6px;
+}
+
+.result::-webkit-scrollbar{
+  width:4px;
+}
+
+.result::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.05);
+  border-radius:999px;
+}
+
+.result::-webkit-scrollbar-thumb{
+  background:#4c8dff;
+  border-radius:999px;
 }
 
 .quick:hover{
@@ -689,6 +711,94 @@ const dictionary = {
 
 "target ini":[
 {type:"Game",korean:"이거 쳐요",indonesia:"Target ini"}
+],
+
+"ga bisa nangkep":[
+{type:"Game",korean:"못잡 ㅋㅋ",indonesia:"Ga bisa nangkep wkwk"}
+],
+
+"coba tangkep":[
+{type:"Game",korean:"잡아봐 ㅋㅋ",indonesia:"Coba tangkep"}
+],
+
+"lambat":[
+{type:"Game",korean:"느림",indonesia:"Lambat"}
+],
+
+"ga kena":[
+{type:"Game",korean:"못침",indonesia:"Ga kena"}
+],
+
+"cupu":[
+{type:"Game",korean:"허접",indonesia:"Cupu / noob"}
+],
+
+"kite terus":[
+{type:"Game",korean:"계속 뛰네 ㅋㅋ",indonesia:"Lari terus wkwk"}
+],
+
+"susah nangkep":[
+{type:"Game",korean:"못 잡겠네",indonesia:"Susah nangkep"}
+],
+
+"kejar terus":[
+{type:"Game",korean:"계속 쫓아오네",indonesia:"Ngejar terus"}
+],
+
+"cape ga":[
+{type:"Game",korean:"안 피곤해? ㅋㅋ",indonesia:"Ga capek? wkwk"}
+],
+
+"masih ngejar":[
+{type:"Game",korean:"아직도 쫓아와? ㅋㅋ",indonesia:"Masih ngejar? wkwk"}
+],
+
+"ga dapet dapet":[
+{type:"Game",korean:"못 잡네 ㅋㅋ",indonesia:"Ga dapet-dapet"}
+],
+
+"lari lagi":[
+{type:"Game",korean:"또 튄다 ㅋㅋ",indonesia:"Kabur lagi wkwk"}
+],
+
+"ayo sini":[
+{type:"Game",korean:"와봐 ㅋㅋ",indonesia:"Sini maju wkwk"}
+],
+
+"kok diem":[
+{type:"Game",korean:"왜 멈춤? ㅋㅋ",indonesia:"Kok diem? wkwk"}
+],
+
+"takut ya":[
+{type:"Game",korean:"쫄았냐? ㅋㅋ",indonesia:"Takut ya? wkwk"}
+],
+
+"ga sakit":[
+{type:"Game",korean:"안 아픈데? ㅋㅋ",indonesia:"Ga sakit tuh wkwk"}
+],
+
+"damage kecil":[
+{type:"Game",korean:"딜 왜 이래? ㅋㅋ",indonesia:"Damage kecil amat"}
+],
+
+"kurang sakit":[
+{type:"Game",korean:"딜 약하네",indonesia:"Damage lemah"}
+],
+
+"masih hidup":[
+{type:"Game",korean:"아직 살아있네 ㅋㅋ",indonesia:"Masih hidup nih wkwk"}
+],
+
+"cuma segini":[
+{type:"Game",korean:"이게 끝? ㅋㅋ",indonesia:"Cuma segini?"}
+],
+
+"ga mempan":[
+{type:"Game",korean:"안 먹히네",indonesia:"Ga mempan"}
+],
+
+"miss terus":[
+{type:"Game",korean:"계속 빗나가네 ㅋㅋ",indonesia:"Miss terus wkwk"}
 ],
 
 "pk":[
@@ -4442,7 +4552,37 @@ function setupCategories(){
 
   const categories = {
     '🎉 PARTY':['party','slot','invite','leader','tank','healer','dps'],
-    '⚔️ WAR':['war','pk','musuh','push','mundur','defend','serang'],
+    '⚔️ WAR':[
+  'war',
+  'pk',
+  'musuh',
+  'push',
+  'mundur',
+  'defend',
+  'serang',
+  'lari',
+  'retreat',
+  'ga bisa nangkep',
+  'coba tangkep',
+  'cupu',
+  'takut ya',
+  'ga sakit',
+  'miss terus',
+  'damage kecil',
+  'ayo sini',
+  'kok diem',
+  'ga mempan',
+  'masih hidup',
+  'cuma segini',
+  'kejar terus',
+  'cape ga',
+  'masih ngejar',
+  'ga dapet dapet',
+  'lari lagi',
+  'susah nangkep',
+  'lambat',
+  'ga kena'
+],
     '🌾 FARM':['farm','hunt','hunting','mob','spot','exp','drop'],
     '💰 TRADE':['jual','beli','trade','harga','adena','gold','item'],
     '📅 DAILY':['daily','quest','npc','login','logout','afk'],
@@ -4489,10 +4629,16 @@ resultHeader.innerHTML = '';
 
           const keyWords = key.split(' ');
           
-          if(key.includes(word)){
-            
-            found.push(...dictionary[key]);
-          }
+          const keyLower = key.toLowerCase();
+const wordLower = word.toLowerCase();
+
+if(
+  keyLower.includes(wordLower) ||
+  wordLower.includes(keyLower) ||
+  keyLower.split(' ').some(w => w.includes(wordLower))
+){
+  found.push(...dictionary[key]);
+}
 
         });
 
@@ -4532,7 +4678,7 @@ resultHeader.innerHTML = '';
         </div>
       `;
 
-      showResults(unique.slice(0,24));
+      showResults(unique.slice(0,80));
 
     };
 
@@ -4812,6 +4958,34 @@ function scrollToSuggestions(){
   },120);
 
 }
+
+function updateScrollIndicator(){
+
+  const thumb = document.getElementById('scrollThumb');
+
+  const scrollTop = window.scrollY;
+
+  const docHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  if(docHeight <= 0) return;
+
+  const progress = scrollTop / docHeight;
+
+  thumb.style.transform =
+    `translateY(${progress * 400}%)`;
+
+}
+
+window.addEventListener(
+  'scroll',
+  updateScrollIndicator
+);
+
+window.addEventListener(
+  'load',
+  updateScrollIndicator
+);
 
 </script>
 
