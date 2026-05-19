@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Korean MMO Chat Assistant</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="hero">
+    <div class="beta">BETA VERSION</div>
+    <div class="logo">🇰🇷</div>
+    <h1>Korean MMO Chat Assistant</h1>
+    <p class="subtitle">Korean MMO Phrase Generator</p>
+    <div class="hero-info">Indo → Korean → Korean Keyboard Input</div>
+  </div>
+
+  <div class="input-box input-box--stack">
+    <input
+      id="input"
+      placeholder="Contoh: heal dong, party yuk, ada pk"
+      onfocus="this.select()"
+      oninput="updateSuggestions(); scrollToSuggestions()"
+      onkeydown="if(event.key==='Enter') generateText()"
+    >
+
+    <div class="button-row">
+      <button class="search-btn" onclick="generateText()">Search</button>
+      <button class="clear-btn" onclick="closeKeyboard(); clearAll()">🗑️ Clear</button>
+    </div>
+  </div>
+
+  <div class="suggestion-box" id="suggestions"></div>
+
+  <div class="section" id="quickSection">
+    <div class="quick-title">⚡ Quick Chat</div>
+    <div class="quick-box" id="quickBox"></div>
+  </div>
+
+  <div class="section">
+    <div class="quick-title">📂 Categories</div>
+    <div class="quick-box" id="categoryBox"></div>
+  </div>
+
+  <div class="section">
+    <div class="quick-title">⭐ Favorites</div>
+    <div class="quick-box" id="favoriteBox"></div>
+  </div>
+
+  <div id="resultHeader"></div>
+  <div class="result" id="result"></div>
+
+  <div class="info">Built by Fajar</div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script src="js/database.js"></script>
+<script src="js/categories.js"></script>
+<script src="js/keyboardMap.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
