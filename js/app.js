@@ -41,46 +41,37 @@ function setupCategories(){
 
   box.innerHTML = '';
 
-  Object.entries(categories).forEach(([cat, words])=>{
+  Object.entries(categories).forEach(([label, categoryId])=>{
     const btn = document.createElement('div');
     btn.className = 'quick';
-    btn.innerText = cat;
+    btn.innerText = label;
 
     btn.onclick = ()=>{
-      if(result.dataset.category === cat){
+      if(result.dataset.category === categoryId){
         result.dataset.category = '';
         result.innerHTML = '';
         resultHeader.innerHTML = '';
         return;
       }
 
-      result.dataset.category = cat;
-      let found = [];
+      result.dataset.category = categoryId;
 
-      words.forEach(word=>{
-        const wordLower = word.toLowerCase();
+      const found = [];
 
-        Object.keys(dictionary).forEach(key=>{
-          const keyLower = key.toLowerCase();
-          const keyWords = keyLower.split(' ');
-
-          if(
-            keyLower === wordLower ||
-            keyLower.includes(wordLower) ||
-            wordLower.includes(keyLower) ||
-            keyWords.some(w=>w.includes(wordLower))
-          ){
-            found.push(...dictionary[key]);
+      Object.values(dictionary).forEach(list=>{
+        list.forEach(item=>{
+          if(item.category === categoryId){
+            found.push(item);
           }
         });
       });
 
-      const unique = uniqueItems(found).slice(0,80);
+      const unique = uniqueItems(found).slice(0,100);
 
       resultHeader.innerHTML = `
         <div class="card" data-category-title="true">
           <div class="type">CATEGORY</div>
-          <div class="korean">${cat.replace(/^[^A-Za-z0-9가-힣]+\s*/, '')}</div>
+          <div class="korean">${label.replace(/^[^A-Za-z0-9가-힣]+\s*/, '')}</div>
           <div class="indo">Klik kategori yang sama lagi untuk menutup.</div>
         </div>
       `;
