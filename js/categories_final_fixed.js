@@ -1,1 +1,0 @@
-// fixed categories placeholder
