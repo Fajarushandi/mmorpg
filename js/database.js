@@ -451,7 +451,7 @@ const dictionary = {
 ],
 
 "boss mati":[
-{category:"HP",type:"Game",korean:"보스 죽었어요",indonesia:"Boss mati"}
+{category:"FARM",type:"Game",korean:"보스 죽었어요",indonesia:"Boss mati"}
 ],
 
 "boss kiri":[
@@ -567,7 +567,7 @@ const dictionary = {
 ],
 
 "kumpul sini":[
-{category:"MANA",type:"Game",korean:"여기 모여요",indonesia:"Kumpul sini"}
+{category:"DAILY",type:"Game",korean:"여기 모여요",indonesia:"Kumpul sini"}
 ],
 
 "leveling":[
@@ -769,11 +769,11 @@ const dictionary = {
 ],
 
 "kamu dimana":[
-{category:"MANA",type:"Natural",korean:"어디예요?",indonesia:"Kamu dimana?"}
+{category:"DAILY",type:"Natural",korean:"어디예요?",indonesia:"Kamu dimana?"}
 ],
 
 "posisi dimana":[
-{category:"MANA",type:"Game",korean:"위치 어디예요?",indonesia:"Posisi dimana?"}
+{category:"DAILY",type:"Game",korean:"위치 어디예요?",indonesia:"Posisi dimana?"}
 ],
 
 "aku disini":[
@@ -781,7 +781,7 @@ const dictionary = {
 ],
 
 "map mana":[
-{category:"MANA",type:"Game",korean:"어느 맵이에요?",indonesia:"Map mana?"}
+{category:"DAILY",type:"Game",korean:"어느 맵이에요?",indonesia:"Map mana?"}
 ],
 
 "lagi ngapain":[
@@ -851,8 +851,8 @@ const dictionary = {
 ],
 
 "dadah":[
-{category:"BASIC",type:"Santai",korean:"바이",indonesia:"Bye"},
-{category:"BASIC",type:"Natural",korean:"안녕",indonesia:"Dadah"}
+{category:"BASIC",type:"Santai",korean:"바이",indonesia:"Bye / dadah santai"},
+{category:"BASIC",type:"Formal",korean:"안녕히 가세요",indonesia:"Selamat jalan / dadah sopan"}
 ],
 
 "mp low":[
@@ -958,7 +958,7 @@ const dictionary = {
 ],
 
 "restart game":[
-{category:"HP",type:"Game",korean:"게임 다시 켤게요",indonesia:"Restart game"}
+{category:"DAILY",type:"Game",korean:"게임 다시 켤게요",indonesia:"Restart game"}
 ],
 
 "aku login":[
@@ -1002,7 +1002,8 @@ const dictionary = {
 ],
 
 "good game":[
-{category:"DAILY",type:"Game",korean:"수고하셨습니다",indonesia:"Good game"}
+{category:"DAILY",type:"Game",korean:"수고하셨습니다",indonesia:"Good job / makasih party"},
+{category:"BASIC",type:"Game",korean:"ㅈㅈ",indonesia:"GG"}
 ],
 
 "nice try":[
@@ -1082,7 +1083,7 @@ const dictionary = {
 ],
 
 "mob gampang":[
-{category:"MANA",type:"Game",korean:"몹 쉬워요",indonesia:"Mob gampang"}
+{category:"FARM",type:"Game",korean:"몹 쉬워요",indonesia:"Mob gampang"}
 ],
 
 "drop banyak":[
@@ -1378,11 +1379,11 @@ const dictionary = {
 ],
 
 "mob respawn":[
-{category:"HP",type:"Game",korean:"몹 다시 나왔어요",indonesia:"Mob respawn"}
+{category:"FARM",type:"Game",korean:"몹 다시 나왔어요",indonesia:"Mob respawn"}
 ],
 
 "boss respawn":[
-{category:"HP",type:"Game",korean:"보스 다시 떴어요",indonesia:"Boss respawn"}
+{category:"FARM",type:"Game",korean:"보스 다시 떴어요",indonesia:"Boss respawn"}
 ],
 
 "siap teleport":[
@@ -1602,7 +1603,7 @@ const dictionary = {
 ],
 
 "boss gampang":[
-{category:"MANA",type:"Game",korean:"보스 쉬워요",indonesia:"Boss gampang"}
+{category:"FARM",type:"Game",korean:"보스 쉬워요",indonesia:"Boss gampang"}
 ],
 
 "damage kurang banget":[
@@ -1758,15 +1759,15 @@ const dictionary = {
 ],
 
 "harus kemana":[
-{category:"MANA",type:"Game",korean:"어디로 가야 돼요?",indonesia:"Harus kemana?"}
+{category:"DAILY",type:"Game",korean:"어디로 가야 돼요?",indonesia:"Harus kemana?"}
 ],
 
 "quest dimana":[
-{category:"MANA",type:"Game",korean:"퀘스트 어디예요?",indonesia:"Quest dimana?"}
+{category:"DAILY",type:"Game",korean:"퀘스트 어디예요?",indonesia:"Quest dimana?"}
 ],
 
 "npc dimana":[
-{category:"MANA",type:"Game",korean:"NPC 어디예요?",indonesia:"NPC dimana?"}
+{category:"DAILY",type:"Game",korean:"NPC 어디예요?",indonesia:"NPC dimana?"}
 ],
 
 "tolong bantu":[
@@ -1806,7 +1807,7 @@ const dictionary = {
 ],
 
 "tolong bahasa simple":[
-{category:"MANA",type:"Natural",korean:"쉬운 말로 해주세요",indonesia:"Tolong bahasa simple"}
+{category:"DAILY",type:"Natural",korean:"쉬운 말로 해주세요",indonesia:"Tolong bahasa simple"}
 ],
 
 "aku ngerti sedikit":[
@@ -1866,7 +1867,7 @@ const dictionary = {
 ],
 
 "sampai jumpa":[
-{category:"MANA",type:"Natural",korean:"다음에 봐요",indonesia:"Sampai jumpa"}
+{category:"BASIC",type:"Natural",korean:"다음에 봐요",indonesia:"Sampai jumpa"}
 ],
 
 "ayo cepat farming":[
@@ -1906,7 +1907,7 @@ const dictionary = {
 ],
 
 "monster gampang banget":[
-{category:"MANA",type:"Game",korean:"몹 엄청 쉬워요",indonesia:"Monster gampang banget"}
+{category:"FARM",type:"Game",korean:"몹 엄청 쉬워요",indonesia:"Monster gampang banget"}
 ],
 
 "ayo cari spot":[
@@ -1966,7 +1967,7 @@ const dictionary = {
 ],
 
 "war gampang":[
-{category:"MANA",type:"Game",korean:"전쟁 쉬워요",indonesia:"War gampang"}
+{category:"WAR",type:"Game",korean:"전쟁 쉬워요",indonesia:"War gampang"}
 ],
 
 "ayo push kiri":[
