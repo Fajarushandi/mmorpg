@@ -198,9 +198,50 @@ button:hover{
 }
 
 .type{
+  display:inline-flex;
+  align-items:center;
+  width:max-content;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.5px;
+  margin-bottom:10px;
+  background:#2a313d;
+  color:#b7c5d9;
+  border:1px solid rgba(255,255,255,.08);
+}
+
+.type.game{
+  background:rgba(76,141,255,.18);
   color:#8eb4ff;
-  font-size:13px;
-  margin-bottom:8px;
+  border-color:rgba(76,141,255,.35);
+}
+
+.type.formal{
+  background:rgba(255,255,255,.10);
+  color:#d7dde8;
+}
+
+.type.santai{
+  background:rgba(116,255,156,.12);
+  color:#74ff9c;
+}
+
+.type.singkat{
+  background:rgba(180,120,255,.16);
+  color:#caa6ff;
+}
+
+.type.natural{
+  background:rgba(255,193,85,.14);
+  color:#ffd18a;
+}
+
+.type.pk_chat{
+  background:rgba(255,75,75,.17);
+  color:#ff8b8b;
+  border-color:rgba(255,75,75,.35);
 }
 
 .korean{
