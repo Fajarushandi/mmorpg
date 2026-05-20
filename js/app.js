@@ -198,16 +198,19 @@ function showResults(items){
 }
 
 function getTypeClass(item){
+
   const type = (item.type || '').toLowerCase();
+
+  if((item.category || '').includes('PK_CHAT')) return 'pk_chat';
 
   if(type.includes('game')) return 'game';
   if(type.includes('formal')) return 'formal';
   if(type.includes('santai')) return 'santai';
   if(type.includes('singkat')) return 'singkat';
   if(type.includes('natural')) return 'natural';
-  if((item.category || '').includes('PK_CHAT')) return 'pk_chat';
 
   return '';
+
 }
 
 function cleanDescription(text){

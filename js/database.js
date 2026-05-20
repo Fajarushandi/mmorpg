@@ -149,7 +149,7 @@ const dictionary = {
 ],
 
 "kick aku":[
-{category:"DAILY",type:"Game",korean:"추방해주세요",indonesia:"Kick aku"}
+{category:"PARTY",type:"Game",korean:"추방해주세요",indonesia:"Kick aku"}
 ],
 
 "keluar party":[
@@ -515,7 +515,7 @@ const dictionary = {
 ],
 
 "jangan pull":[
-{category:"DAILY",type:"Game",korean:"몹 몰지 마세요",indonesia:"Jangan pull mob"}
+{category:"FARM",type:"Game",korean:"몹 몰지 마세요",indonesia:"Jangan pull mob"}
 ],
 
 "mob banyak":[
@@ -559,15 +559,15 @@ const dictionary = {
 ],
 
 "gabung sini":[
-{category:"DAILY",type:"Game",korean:"여기 같이 해요",indonesia:"Gabung sini"}
+{category:"MOVE",type:"Game",korean:"여기 같이 해요",indonesia:"Gabung sini"}
 ],
 
 "ikut sini":[
-{category:"DAILY",type:"Game",korean:"여기로 오세요",indonesia:"Ikut ke sini"}
+{category:"MOVE",type:"Game",korean:"여기로 오세요",indonesia:"Ikut ke sini"}
 ],
 
 "kumpul sini":[
-{category:"DAILY",type:"Game",korean:"여기 모여요",indonesia:"Kumpul sini"}
+{category:"MOVE",type:"Game",korean:"여기 모여요",indonesia:"Kumpul sini"}
 ],
 
 "leveling":[
@@ -587,7 +587,7 @@ const dictionary = {
 ],
 
 "ant cave":[
-{category:"DAILY",type:"Game",korean:"개미굴",indonesia:"Ant Cave"}
+{category:"FARM",type:"Game",korean:"개미굴",indonesia:"Ant Cave"}
 ],
 
 "oasis":[
@@ -745,11 +745,11 @@ const dictionary = {
 ],
 
 "aku otw":[
-{category:"DAILY",type:"Game",korean:"가는 중이에요",indonesia:"Aku OTW"}
+{category:"MOVE",type:"Game",korean:"가는 중이에요",indonesia:"Aku OTW"}
 ],
 
 "otw bentar":[
-{category:"DAILY",type:"Game",korean:"금방 갈게요",indonesia:"OTW bentar"}
+{category:"MOVE",type:"Game",korean:"금방 갈게요",indonesia:"OTW bentar"}
 ],
 
 "tunggu aku":[
@@ -761,76 +761,76 @@ const dictionary = {
 ],
 
 "aku datang":[
-{category:"DAILY",type:"Game",korean:"갈게요",indonesia:"Aku datang"}
+{category:"MOVE",type:"Game",korean:"갈게요",indonesia:"Aku datang"}
 ],
 
 "aku kesana":[
-{category:"DAILY",type:"Game",korean:"거기로 갈게요",indonesia:"Aku ke sana"}
+{category:"MOVE",type:"Game",korean:"거기로 갈게요",indonesia:"Aku ke sana"}
 ],
 
 "kamu dimana":[
-{category:"DAILY",type:"Natural",korean:"어디예요?",indonesia:"Kamu dimana?"}
+{category:"MOVE",type:"Natural",korean:"어디예요?",indonesia:"Kamu dimana?"}
 ],
 
 "posisi dimana":[
-{category:"DAILY",type:"Game",korean:"위치 어디예요?",indonesia:"Posisi dimana?"}
+{category:"MOVE",type:"Game",korean:"위치 어디예요?",indonesia:"Posisi dimana?"}
 ],
 
 "aku disini":[
-{category:"DAILY",type:"Natural",korean:"여기 있어요",indonesia:"Aku di sini"}
+{category:"MOVE",type:"Natural",korean:"여기 있어요",indonesia:"Aku di sini"}
 ],
 
 "map mana":[
-{category:"DAILY",type:"Game",korean:"어느 맵이에요?",indonesia:"Map mana?"}
+{category:"MOVE",type:"Game",korean:"어느 맵이에요?",indonesia:"Map mana?"}
 ],
 
 "lagi ngapain":[
-{category:"DAILY",type:"Natural",korean:"뭐해요?",indonesia:"Lagi ngapain?"},
-{category:"DAILY",type:"Santai",korean:"뭐해?",indonesia:"Lagi apa? santai"}
+{category:"CHAT",type:"Natural",korean:"뭐해요?",indonesia:"Lagi ngapain?"},
+{category:"CHAT",type:"Santai",korean:"뭐해?",indonesia:"Lagi apa? santai"}
 ],
 
 "aku lapar":[
-{category:"DAILY",type:"Natural",korean:"배고파요",indonesia:"Aku lapar"}
+{category:"CHAT",type:"Natural",korean:"배고파요",indonesia:"Aku lapar"}
 ],
 
 "makan dulu":[
-{category:"DAILY",type:"Natural",korean:"밥 먹고 올게요",indonesia:"Makan dulu"}
+{category:"CHAT",type:"Natural",korean:"밥 먹고 올게요",indonesia:"Makan dulu"}
 ],
 
 "minum dulu":[
-{category:"DAILY",type:"Natural",korean:"물 좀 마실게요",indonesia:"Minum dulu"}
+{category:"CHAT",type:"Natural",korean:"물 좀 마실게요",indonesia:"Minum dulu"}
 ],
 
 "tidur dulu":[
-{category:"DAILY",type:"Natural",korean:"자러 갈게요",indonesia:"Tidur dulu"}
+{category:"CHAT",type:"Natural",korean:"자러 갈게요",indonesia:"Tidur dulu"}
 ],
 
 "aku ngantuk":[
-{category:"DAILY",type:"Natural",korean:"졸려요",indonesia:"Aku ngantuk"}
+{category:"CHAT",type:"Natural",korean:"졸려요",indonesia:"Aku ngantuk"}
 ],
 
 "aku capek":[
-{category:"DAILY",type:"Natural",korean:"피곤해요",indonesia:"Aku capek"}
+{category:"CHAT",type:"Natural",korean:"피곤해요",indonesia:"Aku capek"}
 ],
 
 "capek banget":[
-{category:"DAILY",type:"Natural",korean:"너무 피곤해요",indonesia:"Capek banget"}
+{category:"CHAT",type:"Natural",korean:"너무 피곤해요",indonesia:"Capek banget"}
 ],
 
 "seru banget":[
-{category:"DAILY",type:"Natural",korean:"정말 재밌어요",indonesia:"Seru banget"}
+{category:"CHAT",type:"Natural",korean:"정말 재밌어요",indonesia:"Seru banget"}
 ],
 
 "main lagi":[
-{category:"DAILY",type:"Natural",korean:"또 같이 해요",indonesia:"Main lagi"}
+{category:"CHAT",type:"Natural",korean:"또 같이 해요",indonesia:"Main lagi"}
 ],
 
 "temenan yuk":[
-{category:"DAILY",type:"Natural",korean:"친구해요",indonesia:"Temenan yuk"}
+{category:"CHAT",type:"Natural",korean:"친구해요",indonesia:"Temenan yuk"}
 ],
 
 "add friend":[
-{category:"DAILY",type:"Game",korean:"친구 추가해주세요",indonesia:"Add friend"}
+{category:"CHAT",type:"Game",korean:"친구 추가해주세요",indonesia:"Add friend"}
 ],
 
 "wkwk":[
@@ -851,8 +851,8 @@ const dictionary = {
 ],
 
 "dadah":[
-{category:"BASIC",type:"Santai",korean:"바이",indonesia:"Bye / dadah santai"},
-{category:"BASIC",type:"Formal",korean:"안녕히 가세요",indonesia:"Selamat jalan / dadah sopan"}
+{category:"BASIC",type:"Santai",korean:"바이",indonesia:"Bye"},
+{category:"BASIC",type:"Natural",korean:"안녕",indonesia:"Dadah"}
 ],
 
 "mp low":[
@@ -865,15 +865,15 @@ const dictionary = {
 ],
 
 "suruh pergi":[
-{category:"DAILY",type:"Game",korean:"저리 가세요",indonesia:"Suruh pergi"}
+{category:"CHAT",type:"Game",korean:"저리 가세요",indonesia:"Suruh pergi"}
 ],
 
 "pergi sana":[
-{category:"DAILY",type:"Game",korean:"저리 가세요",indonesia:"Pergi sana"}
+{category:"CHAT",type:"Game",korean:"저리 가세요",indonesia:"Pergi sana"}
 ],
 
 "usir dia":[
-{category:"DAILY",type:"Game",korean:"저리 가세요",indonesia:"Usir dia"}
+{category:"CHAT",type:"Game",korean:"저리 가세요",indonesia:"Usir dia"}
 ],
 
 "tunggu disini 10 menit":[
@@ -886,7 +886,7 @@ const dictionary = {
 ],
 
 "cepat kesini":[
-{category:"DAILY",type:"Game",korean:"빨리 여기 오세요",indonesia:"Cepat kesini"}
+{category:"MOVE",type:"Game",korean:"빨리 여기 오세요",indonesia:"Cepat kesini"}
 ],
 
 "monster sakit":[
@@ -894,27 +894,27 @@ const dictionary = {
 ],
 
 "damage kurang":[
-{category:"DAILY",type:"Game",korean:"딜 부족해요",indonesia:"Damage kurang"}
+{category:"CHAT",type:"Game",korean:"딜 부족해요",indonesia:"Damage kurang"}
 ],
 
 "damage besar":[
-{category:"DAILY",type:"Game",korean:"딜 세요",indonesia:"Damage besar"}
+{category:"CHAT",type:"Game",korean:"딜 세요",indonesia:"Damage besar"}
 ],
 
 "aman disini":[
-{category:"DAILY",type:"Game",korean:"여기 안전해요",indonesia:"Aman disini"}
+{category:"CHAT",type:"Game",korean:"여기 안전해요",indonesia:"Aman disini"}
 ],
 
 "tidak aman":[
-{category:"DAILY",type:"Game",korean:"안전하지 않아요",indonesia:"Tidak aman"}
+{category:"CHAT",type:"Game",korean:"안전하지 않아요",indonesia:"Tidak aman"}
 ],
 
 "ramai banget":[
-{category:"DAILY",type:"Game",korean:"사람 많아요",indonesia:"Ramai banget"}
+{category:"CHAT",type:"Game",korean:"사람 많아요",indonesia:"Ramai banget"}
 ],
 
 "sepi":[
-{category:"DAILY",type:"Game",korean:"사람 없어요",indonesia:"Sepi"}
+{category:"CHAT",type:"Game",korean:"사람 없어요",indonesia:"Sepi"}
 ],
 
 "farm semalaman":[
@@ -938,11 +938,11 @@ const dictionary = {
 ],
 
 "aku disconnect":[
-{category:"DAILY",type:"Game",korean:"접속 끊겼어요",indonesia:"Aku disconnect"}
+{category:"SYSTEM",type:"Game",korean:"접속 끊겼어요",indonesia:"Aku disconnect"}
 ],
 
 "lag parah":[
-{category:"DAILY",type:"Game",korean:"렉 심해요",indonesia:"Lag parah"}
+{category:"SYSTEM",type:"Game",korean:"렉 심해요",indonesia:"Lag parah"}
 ],
 
 "fps drop":[
@@ -950,23 +950,23 @@ const dictionary = {
 ],
 
 "server penuh":[
-{category:"DAILY",type:"Game",korean:"서버 꽉 찼어요",indonesia:"Server penuh"}
+{category:"SYSTEM",type:"Game",korean:"서버 꽉 찼어요",indonesia:"Server penuh"}
 ],
 
 "maintenance":[
-{category:"DAILY",type:"Game",korean:"점검 중",indonesia:"Maintenance"}
+{category:"SYSTEM",type:"Game",korean:"점검 중",indonesia:"Maintenance"}
 ],
 
 "restart game":[
-{category:"DAILY",type:"Game",korean:"게임 다시 켤게요",indonesia:"Restart game"}
+{category:"SYSTEM",type:"Game",korean:"게임 다시 켤게요",indonesia:"Restart game"}
 ],
 
 "aku login":[
-{category:"DAILY",type:"Game",korean:"접속했어요",indonesia:"Aku login"}
+{category:"SYSTEM",type:"Game",korean:"접속했어요",indonesia:"Aku login"}
 ],
 
 "aku logout":[
-{category:"DAILY",type:"Game",korean:"로그아웃할게요",indonesia:"Aku logout"}
+{category:"SYSTEM",type:"Game",korean:"로그아웃할게요",indonesia:"Aku logout"}
 ],
 
 "tolong cover":[
@@ -978,7 +978,7 @@ const dictionary = {
 ],
 
 "jangan rush":[
-{category:"DAILY",type:"Game",korean:"무리하지 마세요",indonesia:"Jangan rush"}
+{category:"CHAT",type:"Game",korean:"무리하지 마세요",indonesia:"Jangan rush"}
 ],
 
 "rush boss":[
@@ -986,11 +986,11 @@ const dictionary = {
 ],
 
 "aku siap":[
-{category:"DAILY",type:"Game",korean:"준비됐어요",indonesia:"Aku siap"}
+{category:"CHAT",type:"Game",korean:"준비됐어요",indonesia:"Aku siap"}
 ],
 
 "belum siap":[
-{category:"DAILY",type:"Game",korean:"아직 준비 안 됐어요",indonesia:"Belum siap"}
+{category:"CHAT",type:"Game",korean:"아직 준비 안 됐어요",indonesia:"Belum siap"}
 ],
 
 "siap war":[
@@ -1002,12 +1002,11 @@ const dictionary = {
 ],
 
 "good game":[
-{category:"DAILY",type:"Game",korean:"수고하셨습니다",indonesia:"Good job / makasih party"},
-{category:"BASIC",type:"Game",korean:"ㅈㅈ",indonesia:"GG"}
+{category:"DAILY",type:"Game",korean:"수고하셨습니다",indonesia:"Good game"}
 ],
 
 "nice try":[
-{category:"DAILY",type:"Game",korean:"잘했어요",indonesia:"Nice try"}
+{category:"CHAT",type:"Game",korean:"잘했어요",indonesia:"Nice try"}
 ],
 
 "mantap party":[
@@ -1143,7 +1142,7 @@ const dictionary = {
 ],
 
 "hemat potion":[
-{category:"DAILY",type:"Game",korean:"물약 아껴요",indonesia:"Hemat potion"}
+{category:"CHAT",type:"Game",korean:"물약 아껴요",indonesia:"Hemat potion"}
 ],
 
 "pakai buff":[
@@ -1163,31 +1162,31 @@ const dictionary = {
 ],
 
 "aku sibuk":[
-{category:"DAILY",type:"Natural",korean:"지금 바빠요",indonesia:"Aku sibuk"}
+{category:"CHAT",type:"Natural",korean:"지금 바빠요",indonesia:"Aku sibuk"}
 ],
 
 "nanti dulu":[
-{category:"DAILY",type:"Natural",korean:"나중에 해요",indonesia:"Nanti dulu"}
+{category:"CHAT",type:"Natural",korean:"나중에 해요",indonesia:"Nanti dulu"}
 ],
 
 "sebentar lagi":[
-{category:"DAILY",type:"Natural",korean:"곧 갈게요",indonesia:"Sebentar lagi"}
+{category:"CHAT",type:"Natural",korean:"곧 갈게요",indonesia:"Sebentar lagi"}
 ],
 
 "lama banget":[
-{category:"DAILY",type:"Natural",korean:"너무 오래 걸려요",indonesia:"Lama banget"}
+{category:"CHAT",type:"Natural",korean:"너무 오래 걸려요",indonesia:"Lama banget"}
 ],
 
 "cepat banget":[
-{category:"DAILY",type:"Natural",korean:"엄청 빨라요",indonesia:"Cepat banget"}
+{category:"CHAT",type:"Natural",korean:"엄청 빨라요",indonesia:"Cepat banget"}
 ],
 
 "aku takut":[
-{category:"DAILY",type:"Natural",korean:"무서워요",indonesia:"Aku takut"}
+{category:"CHAT",type:"Natural",korean:"무서워요",indonesia:"Aku takut"}
 ],
 
 "tenang aja":[
-{category:"DAILY",type:"Natural",korean:"걱정 마세요",indonesia:"Tenang aja"}
+{category:"CHAT",type:"Natural",korean:"걱정 마세요",indonesia:"Tenang aja"}
 ],
 
 "semangat":[
@@ -1195,19 +1194,19 @@ const dictionary = {
 ],
 
 "ayo lanjut":[
-{category:"DAILY",type:"Game",korean:"계속 갑시다",indonesia:"Ayo lanjut"}
+{category:"CHAT",type:"Game",korean:"계속 갑시다",indonesia:"Ayo lanjut"}
 ],
 
 "ada orang":[
-{category:"DAILY",type:"Game",korean:"사람 있어요",indonesia:"Ada orang"}
+{category:"CHAT",type:"Game",korean:"사람 있어요",indonesia:"Ada orang"}
 ],
 
 "orang datang":[
-{category:"DAILY",type:"Game",korean:"사람 왔어요",indonesia:"Orang datang"}
+{category:"CHAT",type:"Game",korean:"사람 왔어요",indonesia:"Orang datang"}
 ],
 
 "ramai disini":[
-{category:"DAILY",type:"Game",korean:"여기 사람 많아요",indonesia:"Ramai disini"}
+{category:"CHAT",type:"Game",korean:"여기 사람 많아요",indonesia:"Ramai disini"}
 ],
 
 "spot rebutan":[
@@ -1251,15 +1250,15 @@ const dictionary = {
 ],
 
 "gear bagus":[
-{category:"DAILY",type:"Game",korean:"장비 좋아요",indonesia:"Gear bagus"}
+{category:"CHAT",type:"Game",korean:"장비 좋아요",indonesia:"Gear bagus"}
 ],
 
 "gear jelek":[
-{category:"DAILY",type:"Game",korean:"장비 안 좋아요",indonesia:"Gear jelek"}
+{category:"CHAT",type:"Game",korean:"장비 안 좋아요",indonesia:"Gear jelek"}
 ],
 
 "damage sakit banget":[
-{category:"DAILY",type:"Game",korean:"딜 엄청 아파요",indonesia:"Damage sakit banget"}
+{category:"CHAT",type:"Game",korean:"딜 엄청 아파요",indonesia:"Damage sakit banget"}
 ],
 
 "tank tipis":[
@@ -1315,7 +1314,7 @@ const dictionary = {
 ],
 
 "jangan sendiri":[
-{category:"DAILY",type:"Game",korean:"혼자 가지 마세요",indonesia:"Jangan sendiri"}
+{category:"CHAT",type:"Game",korean:"혼자 가지 마세요",indonesia:"Jangan sendiri"}
 ],
 
 "ikut party kami":[
@@ -1331,19 +1330,19 @@ const dictionary = {
 ],
 
 "main santai":[
-{category:"DAILY",type:"Natural",korean:"편하게 게임해요",indonesia:"Main santai"}
+{category:"CHAT",type:"Natural",korean:"편하게 게임해요",indonesia:"Main santai"}
 ],
 
 "main serius":[
-{category:"DAILY",type:"Natural",korean:"열심히 게임해요",indonesia:"Main serius"}
+{category:"CHAT",type:"Natural",korean:"열심히 게임해요",indonesia:"Main serius"}
 ],
 
 "aku offline dulu":[
-{category:"DAILY",type:"Natural",korean:"먼저 로그아웃할게요",indonesia:"Offline dulu"}
+{category:"CHAT",type:"Natural",korean:"먼저 로그아웃할게요",indonesia:"Offline dulu"}
 ],
 
 "aku balik lagi":[
-{category:"DAILY",type:"Natural",korean:"다시 올게요",indonesia:"Aku balik lagi"}
+{category:"CHAT",type:"Natural",korean:"다시 올게요",indonesia:"Aku balik lagi"}
 ],
 
 "selamat farming":[
@@ -1355,7 +1354,7 @@ const dictionary = {
 ],
 
 "semoga hoki":[
-{category:"DAILY",type:"Natural",korean:"행운을 빌어요",indonesia:"Semoga hoki"}
+{category:"CHAT",type:"Natural",korean:"행운을 빌어요",indonesia:"Semoga hoki"}
 ],
 
 "good luck":[
@@ -1363,19 +1362,19 @@ const dictionary = {
 ],
 
 "ayo buru buru":[
-{category:"DAILY",type:"Game",korean:"빨리 갑시다",indonesia:"Ayo buru-buru"}
+{category:"CHAT",type:"Game",korean:"빨리 갑시다",indonesia:"Ayo buru-buru"}
 ],
 
 "jangan telat":[
-{category:"DAILY",type:"Game",korean:"늦지 마세요",indonesia:"Jangan telat"}
+{category:"CHAT",type:"Game",korean:"늦지 마세요",indonesia:"Jangan telat"}
 ],
 
 "aku nyangkut":[
-{category:"DAILY",type:"Game",korean:"끼였어요",indonesia:"Aku nyangkut"}
+{category:"SYSTEM",type:"Game",korean:"끼였어요",indonesia:"Aku nyangkut"}
 ],
 
 "jalan blocked":[
-{category:"DAILY",type:"Game",korean:"길 막혔어요",indonesia:"Jalan blocked"}
+{category:"SYSTEM",type:"Game",korean:"길 막혔어요",indonesia:"Jalan blocked"}
 ],
 
 "mob respawn":[
@@ -1395,31 +1394,31 @@ const dictionary = {
 ],
 
 "jangan spam":[
-{category:"DAILY",type:"Game",korean:"스팸하지 마세요",indonesia:"Jangan spam"}
+{category:"CHAT",type:"Game",korean:"스팸하지 마세요",indonesia:"Jangan spam"}
 ],
 
 "chat pelan":[
-{category:"DAILY",type:"Game",korean:"천천히 말해주세요",indonesia:"Chat pelan"}
+{category:"CHAT",type:"Game",korean:"천천히 말해주세요",indonesia:"Chat pelan"}
 ],
 
 "aku tidak ngerti":[
-{category:"DAILY",type:"Natural",korean:"이해 못했어요",indonesia:"Aku tidak ngerti"}
+{category:"CHAT",type:"Natural",korean:"이해 못했어요",indonesia:"Aku tidak ngerti"}
 ],
 
 "bisa ulang":[
-{category:"DAILY",type:"Natural",korean:"다시 말해주세요",indonesia:"Bisa ulang?"}
+{category:"CHAT",type:"Natural",korean:"다시 말해주세요",indonesia:"Bisa ulang?"}
 ],
 
 "bahasa korea sulit":[
-{category:"DAILY",type:"Natural",korean:"한국어 어려워요",indonesia:"Bahasa Korea sulit"}
+{category:"CHAT",type:"Natural",korean:"한국어 어려워요",indonesia:"Bahasa Korea sulit"}
 ],
 
 "aku belajar korea":[
-{category:"DAILY",type:"Natural",korean:"한국어 배우는 중이에요",indonesia:"Aku belajar Korea"}
+{category:"CHAT",type:"Natural",korean:"한국어 배우는 중이에요",indonesia:"Aku belajar Korea"}
 ],
 
 "tolong tunggu":[
-{category:"DAILY",type:"Natural",korean:"잠시 기다려주세요",indonesia:"Tolong tunggu"}
+{category:"CHAT",type:"Natural",korean:"잠시 기다려주세요",indonesia:"Tolong tunggu"}
 ],
 
 "aku sibuk farming":[
@@ -1427,11 +1426,11 @@ const dictionary = {
 ],
 
 "jangan ganggu":[
-{category:"DAILY",type:"Game",korean:"방해하지 마세요",indonesia:"Jangan ganggu"}
+{category:"CHAT",type:"Game",korean:"방해하지 마세요",indonesia:"Jangan ganggu"}
 ],
 
 "aku fokus":[
-{category:"DAILY",type:"Natural",korean:"집중 중이에요",indonesia:"Aku fokus"}
+{category:"CHAT",type:"Natural",korean:"집중 중이에요",indonesia:"Aku fokus"}
 ],
 
 "farm nonstop":[
@@ -1443,7 +1442,7 @@ const dictionary = {
 ],
 
 "aku mau tidur":[
-{category:"DAILY",type:"Natural",korean:"자러 갈게요",indonesia:"Aku mau tidur"}
+{category:"CHAT",type:"Natural",korean:"자러 갈게요",indonesia:"Aku mau tidur"}
 ],
 
 "selamat tidur":[
@@ -1459,11 +1458,11 @@ const dictionary = {
 ],
 
 "aku kembali":[
-{category:"DAILY",type:"Natural",korean:"다시 왔어요",indonesia:"Aku kembali"}
+{category:"CHAT",type:"Natural",korean:"다시 왔어요",indonesia:"Aku kembali"}
 ],
 
 "maaf telat":[
-{category:"DAILY",type:"Natural",korean:"늦어서 죄송해요",indonesia:"Maaf telat"}
+{category:"CHAT",type:"Natural",korean:"늦어서 죄송해요",indonesia:"Maaf telat"}
 ],
 
 "aku lag":[
@@ -1471,39 +1470,39 @@ const dictionary = {
 ],
 
 "ping tinggi":[
-{category:"DAILY",type:"Game",korean:"핑 높아요",indonesia:"Ping tinggi"}
+{category:"SYSTEM",type:"Game",korean:"핑 높아요",indonesia:"Ping tinggi"}
 ],
 
 "internet jelek":[
-{category:"DAILY",type:"Game",korean:"인터넷 안 좋아요",indonesia:"Internet jelek"}
+{category:"SYSTEM",type:"Game",korean:"인터넷 안 좋아요",indonesia:"Internet jelek"}
 ],
 
 "disconnect lagi":[
-{category:"DAILY",type:"Game",korean:"또 끊겼어요",indonesia:"Disconnect lagi"}
+{category:"SYSTEM",type:"Game",korean:"또 끊겼어요",indonesia:"Disconnect lagi"}
 ],
 
 "server lag":[
-{category:"DAILY",type:"Game",korean:"서버 렉이에요",indonesia:"Server lag"}
+{category:"SYSTEM",type:"Game",korean:"서버 렉이에요",indonesia:"Server lag"}
 ],
 
 "maintenance kapan":[
-{category:"DAILY",type:"Game",korean:"점검 언제예요?",indonesia:"Maintenance kapan?"}
+{category:"SYSTEM",type:"Game",korean:"점검 언제예요?",indonesia:"Maintenance kapan?"}
 ],
 
 "server penuh banget":[
-{category:"DAILY",type:"Game",korean:"서버 사람 너무 많아요",indonesia:"Server penuh banget"}
+{category:"SYSTEM",type:"Game",korean:"서버 사람 너무 많아요",indonesia:"Server penuh banget"}
 ],
 
 "aku afk makan":[
-{category:"DAILY",type:"Game",korean:"밥 먹고 올게요",indonesia:"AFK makan"}
+{category:"CHAT",type:"Game",korean:"밥 먹고 올게요",indonesia:"AFK makan"}
 ],
 
 "aku afk sebentar":[
-{category:"DAILY",type:"Game",korean:"잠깐 잠수할게요",indonesia:"AFK sebentar"}
+{category:"CHAT",type:"Game",korean:"잠깐 잠수할게요",indonesia:"AFK sebentar"}
 ],
 
 "jangan kick":[
-{category:"DAILY",type:"Game",korean:"강퇴하지 마세요",indonesia:"Jangan kick"}
+{category:"CHAT",type:"Game",korean:"강퇴하지 마세요",indonesia:"Jangan kick"}
 ],
 
 "tolong invite lagi":[
@@ -1515,7 +1514,7 @@ const dictionary = {
 ],
 
 "boss sudah mati":[
-{category:"HP",type:"Game",korean:"보스 이미 죽었어요",indonesia:"Boss sudah mati"}
+{category:"FARM",type:"Game",korean:"보스 이미 죽었어요",indonesia:"Boss sudah mati"}
 ],
 
 "drop rare":[
@@ -1531,7 +1530,7 @@ const dictionary = {
 ],
 
 "ayo cepet":[
-{category:"DAILY",type:"Game",korean:"빨리 와요",indonesia:"Ayo cepat"}
+{category:"CHAT",type:"Game",korean:"빨리 와요",indonesia:"Ayo cepat"}
 ],
 
 "aku otw boss":[
@@ -1539,7 +1538,7 @@ const dictionary = {
 ],
 
 "jangan rusuh":[
-{category:"DAILY",type:"Game",korean:"시끄럽게 하지 마세요",indonesia:"Jangan rusuh"}
+{category:"CHAT",type:"Game",korean:"시끄럽게 하지 마세요",indonesia:"Jangan rusuh"}
 ],
 
 "ayo defend":[
@@ -1559,7 +1558,7 @@ const dictionary = {
 ],
 
 "jangan ceroboh":[
-{category:"DAILY",type:"Game",korean:"조심하세요",indonesia:"Jangan ceroboh"}
+{category:"CHAT",type:"Game",korean:"조심하세요",indonesia:"Jangan ceroboh"}
 ],
 
 "musuh kabur":[
@@ -1595,7 +1594,7 @@ const dictionary = {
 ],
 
 "ulang lagi":[
-{category:"DAILY",type:"Game",korean:"다시 해요",indonesia:"Ulang lagi"}
+{category:"CHAT",type:"Game",korean:"다시 해요",indonesia:"Ulang lagi"}
 ],
 
 "boss susah":[
@@ -1607,7 +1606,7 @@ const dictionary = {
 ],
 
 "damage kurang banget":[
-{category:"DAILY",type:"Game",korean:"딜 너무 부족해요",indonesia:"Damage kurang banget"}
+{category:"CHAT",type:"Game",korean:"딜 너무 부족해요",indonesia:"Damage kurang banget"}
 ],
 
 "heal kurang":[
@@ -1639,7 +1638,7 @@ const dictionary = {
 ],
 
 "stok potion habis":[
-{category:"DAILY",type:"Game",korean:"물약 다 썼어요",indonesia:"Potion habis"}
+{category:"CHAT",type:"Game",korean:"물약 다 썼어요",indonesia:"Potion habis"}
 ],
 
 "aku beli potion":[
@@ -1695,11 +1694,11 @@ const dictionary = {
 ],
 
 "hoki bagus":[
-{category:"DAILY",type:"Natural",korean:"운 좋네요",indonesia:"Hoki bagus"}
+{category:"CHAT",type:"Natural",korean:"운 좋네요",indonesia:"Hoki bagus"}
 ],
 
 "hoki jelek":[
-{category:"DAILY",type:"Natural",korean:"운이 안 좋아요",indonesia:"Hoki jelek"}
+{category:"CHAT",type:"Natural",korean:"운이 안 좋아요",indonesia:"Hoki jelek"}
 ],
 
 "thanks party":[
@@ -1723,11 +1722,11 @@ const dictionary = {
 ],
 
 "main bareng lagi":[
-{category:"DAILY",type:"Natural",korean:"다음에 또 같이 해요",indonesia:"Main bareng lagi"}
+{category:"CHAT",type:"Natural",korean:"다음에 또 같이 해요",indonesia:"Main bareng lagi"}
 ],
 
 "senang ketemu kamu":[
-{category:"DAILY",type:"Natural",korean:"만나서 반가워요",indonesia:"Senang ketemu kamu"}
+{category:"CHAT",type:"Natural",korean:"만나서 반가워요",indonesia:"Senang ketemu kamu"}
 ],
 
 "terima kasih banyak":[
@@ -1743,115 +1742,115 @@ const dictionary = {
 ],
 
 "maaf noob":[
-{category:"DAILY",type:"Game",korean:"제가 초보예요",indonesia:"Maaf masih noob"}
+{category:"CHAT",type:"Game",korean:"제가 초보예요",indonesia:"Maaf masih noob"}
 ],
 
 "aku masih belajar":[
-{category:"DAILY",type:"Natural",korean:"아직 배우는 중이에요",indonesia:"Aku masih belajar"}
+{category:"CHAT",type:"Natural",korean:"아직 배우는 중이에요",indonesia:"Aku masih belajar"}
 ],
 
 "tolong ajarin":[
-{category:"DAILY",type:"Natural",korean:"가르쳐주세요",indonesia:"Tolong ajarin"}
+{category:"QUEST",type:"Natural",korean:"가르쳐주세요",indonesia:"Tolong ajarin"}
 ],
 
 "aku bingung":[
-{category:"DAILY",type:"Natural",korean:"헷갈려요",indonesia:"Aku bingung"}
+{category:"QUEST",type:"Natural",korean:"헷갈려요",indonesia:"Aku bingung"}
 ],
 
 "harus kemana":[
-{category:"DAILY",type:"Game",korean:"어디로 가야 돼요?",indonesia:"Harus kemana?"}
+{category:"MOVE",type:"Game",korean:"어디로 가야 돼요?",indonesia:"Harus kemana?"}
 ],
 
 "quest dimana":[
-{category:"DAILY",type:"Game",korean:"퀘스트 어디예요?",indonesia:"Quest dimana?"}
+{category:"QUEST",type:"Game",korean:"퀘스트 어디예요?",indonesia:"Quest dimana?"}
 ],
 
 "npc dimana":[
-{category:"DAILY",type:"Game",korean:"NPC 어디예요?",indonesia:"NPC dimana?"}
+{category:"QUEST",type:"Game",korean:"NPC 어디예요?",indonesia:"NPC dimana?"}
 ],
 
 "tolong bantu":[
-{category:"DAILY",type:"Natural",korean:"도와주세요",indonesia:"Tolong bantu"}
+{category:"QUEST",type:"Natural",korean:"도와주세요",indonesia:"Tolong bantu"}
 ],
 
 "bantu quest":[
-{category:"FARM",type:"Game",korean:"퀘스트 도와주세요",indonesia:"Bantu quest"}
+{category:"QUEST",type:"Game",korean:"퀘스트 도와주세요",indonesia:"Bantu quest"}
 ],
 
 "bantu kill":[
-{category:"FARM",type:"Game",korean:"잡는 거 도와주세요",indonesia:"Bantu kill"}
+{category:"QUEST",type:"Game",korean:"잡는 거 도와주세요",indonesia:"Bantu kill"}
 ],
 
 "aku sendirian":[
-{category:"DAILY",type:"Natural",korean:"혼자예요",indonesia:"Aku sendirian"}
+{category:"CHAT",type:"Natural",korean:"혼자예요",indonesia:"Aku sendirian"}
 ],
 
 "boleh ikut":[
-{category:"DAILY",type:"Game",korean:"같이 가도 돼요?",indonesia:"Boleh ikut?"}
+{category:"CHAT",type:"Game",korean:"같이 가도 돼요?",indonesia:"Boleh ikut?"}
 ],
 
 "ayo bareng":[
-{category:"DAILY",type:"Natural",korean:"같이 해요",indonesia:"Ayo bareng"}
+{category:"CHAT",type:"Natural",korean:"같이 해요",indonesia:"Ayo bareng"}
 ],
 
 "aku teman indonesia":[
-{category:"DAILY",type:"Natural",korean:"저 인도네시아 사람이에요",indonesia:"Aku orang Indonesia"}
+{category:"CHAT",type:"Natural",korean:"저 인도네시아 사람이에요",indonesia:"Aku orang Indonesia"}
 ],
 
 "aku tidak bisa korea":[
-{category:"DAILY",type:"Natural",korean:"한국어 잘 못해요",indonesia:"Aku tidak bisa Korea"}
+{category:"CHAT",type:"Natural",korean:"한국어 잘 못해요",indonesia:"Aku tidak bisa Korea"}
 ],
 
 "pakai translate":[
-{category:"DAILY",type:"Natural",korean:"번역기 사용 중이에요",indonesia:"Pakai translate"}
+{category:"CHAT",type:"Natural",korean:"번역기 사용 중이에요",indonesia:"Pakai translate"}
 ],
 
 "tolong bahasa simple":[
-{category:"DAILY",type:"Natural",korean:"쉬운 말로 해주세요",indonesia:"Tolong bahasa simple"}
+{category:"CHAT",type:"Natural",korean:"쉬운 말로 해주세요",indonesia:"Tolong bahasa simple"}
 ],
 
 "aku ngerti sedikit":[
-{category:"DAILY",type:"Natural",korean:"조금 이해해요",indonesia:"Aku ngerti sedikit"}
+{category:"CHAT",type:"Natural",korean:"조금 이해해요",indonesia:"Aku ngerti sedikit"}
 ],
 
 "aku suka game ini":[
-{category:"DAILY",type:"Natural",korean:"이 게임 좋아해요",indonesia:"Aku suka game ini"}
+{category:"CHAT",type:"Natural",korean:"이 게임 좋아해요",indonesia:"Aku suka game ini"}
 ],
 
 "game ini seru":[
-{category:"DAILY",type:"Natural",korean:"이 게임 재밌어요",indonesia:"Game ini seru"}
+{category:"CHAT",type:"Natural",korean:"이 게임 재밌어요",indonesia:"Game ini seru"}
 ],
 
 "server ini ramai":[
-{category:"DAILY",type:"Game",korean:"이 서버 사람 많아요",indonesia:"Server ini ramai"}
+{category:"CHAT",type:"Game",korean:"이 서버 사람 많아요",indonesia:"Server ini ramai"}
 ],
 
 "server ini bagus":[
-{category:"DAILY",type:"Game",korean:"이 서버 좋아요",indonesia:"Server ini bagus"}
+{category:"CHAT",type:"Game",korean:"이 서버 좋아요",indonesia:"Server ini bagus"}
 ],
 
 "aku online tiap hari":[
-{category:"DAILY",type:"Natural",korean:"매일 접속해요",indonesia:"Aku online tiap hari"}
+{category:"CHAT",type:"Natural",korean:"매일 접속해요",indonesia:"Aku online tiap hari"}
 ],
 
 "aku main malam":[
-{category:"DAILY",type:"Natural",korean:"밤에 게임해요",indonesia:"Aku main malam"}
+{category:"CHAT",type:"Natural",korean:"밤에 게임해요",indonesia:"Aku main malam"}
 ],
 
 "aku main santai aja":[
-{category:"DAILY",type:"Natural",korean:"편하게 게임해요",indonesia:"Main santai aja"}
+{category:"CHAT",type:"Natural",korean:"편하게 게임해요",indonesia:"Main santai aja"}
 ],
 
 "jangan marah":[
-{category:"DAILY",type:"Natural",korean:"화내지 마세요",indonesia:"Jangan marah"}
+{category:"CHAT",type:"Natural",korean:"화내지 마세요",indonesia:"Jangan marah"}
 ],
 
 "tenang tenang":[
-{category:"DAILY",type:"Natural",korean:"진정하세요",indonesia:"Tenang tenang"}
+{category:"CHAT",type:"Natural",korean:"진정하세요",indonesia:"Tenang tenang"}
 ],
 
 "aku bercanda":[
-{category:"DAILY",type:"Natural",korean:"농담이에요",indonesia:"Aku bercanda"}
+{category:"CHAT",type:"Natural",korean:"농담이에요",indonesia:"Aku bercanda"}
 ],
 
 "wkwkwk":[
@@ -1859,7 +1858,7 @@ const dictionary = {
 ],
 
 "haha lucu":[
-{category:"DAILY",type:"Natural",korean:"재밌네요",indonesia:"Haha lucu"}
+{category:"CHAT",type:"Natural",korean:"재밌네요",indonesia:"Haha lucu"}
 ],
 
 "bye":[
@@ -1867,7 +1866,7 @@ const dictionary = {
 ],
 
 "sampai jumpa":[
-{category:"BASIC",type:"Natural",korean:"다음에 봐요",indonesia:"Sampai jumpa"}
+{category:"MANA",type:"Natural",korean:"다음에 봐요",indonesia:"Sampai jumpa"}
 ],
 
 "ayo cepat farming":[
@@ -1891,7 +1890,7 @@ const dictionary = {
 ],
 
 "ayo pindah map":[
-{category:"FARM",type:"Game",korean:"맵 옮겨요",indonesia:"Ayo pindah map"}
+{category:"MOVE",type:"Game",korean:"맵 옮겨요",indonesia:"Ayo pindah map"}
 ],
 
 "map ini bagus":[
@@ -1911,7 +1910,7 @@ const dictionary = {
 ],
 
 "ayo cari spot":[
-{category:"FARM",type:"Game",korean:"자리 찾으러 가요",indonesia:"Cari spot"}
+{category:"MOVE",type:"Game",korean:"자리 찾으러 가요",indonesia:"Cari spot"}
 ],
 
 "jangan rebut spot":[
@@ -1919,7 +1918,7 @@ const dictionary = {
 ],
 
 "kami duluan":[
-{category:"DAILY",type:"Game",korean:"저희가 먼저 왔어요",indonesia:"Kami duluan"}
+{category:"CHAT",type:"Game",korean:"저희가 먼저 왔어요",indonesia:"Kami duluan"}
 ],
 
 "ayo hunt boss":[
@@ -1967,7 +1966,7 @@ const dictionary = {
 ],
 
 "war gampang":[
-{category:"WAR",type:"Game",korean:"전쟁 쉬워요",indonesia:"War gampang"}
+{category:"MANA",type:"Game",korean:"전쟁 쉬워요",indonesia:"War gampang"}
 ],
 
 "ayo push kiri":[
@@ -2039,19 +2038,19 @@ const dictionary = {
 ],
 
 "server stabil":[
-{category:"DAILY",type:"Game",korean:"서버 안정적이에요",indonesia:"Server stabil"}
+{category:"SYSTEM",type:"Game",korean:"서버 안정적이에요",indonesia:"Server stabil"}
 ],
 
 "server error":[
-{category:"DAILY",type:"Game",korean:"서버 오류예요",indonesia:"Server error"}
+{category:"SYSTEM",type:"Game",korean:"서버 오류예요",indonesia:"Server error"}
 ],
 
 "ayo kumpul":[
-{category:"MANA",type:"Game",korean:"다 같이 모여요",indonesia:"Ayo kumpul"}
+{category:"MOVE",type:"Game",korean:"다 같이 모여요",indonesia:"Ayo kumpul"}
 ],
 
 "kumpul tengah":[
-{category:"MANA",type:"Game",korean:"중앙으로 모여요",indonesia:"Kumpul tengah"}
+{category:"MOVE",type:"Game",korean:"중앙으로 모여요",indonesia:"Kumpul tengah"}
 ],
 
 "musuh di tengah":[
@@ -2059,19 +2058,19 @@ const dictionary = {
 ],
 
 "jalan kiri aman":[
-{category:"DAILY",type:"Game",korean:"왼쪽 길 안전해요",indonesia:"Jalan kiri aman"}
+{category:"MOVE",type:"Game",korean:"왼쪽 길 안전해요",indonesia:"Jalan kiri aman"}
 ],
 
 "jalan kanan aman":[
-{category:"DAILY",type:"Game",korean:"오른쪽 길 안전해요",indonesia:"Jalan kanan aman"}
+{category:"MOVE",type:"Game",korean:"오른쪽 길 안전해요",indonesia:"Jalan kanan aman"}
 ],
 
 "jangan masuk dulu":[
-{category:"DAILY",type:"Game",korean:"아직 들어가지 마세요",indonesia:"Jangan masuk dulu"}
+{category:"MOVE",type:"Game",korean:"아직 들어가지 마세요",indonesia:"Jangan masuk dulu"}
 ],
 
 "masuk sekarang":[
-{category:"DAILY",type:"Game",korean:"지금 들어가요",indonesia:"Masuk sekarang"}
+{category:"MOVE",type:"Game",korean:"지금 들어가요",indonesia:"Masuk sekarang"}
 ],
 
 "aku hampir mati":[
@@ -2087,15 +2086,15 @@ const dictionary = {
 ],
 
 "party terlalu jauh":[
-{category:"PARTY",type:"Game",korean:"파티 너무 멀어요",indonesia:"Party terlalu jauh"}
+{category:"MOVE",type:"Game",korean:"파티 너무 멀어요",indonesia:"Party terlalu jauh"}
 ],
 
 "ikuti tank":[
-{category:"PARTY",type:"Game",korean:"탱커 따라가세요",indonesia:"Ikuti tank"}
+{category:"MOVE",type:"Game",korean:"탱커 따라가세요",indonesia:"Ikuti tank"}
 ],
 
 "jangan pisah":[
-{category:"DAILY",type:"Game",korean:"따로 가지 마세요",indonesia:"Jangan pisah"}
+{category:"MOVE",type:"Game",korean:"따로 가지 마세요",indonesia:"Jangan pisah"}
 ],
 
 "ayo finish boss":[

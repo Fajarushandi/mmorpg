@@ -34,5 +34,10 @@ const categories = {
   '🔵 MANA':'MANA',
   '💰 TRADE':'TRADE',
   '🏙️ TOWN':'TOWN',
-  '📅 DAILY':'DAILY'
+
+  '📅 DAILY':'DAILY',
+  '🧭 MOVE':'MOVE',
+  '📜 QUEST':'QUEST',
+  '💬 CHAT':'CHAT',
+  '🛠️ SYSTEM':'SYSTEM'
 };
