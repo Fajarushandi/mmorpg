@@ -173,7 +173,7 @@ function showResults(items){
     div.className = 'card';
 
     div.innerHTML = `
-      <div class="type">${item.type}</div>
+      <div class="type ${getTypeClass(item)}">${item.type}</div>
       <div class="korean">${item.korean}</div>
       <div class="keyboard">${keyboard}</div>
       <div class="indo">${cleanDescription(item.indonesia)}</div>
@@ -195,6 +195,19 @@ function showResults(items){
   });
 
   result.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function getTypeClass(item){
+  const type = (item.type || '').toLowerCase();
+
+  if(type.includes('game')) return 'game';
+  if(type.includes('formal')) return 'formal';
+  if(type.includes('santai')) return 'santai';
+  if(type.includes('singkat')) return 'singkat';
+  if(type.includes('natural')) return 'natural';
+  if((item.category || '').includes('PK_CHAT')) return 'pk_chat';
+
+  return '';
 }
 
 function cleanDescription(text){
