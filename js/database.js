@@ -946,7 +946,7 @@ const dictionary = {
 ],
 
 "fps drop":[
-{category:"FARM",type:"Game",korean:"프레임 떨어져요",indonesia:"FPS drop"}
+{category:"SYSTEM",type:"Game",korean:"프레임 떨어져요",indonesia:"FPS drop"}
 ],
 
 "server penuh":[
@@ -1006,7 +1006,7 @@ const dictionary = {
 ],
 
 "nice try":[
-{category:"CHAT",type:"Game",korean:"잘했어요",indonesia:"Nice try"}
+{category:"CHAT",type:"Game",korean:"잘 해봤어",indonesia:"Nice try"}
 ],
 
 "mantap party":[
@@ -1866,7 +1866,7 @@ const dictionary = {
 ],
 
 "sampai jumpa":[
-{category:"MANA",type:"Natural",korean:"다음에 봐요",indonesia:"Sampai jumpa"}
+{category:"BASIC",type:"Natural",korean:"다음에 봐요",indonesia:"Sampai jumpa"}
 ],
 
 "ayo cepat farming":[
@@ -1966,7 +1966,7 @@ const dictionary = {
 ],
 
 "war gampang":[
-{category:"MANA",type:"Game",korean:"전쟁 쉬워요",indonesia:"War gampang"}
+{category:"WAR",type:"Game",korean:"전쟁 쉬워요",indonesia:"War gampang"}
 ],
 
 "ayo push kiri":[
@@ -3254,7 +3254,7 @@ const dictionary = {
 ],
 
 "aku bangkrut":[
-{category:"DAILY",type:"Game",korean:"완전 거지됐어요",indonesia:"Aku bangkrut"}
+{category:"DAILY",type:"Game",korean:"돈 다 썼어요",indonesia:"Aku bangkrut"}
 ],
 
 "drop dibagi party":[
@@ -3338,11 +3338,11 @@ const dictionary = {
 ],
 
 "ayo camp boss":[
-{category:"MANA",type:"Game",korean:"보스 캠핑합시다",indonesia:"Camp boss"}
+{category:"FARM",type:"Game",korean:"보스 캠핑합시다",indonesia:"Camp boss"}
 ],
 
 "camp disini":[
-{category:"MANA",type:"Game",korean:"여기서 캠핑해요",indonesia:"Camp disini"}
+{category:"FARM",type:"Game",korean:"여기서 캠핑해요",indonesia:"Camp disini"}
 ],
 
 "jangan rebut boss":[
