@@ -1590,7 +1590,7 @@ const dictionary = {
 ],
 
 "ayo reset":[
-{category:"HP",type:"Game",korean:"리셋합시다",indonesia:"Ayo reset"}
+{category:"DAILY",type:"Game",korean:"리셋합시다",indonesia:"Ayo reset"}
 ],
 
 "ulang lagi":[
@@ -2578,7 +2578,7 @@ const dictionary = {
 ],
 
 "quest gampang":[
-{category:"MANA",type:"Game",korean:"퀘스트 쉬워요",indonesia:"Quest gampang"}
+{category:"QUEST",type:"Game",korean:"퀘스트 쉬워요",indonesia:"Quest gampang"}
 ],
 
 "tolong cepat":[
@@ -2610,15 +2610,15 @@ const dictionary = {
 ],
 
 "aku simpan dulu":[
-{category:"MANA",type:"Game",korean:"일단 보관할게요",indonesia:"Aku simpan dulu"}
+{category:"DAILY",type:"Game",korean:"일단 보관할게요",indonesia:"Aku simpan dulu"}
 ],
 
 "toilet dulu":[
-{category:"DAILY",type:"Game",korean:"장실요",indonesia:"Toilet dulu"}
+{category:"DAILY",type:"Game",korean:"화장실요",indonesia:"Toilet dulu"}
 ],
 
 "wc dulu":[
-{category:"DAILY",type:"Game",korean:"장실요",indonesia:"WC dulu"}
+{category:"DAILY",type:"Game",korean:"화장실요",indonesia:"WC dulu"}
 ],
 
 "panah dong":[
@@ -2638,7 +2638,7 @@ const dictionary = {
 ],
 
 "matiin auto":[
-{category:"HP",type:"Game",korean:"자동 꺼주세요",indonesia:"Matikan auto"}
+{category:"DAILY",type:"Game",korean:"자동 꺼주세요",indonesia:"Matikan auto"}
 ],
 
 "nyalain auto":[
@@ -2782,19 +2782,19 @@ const dictionary = {
 ],
 
 "brb toilet":[
-{category:"DAILY",type:"Game",korean:"장실요",indonesia:"BRB toilet"}
+{category:"DAILY",type:"Game",korean:"화장실요",indonesia:"BRB toilet"}
 ],
 
 "brb town":[
-{category:"DAILY",type:"Game",korean:"마을 갔다올게요",indonesia:"BRB town"}
+{category:"TOWN",type:"Game",korean:"마을 갔다올게요",indonesia:"BRB town"}
 ],
 
 "brb warehouse":[
-{category:"WAR",type:"Game",korean:"창고 갔다올게요",indonesia:"BRB warehouse"}
+{category:"TOWN",type:"Game",korean:"창고 갔다올게요",indonesia:"BRB warehouse"}
 ],
 
 "afk toilet":[
-{category:"DAILY",type:"Game",korean:"장실 다녀올게요",indonesia:"AFK toilet"}
+{category:"DAILY",type:"Game",korean:"화장실 다녀올게요",indonesia:"AFK toilet"}
 ],
 
 "reload pot":[
@@ -2818,7 +2818,7 @@ const dictionary = {
 ],
 
 "kumpulin monster":[
-{category:"MANA",type:"Game",korean:"몹 모아주세요",indonesia:"Kumpulin monster"}
+{category:"FARM",type:"Game",korean:"몹 모아주세요",indonesia:"Kumpulin monster"}
 ],
 
 "bawa monster kesini":[
@@ -2846,7 +2846,7 @@ const dictionary = {
 ],
 
 "biar monster ngumpul":[
-{category:"MANA",type:"Game",korean:"몹 모일 때까지 기다리세요",indonesia:"Biar monster ngumpul"}
+{category:"FARM",type:"Game",korean:"몹 모일 때까지 기다리세요",indonesia:"Biar monster ngumpul"}
 ],
 
 "tahan monster":[
@@ -2858,7 +2858,7 @@ const dictionary = {
 ],
 
 "monster sudah ngumpul":[
-{category:"MANA",type:"Game",korean:"몹 다 모였어요",indonesia:"Monster sudah ngumpul"}
+{category:"FARM",type:"Game",korean:"몹 다 모였어요",indonesia:"Monster sudah ngumpul"}
 ],
 
 "aoe sekarang":[
@@ -2998,7 +2998,7 @@ const dictionary = {
 ],
 
 "reset lagi":[
-{category:"HP",type:"Game",korean:"다시 리셋할게요",indonesia:"Reset lagi"}
+{category:"DAILY",type:"Game",korean:"다시 리셋할게요",indonesia:"Reset lagi"}
 ],
 
 "monster terlalu sakit":[
@@ -3050,7 +3050,7 @@ const dictionary = {
 ],
 
 "aku afk toilet":[
-{category:"DAILY",type:"Game",korean:"장실 다녀올게요",indonesia:"AFK toilet"}
+{category:"DAILY",type:"Game",korean:"화장실 다녀올게요",indonesia:"AFK toilet"}
 ],
 
 "afk bentar jangan kick":[
@@ -3062,7 +3062,7 @@ const dictionary = {
 ],
 
 "restart client":[
-{category:"HP",type:"Game",korean:"클라이언트 다시 켤게요",indonesia:"Restart client"}
+{category:"SYSTEM",type:"Game",korean:"클라이언트 다시 켤게요",indonesia:"Restart client"}
 ],
 
 "server unstable":[
@@ -3094,7 +3094,7 @@ const dictionary = {
 ],
 
 "jangan pencet respawn":[
-{category:"HP",type:"Game",korean:"리스폰 누르지 마세요",indonesia:"Jangan pencet respawn"}
+{category:"DAILY",type:"Game",korean:"리스폰 누르지 마세요",indonesia:"Jangan pencet respawn"}
 ],
 
 "wait revive":[
