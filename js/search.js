@@ -1,20 +1,37 @@
 function normalizeInput(text){
 
-  return text.toLowerCase().trim().replace(/\s+/g,' ');
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[!?.,;:'"()]/g,'')
+    .replace(/\s+/g,' ');
 }
 
 function typoScore(a,b){
 
   if(Math.abs(a.length - b.length) > 2) return 99;
 
-  let diff = 0;
-  const len = Math.max(a.length,b.length);
+  // True Levenshtein edit distance (insert/delete/substitute),
+  // so typos from extra/missing characters are caught correctly,
+  // not just same-position mismatches.
+  const m = a.length, n = b.length;
+  const dp = Array.from({length: m+1}, ()=>new Array(n+1).fill(0));
 
-  for(let i=0;i<len;i++){
-    if(a[i] !== b[i]) diff++;
+  for(let i=0;i<=m;i++) dp[i][0] = i;
+  for(let j=0;j<=n;j++) dp[0][j] = j;
+
+  for(let i=1;i<=m;i++){
+    for(let j=1;j<=n;j++){
+      const cost = a[i-1] === b[j-1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i-1][j] + 1,
+        dp[i][j-1] + 1,
+        dp[i-1][j-1] + cost
+      );
+    }
   }
 
-  return diff;
+  return dp[m][n];
 }
 
 function closeKeyboard(){

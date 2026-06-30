@@ -1,4 +1,25 @@
-let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+let favorites = [];
+try{
+  favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+}catch(e){
+  console.warn('Gagal load favorites dari localStorage:', e);
+  favorites = [];
+}
+
+function saveFavorites(){
+  try{
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }catch(e){
+    console.warn('Gagal simpan favorites (storage penuh / private mode):', e);
+    showToast('Gagal simpan favorite');
+  }
+}
+
+function esc(text){
+  const div = document.createElement('div');
+  div.textContent = text == null ? '' : String(text);
+  return div.innerHTML;
+}
 
 function itemId(item){
   return `${item.korean}::${item.type}`;
@@ -71,7 +92,7 @@ function setupCategories(){
       resultHeader.innerHTML = `
         <div class="card" data-category-title="true">
           <div class="type">CATEGORY</div>
-          <div class="korean">${label.replace(/^[^A-Za-z0-9가-힣]+\s*/, '')}</div>
+          <div class="korean">${esc(label.replace(/^[^A-Za-z0-9가-힣]+\s*/, ''))}</div>
           <div class="indo">Klik kategori yang sama lagi untuk menutup.</div>
         </div>
       `;
@@ -93,7 +114,7 @@ function toggleFavorite(data){
     favorites.push(data);
   }
 
-  localStorage.setItem('favorites', JSON.stringify(favorites));
+  saveFavorites();
   renderFavorites();
 }
 
@@ -173,10 +194,10 @@ function showResults(items){
     div.className = 'card';
 
     div.innerHTML = `
-      <div class="type ${getTypeClass(item)}">${item.type}</div>
-      <div class="korean">${item.korean}</div>
-      <div class="keyboard">${keyboard}</div>
-      <div class="indo">${cleanDescription(item.indonesia)}</div>
+      <div class="type ${getTypeClass(item)}">${esc(item.type)}</div>
+      <div class="korean">${esc(item.korean)}</div>
+      <div class="keyboard">${esc(keyboard)}</div>
+      <div class="indo">${esc(cleanDescription(item.indonesia))}</div>
       <div class="copy-row">
         <button class="copy">Copy Keyboard</button>
         <button class="fav">${isFav ? '⭐' : '☆'}</button>
@@ -199,10 +220,17 @@ function showResults(items){
 
 function getTypeClass(item){
 
-  const type = (item.type || '').toLowerCase();
+  const type = (item.type || '').toLowerCase().trim();
 
   if((item.category || '').includes('PK_CHAT')) return 'pk_chat';
 
+  if(type === 'game') return 'game';
+  if(type === 'formal') return 'formal';
+  if(type === 'santai') return 'santai';
+  if(type === 'singkat') return 'singkat';
+  if(type === 'natural') return 'natural';
+
+  // fallback to substring match in case new type variants are added
   if(type.includes('game')) return 'game';
   if(type.includes('formal')) return 'formal';
   if(type.includes('santai')) return 'santai';
@@ -215,10 +243,11 @@ function getTypeClass(item){
 
 function cleanDescription(text){
   return (text || '-')
-    .replace(' formal','')
-    .replace(' santai','')
-    .replace(' slang game','')
-    .replace(' gaya English','');
+    .replace(/\s*\bformal\b/gi,'')
+    .replace(/\s*\bsantai\b/gi,'')
+    .replace(/\s*\bslang game\b/gi,'')
+    .replace(/\s*\bgaya English\b/gi,'')
+    .trim() || '-';
 }
 
 function copyText(text){
@@ -244,8 +273,10 @@ function fallbackCopy(text){
   showToast();
 }
 
-function showToast(){
+function showToast(message){
   const toast = document.getElementById('toast');
+  if(message) toast.textContent = message;
+  else toast.textContent = 'Copied!';
   toast.classList.add('show');
   setTimeout(()=>toast.classList.remove('show'),1500);
 }
